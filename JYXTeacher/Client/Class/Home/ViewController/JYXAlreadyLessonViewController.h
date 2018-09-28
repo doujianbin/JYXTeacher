@@ -1,0 +1,14 @@
+//
+//  JYXAlreadyLessonViewController.h
+//  JYXTeacher
+//
+//  Created by apple on 2018/8/16.
+//  Copyright © 2018年 JYX. All rights reserved.
+//
+
+#import "JYXBaseViewController.h"
+@class JYXWorkHomeViewController;
+
+@interface JYXAlreadyLessonViewController : JYXBaseViewController
+@property (nonatomic, weak) JYXWorkHomeViewController *detailVC;
+@end

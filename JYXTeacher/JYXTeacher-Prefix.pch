@@ -1,0 +1,79 @@
+//
+//  JYXTeacher-Prefix.pch
+//  JYXTeacher
+//
+//  Created by apple on 2018/8/16.
+//  Copyright © 2018年 JYX. All rights reserved.
+//
+
+#ifndef JYXTeacher_Prefix_pch
+#define JYXTeacher_Prefix_pch
+
+#import "JYXBaseNavigationController.h"
+#import "JYXBaseViewController.h"
+#import "Masonry.h"
+#import "UINavigationBar+Awesome.h"
+#import "YXGShowPopAnimationView.h"
+#import "JYXUserManager.h"
+#import "PGDatePickManager.h"
+#import "AppDelegate.h"
+#import "MSActionSheet.h"
+#import "DLPickerView.h"
+#import "JYXHelpView.h"
+#import "APIConfig.h"
+#import "MBProgressHUD+JDragon.h"
+
+/** PublicConfig下头文件 */
+#import "PublicConfig.h"
+
+/** foundation下头文件 */
+#import "PublicHeader.h"
+
+/** pods下的文件 */
+#import <IQKeyboardManager.h>
+#import <SVProgressHUD.h>
+#import <SDWebImage.h>
+#import <MJRefresh.h>
+#import <UIScrollView+EmptyDataSet.h>
+#import <MJExtension.h>
+#import <TZImagePickerController.h>
+#import <RongIMKit/RongIMKit.h>
+#import "JYXLoginViewController.h"
+
+#define SafeAreaTopHeight ([UIScreen mainScreen].bounds.size.height == 812.0 ? 88 : 64)
+#define SafeAreaBottomHeight ([UIScreen mainScreen].bounds.size.height == 812.0 ? 34 : 0)
+#define FONT_SIZE_DESC          14
+#define NF_WECHAT_PAY_SUCCESS       @"NF_WECHAT_PAY_SUCCESS"   //微信支付成功
+#define NF_ALIPAY_PAY_SUCCESS       @"NF_ALIPAY_PAY_SUCCESS"   //支付宝支付成功
+//-------------------------------文案-------------------------------------
+//error信息提示
+#define TEXT_NETWORK_ERROR       @"网络异常,请检查网络连接"
+#define TEXT_SERVER_NOT_RESPOND  @"服务器或网络异常,请稍后重试"
+#define ERROR_NETWORK_TEXT       @"当前网络不可用,请检查你的网络设置\n点击屏幕刷新"
+#define ERROR_DATA_TEXT          @"点击屏幕,重新加载"
+
+//-----------------------UI Colors-----------------------------
+#define COLOR_BLUE_MAIN             @"#4167B2"
+#define COLOR_NEW_TEXTDESC          @"#b9b9b9"
+#define COLOR_GRAY_BG               @"#EFEFEF"
+#define COLOR_LINE_LIGHTGRAY        @"#e0e0e0"
+#define COLOR_TOUCHDOWN             @"#F0F0F0"
+#define COLOR_TEXT_HARDGRAY         @"#000000"
+#define COLOR_TEXT_DESCGRAY         @"#616161"
+#define COLOR_NAVI_DEFAULT          @"#666666"
+#define COLOR_Main                  @"#38393e"
+
+//-----------------------UI SPACING----------------------------
+//新布局间距
+#define SPACING_TEXT              7
+#define SPACING_CONTROLS          12
+#define SPACING_BUTTON            15
+#define SPACING_ORDER_DETAIL      16
+
+//-----------------------UI FONT--------------------------------
+#define FONT_SIZE_TITLE         16
+#define FONT_SIZE_DESC          14
+#define FONT_SIZE_MEMO          12
+
+
+#endif /* JYXTeacher_Prefix_pch */

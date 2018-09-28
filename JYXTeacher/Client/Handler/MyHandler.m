@@ -1,0 +1,210 @@
+//
+//  MyHandler.m
+//  JYXTeacher
+//
+//  Created by 窦建斌 on 2018/9/13.
+//  Copyright © 2018年 JYX. All rights reserved.
+//
+
+#import "MyHandler.h"
+
+@implementation MyHandler
+
++ (void)getTeacherClassMoneyPrepare:(PrepareBlock)prepare success:(SuccessBlock)success failed:(FailedBlock)failed{
+    
+    NSString *str_url = [NSString stringWithFormat:@"%@%@",API_Login,API_POST_TeacherClassMoney];
+    JYXUser *user = [JYXUserManager shareInstance].user;
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    if (user.token) {
+        [dic setObject:user.token forKey:@"token"];
+    }
+    if (user.userId) {
+        [dic setObject:user.userId forKey:@"userid"];
+    }
+   
+    [[RTHttpClient defaultClient] requestWithPath:str_url
+                                           method:RTHttpRequestGet                                parameters:dic
+                                          prepare:prepare
+                                          success:^(NSURLSessionDataTask *task, id responseObject) {
+                                              if ([[responseObject objectForKey:@"code"] intValue] == 1000) {
+                                                  success(responseObject[@"result"]);
+                                              }else{
+                                                  [MBProgressHUD hideHUD];
+                                                  [MBProgressHUD showErrorMessage:[responseObject objectForKey:@"msg"]];
+                                              }
+                                          } failure:^(NSURLSessionDataTask *task, NSError *error) {
+                                              [self handlerErrorWithTask:task error:error complete:failed];
+                                          }];
+}
+
++ (void)teacherPayNumWithUserType:(int)usertype weixin:(NSString *)weixin zhifubao:(NSString *)zhifubao yinlian:(NSString *)yinlian cardname:(NSString *)cardname prepare:(PrepareBlock)prepare success:(SuccessBlock)success failed:(FailedBlock)failed{
+    NSString *str_url = [NSString stringWithFormat:@"%@%@",API_Login,API_POST_TeachePpaynumber];
+    JYXUser *user = [JYXUserManager shareInstance].user;
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    if (user.token) {
+        [dic setObject:user.token forKey:@"token"];
+    }
+    if (user.userId) {
+        [dic setObject:user.userId forKey:@"userid"];
+    }
+    [dic setObject:[NSNumber numberWithInt:usertype] forKey:@"usertype"];
+    if (weixin) {
+        [dic setObject:weixin forKey:@"weixin"];
+    }
+    if (zhifubao) {
+        [dic setObject:zhifubao forKey:@"zhifubao"];
+    }
+    if (yinlian) {
+        [dic setObject:yinlian forKey:@"yinlian"];
+    }
+    if (cardname) {
+        [dic setObject:cardname forKey:@"cardname"];
+    }
+    [[RTHttpClient defaultClient] requestWithPath:str_url
+                                           method:RTHttpRequestGet                                parameters:dic
+                                          prepare:prepare
+                                          success:^(NSURLSessionDataTask *task, id responseObject) {
+                                              if ([[responseObject objectForKey:@"code"] intValue] == 1000) {
+                                                  success(responseObject[@"result"]);
+                                              }else{
+                                                  [MBProgressHUD hideHUD];
+                                                  [MBProgressHUD showErrorMessage:[responseObject objectForKey:@"msg"]];
+                                              }
+                                          } failure:^(NSURLSessionDataTask *task, NSError *error) {
+                                              [self handlerErrorWithTask:task error:error complete:failed];
+                                          }];
+}
+
++ (void)teacherCashTargettype:(int)targettype accounttype:(int)accounttype money:(NSString *)money account:(int)account prepare:(PrepareBlock)prepare success:(SuccessBlock)success failed:(FailedBlock)failed{
+    NSString *str_url = [NSString stringWithFormat:@"%@%@",API_Login,API_POST_TeacherCash];
+    JYXUser *user = [JYXUserManager shareInstance].user;
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    if (user.token) {
+        [dic setObject:user.token forKey:@"token"];
+    }
+    if (user.userId) {
+        [dic setObject:user.userId forKey:@"userid"];
+    }
+    [dic setObject:[NSNumber numberWithInt:targettype] forKey:@"targettype"];
+    [dic setObject:[NSNumber numberWithInt:accounttype] forKey:@"accounttype"];
+    [dic setObject:[NSNumber numberWithInt:account] forKey:@"account"];
+    [dic setObject:money forKey:@"money"];
+    [[RTHttpClient defaultClient] requestWithPath:str_url
+                                           method:RTHttpRequestGet                                parameters:dic
+                                          prepare:prepare
+                                          success:^(NSURLSessionDataTask *task, id responseObject) {
+                                              if ([[responseObject objectForKey:@"code"] intValue] == 1000) {
+                                                  success(responseObject[@"result"]);
+                                              }else{
+                                                  [MBProgressHUD hideHUD];
+                                                  [MBProgressHUD showErrorMessage:[responseObject objectForKey:@"msg"]];
+                                              }
+                                          } failure:^(NSURLSessionDataTask *task, NSError *error) {
+                                              [self handlerErrorWithTask:task error:error complete:failed];
+                                          }];
+    
+}
+
+//获取教师认证信息
++ (void)selectTeacherBaseInfoPrepare:(PrepareBlock)prepare success:(SuccessBlock)success failed:(FailedBlock)failed{
+    NSString *str_url = [NSString stringWithFormat:@"%@%@",API_Login,API_POST_TeacherEdit];
+    JYXUser *user = [JYXUserManager shareInstance].user;
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    if (user.userId) {
+        [dic setObject:user.userId forKey:@"userid"];
+    }
+    if (user.token) {
+        [dic setObject:user.token forKey:@"token"];
+    }
+    [[RTHttpClient defaultClient] requestWithPath:str_url
+                                           method:RTHttpRequestGet                                parameters:dic
+                                          prepare:prepare
+                                          success:^(NSURLSessionDataTask *task, id responseObject) {
+                                              success(responseObject);
+                                          } failure:^(NSURLSessionDataTask *task, NSError *error) {
+                                              [self handlerErrorWithTask:task error:error complete:failed];
+                                          }];
+}
+
+//教师上传资料（基本资料）
++ (void)postTeacherInfoWithCardname:(NSString *)cardname sex:(NSString *)sex education:(NSString *)education worktime:(NSInteger)worktime unit:(NSString *)unit unittype:(NSString *)unittype unitlook:(BOOL)unitlook oneselfinfo:(NSString *)oneselfinfo prepare:(PrepareBlock)prepare success:(SuccessBlock)success failed:(FailedBlock)failed{
+    NSString *str_url = [NSString stringWithFormat:@"%@%@",API_Login,API_POST_TeacherEdit];
+    JYXUser *user = [JYXUserManager shareInstance].user;
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    if (user.userId) {
+        [dic setObject:user.userId forKey:@"userid"];
+    }
+    if (user.token) {
+        [dic setObject:user.token forKey:@"token"];
+    }
+    [dic setObject:cardname forKey:@"cardname"];
+    [dic setObject:sex forKey:@"sex"];
+    [dic setObject:education forKey:@"education"];
+    [dic setObject:[NSNumber numberWithInteger:worktime] forKey:@"worktime"];
+    [dic setObject:unit forKey:@"unit"];
+    [dic setObject:unittype forKey:@"unittype"];
+    if (unitlook) {
+        [dic setObject:[NSNumber numberWithInt:unitlook] forKey:@"unitlook"];
+    }
+    if (oneselfinfo) {
+        [dic setObject:oneselfinfo forKey:@"oneselfinfo"];
+    }
+    [[RTHttpClient defaultClient] requestWithPath:str_url
+                                           method:RTHttpRequestGet                                parameters:dic
+                                          prepare:prepare
+                                          success:^(NSURLSessionDataTask *task, id responseObject) {
+                                              if ([[responseObject objectForKey:@"code"] intValue] == 1000) {
+                                                  success(responseObject[@"result"]);
+                                                  JYXUser *user = [JYXUserManager shareInstance].user;
+                                                  [user clear];
+                                                  [user configUserData:responseObject[@"result"]];
+                                                  
+//                                                  [[JYXUserManager shareInstance] save];
+                                              }else{
+                                                  [MBProgressHUD hideHUD];
+                                                  [MBProgressHUD showErrorMessage:[responseObject objectForKey:@"msg"]];
+                                              }
+                                          } failure:^(NSURLSessionDataTask *task, NSError *error) {
+                                              [self handlerErrorWithTask:task error:error complete:failed];
+                                          }];
+}
+
+//获取融云通讯用户的头像和昵称
++ (void)selectRCIMInformationWithUserId:(NSString *)userid prepare:(PrepareBlock)prepare success:(SuccessBlock)success failed:(FailedBlock)failed{
+    NSString *str_url = @"http://www.jiaoyuxuevip.com/home/student/getheadname";
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    [dic setObject:userid forKey:@"id"];
+    [[RTHttpClient defaultClient] requestWithPath:str_url
+                                           method:RTHttpRequestGet                                parameters:dic
+                                          prepare:prepare
+                                          success:^(NSURLSessionDataTask *task, id responseObject) {
+                                              if ([[responseObject objectForKey:@"code"] intValue] == 1000) {
+                                                  success(responseObject[@"result"]);
+                                              }
+                                          } failure:^(NSURLSessionDataTask *task, NSError *error) {
+                                              [self handlerErrorWithTask:task error:error complete:failed];
+                                          }];
+}
+
+//上传registionid
++ (void)pushJpushRegistionidWithRegistionid:(NSString *)registionid prepare:(PrepareBlock)prepare success:(SuccessBlock)success failed:(FailedBlock)failed{
+    
+    NSString *str_url = [NSString stringWithFormat:@"%@%@",API_Login,API_POST_GetRegistration];
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    [dic setObject:registionid forKey:@"registratid"];
+    [[RTHttpClient defaultClient] requestWithPath:str_url
+                                           method:RTHttpRequestGet                                parameters:dic
+                                          prepare:prepare
+                                          success:^(NSURLSessionDataTask *task, id responseObject) {
+                                              if ([[responseObject objectForKey:@"code"] intValue] == 1000) {
+                                                  success(responseObject[@"result"]);
+                                              }else{
+                                                  [MBProgressHUD hideHUD];
+                                                  [MBProgressHUD showErrorMessage:[responseObject objectForKey:@"msg"]];
+                                              }
+                                          } failure:^(NSURLSessionDataTask *task, NSError *error) {
+                                              [self handlerErrorWithTask:task error:error complete:failed];
+                                          }];
+}
+
+@end

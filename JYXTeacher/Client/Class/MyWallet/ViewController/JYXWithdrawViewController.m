@@ -1,0 +1,157 @@
+//
+//  JYXWithdrawViewController.m
+//  JYXTeacher
+//
+//  Created by apple on 2018/8/22.
+//  Copyright © 2018年 JYX. All rights reserved.
+//
+
+#import "JYXWithdrawViewController.h"
+#import "JYXWithdrawContentView.h"
+#import "MyHandler.h"
+
+@interface JYXWithdrawViewController ()
+@property (nonatomic, strong) UIScrollView *mScrollView;
+@property (nonatomic, strong) JYXWithdrawContentView *contentView;
+@property (nonatomic, assign) int selectIndex;  // 支付宝1 微信2
+@end
+
+@implementation JYXWithdrawViewController
+#pragma mark - lifeCycle                    - Method -
+
+- (void)dealloc
+{
+    
+}
+
+- (void)loadView
+{
+    [super loadView];
+    [self setupViews];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.navigationItem.title = NSLocalizedString(@"提现", nil);
+    [self loadData];
+}
+
+- (void)setupViews
+{
+    self.selectIndex = 999;
+    [self.view addSubview:self.mScrollView];
+    [self.mScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.view);
+    }];
+    
+    [self.mScrollView addSubview:self.contentView];
+    [self.contentView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.mScrollView);
+        make.width.equalTo(self.mScrollView);
+        make.height.greaterThanOrEqualTo(@0.f);//此处保证容器View高度的动态变化 大于等于0.f的高度
+    }];
+    [self.contentView.totalAmountLabel setText:[NSString stringWithFormat:@"可提现金额：￥%.2f",self.money]];
+    
+    [self.contentView.alipayButton addTarget:self action:@selector(alipayButtonAction) forControlEvents:UIControlEventTouchUpInside];
+    [self.contentView.alipaySelectBtn addTarget:self action:@selector(alipayButtonAction) forControlEvents:UIControlEventTouchUpInside];
+    [self.contentView.wechatPayButton addTarget:self action:@selector(wechatButtonAction) forControlEvents:UIControlEventTouchUpInside];
+    [self.contentView.wechatPaySelectBtn addTarget:self action:@selector(wechatButtonAction) forControlEvents:UIControlEventTouchUpInside];
+    [self.contentView.submitBtn addTarget:self action:@selector(submitBtnAction) forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)loadData
+{
+    
+}
+
+#pragma mark - eventResponse                - Method -
+
+- (void)alipayButtonAction{
+    self.selectIndex = 1;
+//    [self.contentView.alipaySelectBtn setBackgroundImage:[UIImage imageNamed:@"paymentBtn_Sel"] forState:UIControlStateNormal];
+    [self.contentView.alipaySelectBtn setImage:[UIImage imageNamed:@"paymentBtn_Sel"] forState:UIControlStateNormal];
+    [self.contentView.wechatPaySelectBtn setImage:[UIImage imageNamed:@"paymentBtn"] forState:UIControlStateNormal];
+}
+
+- (void)wechatButtonAction{
+    self.selectIndex = 2;
+//    [self.contentView.alipaySelectBtn setBackgroundImage:[UIImage imageNamed:@"paymentBtn"] forState:UIControlStateNormal];
+//    [self.contentView.wechatPaySelectBtn setBackgroundImage:[UIImage imageNamed:@"paymentBtn_Sel"] forState:UIControlStateNormal];
+    [self.contentView.wechatPaySelectBtn setImage:[UIImage imageNamed:@"paymentBtn_Sel"] forState:UIControlStateNormal];
+    [self.contentView.alipaySelectBtn setImage:[UIImage imageNamed:@"paymentBtn"] forState:UIControlStateNormal];
+}
+
+- (void)submitBtnAction{
+    if ([self.contentView.inputMoneyField.text isEqualToString:@""]) {
+        [MBProgressHUD showErrorMessage:@"请输入提现金额"];
+        return;
+    }
+    if (self.selectIndex == 999) {
+        [MBProgressHUD showErrorMessage:@"请选择提现方式"];
+        return;
+    }
+    if ([self.contentView.inputMoneyField.text floatValue] > self.money) {
+        [MBProgressHUD showErrorMessage:@"提现金额不能大于可提现金额"];
+        return;
+    }    
+
+    [MyHandler teacherCashTargettype:2 accounttype:self.tixianfangshi money:self.contentView.inputMoneyField.text account:self.selectIndex prepare:^{
+        
+    } success:^(id obj) {
+        [MBProgressHUD showSuccessMessage:@"申请提现成功"];
+        [self.navigationController popViewControllerAnimated:YES];
+    } failed:^(NSInteger statusCode, id json) {
+        
+    }];
+    
+    
+}
+
+#pragma mark - customDelegate               - Method -
+
+#pragma mark - notification                 - Method -
+
+#pragma mark - privateMethods               - Method -
+
+#pragma mark - objective-cDelegate          - Method -
+
+#pragma mark - getters and setters          - Method -
+- (UIScrollView *)mScrollView
+{
+    if (!_mScrollView) {
+        _mScrollView = [[UIScrollView alloc] init];
+        _mScrollView.backgroundColor = [UIColor whiteColor];
+    }
+    return _mScrollView;
+}
+
+- (JYXWithdrawContentView *)contentView
+{
+    if (!_contentView) {
+        _contentView = [[JYXWithdrawContentView alloc] init];
+    }
+    return _contentView;
+}
+
+@end
