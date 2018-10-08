@@ -20,5 +20,5 @@
 
 + (void)postTeacherLessonRangeWithRangeStr:(NSString *)rangeStr prepare:(PrepareBlock)prepare success:(SuccessBlock)success failed:(FailedBlock)failed;
 
-+ (void)postTeacherFangShiWithTeachertohome:(BOOL)teachertohome studenttohome:(BOOL)studenttohome addr:(NSString *)addr otheraddr:(BOOL)otheraddr prepare:(PrepareBlock)prepare success:(SuccessBlock)success failed:(FailedBlock)failed;
++ (void)postTeacherFangShiWithTeachertohome:(BOOL)teachertohome studenttohome:(BOOL)studenttohome addr:(NSString *)addr otheraddr:(BOOL)otheraddr shareaddr:(BOOL)shareaddr prepare:(PrepareBlock)prepare success:(SuccessBlock)success failed:(FailedBlock)failed;
 @end

@@ -204,7 +204,11 @@
     self.sexView.content = user.sex;
     self.educationView.content = user.education;
     self.affiliatedUnitField.text = user.unit;
-    [self.affiliatedUnitTypeBtn setTitle:user.unittype forState:UIControlStateNormal]; // 学历选择按钮
+    if ([user.unittype isEqualToString:@""]) {
+       [self.affiliatedUnitTypeBtn setTitle:@"小学" forState:UIControlStateNormal]; // 学历选择按钮
+    }else{
+        [self.affiliatedUnitTypeBtn setTitle:user.unittype forState:UIControlStateNormal]; // 学历选择按钮
+    }
     [self.showHiddenSwitch setOn:user.unitlook.boolValue];
     self.introduceTextView.text = user.oneselfinfo;
     self.workDateView.content = [NSDate timeStampToDate:user.worktime];

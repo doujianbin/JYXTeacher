@@ -167,17 +167,13 @@
     [TakeOrderSettingHandler postTeacherLessonClassWithClassStr:str_date prepare:^{
         
     } success:^(id obj) {
-        
+        [self.navigationController popViewControllerAnimated:YES];
+        if (self.selectedGradeSubjectBlock) {
+            self.selectedGradeSubjectBlock(gradeSubjectArray, [NSString arrayConvertToJsonData:gradeArray]);
+        }
     } failed:^(NSInteger statusCode, id json) {
         
     }];
-    
-    [self.navigationController popViewControllerAnimated:YES];
-    if (self.selectedGradeSubjectBlock) {
-        self.selectedGradeSubjectBlock(gradeSubjectArray, [NSString arrayConvertToJsonData:gradeArray]);
-    }
-    
-    
 }
 
 #pragma mark - customDelegate               - Method -

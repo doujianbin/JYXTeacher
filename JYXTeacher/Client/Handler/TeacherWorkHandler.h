@@ -10,6 +10,9 @@
 
 @interface TeacherWorkHandler : BaseHandler
 
+//上传版本号
++ (void)postVersionSystemWithNum:(NSString *)num type:(NSString *)type prepare:(PrepareBlock)prepare success:(SuccessBlock)success failed:(FailedBlock)failed;
+
 + (void)teacherAddReviewWithClassId:(NSString *)classId teachercomment:(NSString *)teachercomment teachercontent:(NSString *)teachercontent teacherlabel:(NSString *)teacherlabel prepare:(PrepareBlock)prepare success:(SuccessBlock)success failed:(FailedBlock)failed;
 
 /*

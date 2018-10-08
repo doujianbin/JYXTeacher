@@ -88,7 +88,7 @@
         }
     }
     
-    [TakeOrderSettingHandler postTeacherFangShiWithTeachertohome:self.contentView.teacherVisitTitleSwitch.on studenttohome:self.contentView.studentVisitTitleSwitch.on addr:self.contentView.addressLabel.text otheraddr:self.contentView.otherAddressTitleSwitch.on prepare:^{
+    [TakeOrderSettingHandler postTeacherFangShiWithTeachertohome:self.contentView.teacherVisitTitleSwitch.on studenttohome:self.contentView.studentVisitTitleSwitch.on addr:self.contentView.addressLabel.text otheraddr:self.contentView.otherAddressTitleSwitch.on shareaddr:self.contentView.shareAddressTitleSwitch.on prepare:^{
         
     } success:^(id obj) {
         if (self.teacherClassComplete) {
@@ -98,6 +98,8 @@
     } failed:^(NSInteger statusCode, id json) {
         
     }];
+    
+    
 }
 
 #pragma mark - eventResponse                - Method -

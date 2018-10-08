@@ -76,8 +76,6 @@
             [self initializeFinished:vc];
         });
     });
-   
-    
     
     //上传推送注册id
     if ([[[NSUserDefaults standardUserDefaults] valueForKey:Registionid] length] > 0) {

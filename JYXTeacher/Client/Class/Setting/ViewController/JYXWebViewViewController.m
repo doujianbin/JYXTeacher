@@ -24,7 +24,7 @@
 }
 
 - (void)oncreate{
-    self.myWebview = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    self.myWebview = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - SafeAreaBottomHeight - SafeAreaTopHeight)];
     [self.view addSubview:self.myWebview];
     NSURL *requestUrl = [NSURL URLWithString:self.str_url];
     NSURLRequest *request = [NSURLRequest requestWithURL:requestUrl];

@@ -10,6 +10,24 @@
 
 @implementation TeacherWorkHandler
 
+//上传版本号
++ (void)postVersionSystemWithNum:(NSString *)num type:(NSString *)type prepare:(PrepareBlock)prepare success:(SuccessBlock)success failed:(FailedBlock)failed{
+    NSString *str_url = [NSString stringWithFormat:@"%@%@",API_Login,BasicSystem];
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
+    [dic setValue:app_Version forKey:@"num"];
+    [dic setValue:@"1" forKey:@"type"];
+    [[RTHttpClient defaultClient] requestWithPath:str_url
+                                           method:RTHttpRequestGet                                parameters:dic
+                                          prepare:prepare
+                                          success:^(NSURLSessionDataTask *task, id responseObject) {
+                                              success(responseObject);
+                                          } failure:^(NSURLSessionDataTask *task, NSError *error) {
+                                              [self handlerErrorWithTask:task error:error complete:failed];
+                                          }];
+}
+
 + (void)teacherAddReviewWithClassId:(NSString *)classId teachercomment:(NSString *)teachercomment teachercontent:(NSString *)teachercontent teacherlabel:(NSString *)teacherlabel prepare:(PrepareBlock)prepare success:(SuccessBlock)success failed:(FailedBlock)failed{
     NSString *str_url = [NSString stringWithFormat:@"%@%@",API_Login,API_POST_TeacherAddReview];
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
@@ -132,15 +150,11 @@
                                           success:^(NSURLSessionDataTask *task, id responseObject) {
                                               if ([[responseObject objectForKey:@"code"] intValue] == 1000) {
                                                   success(responseObject[@"result"]);
-                                              }else if ([[responseObject objectForKey:@"code"] intValue] == 1004){
-                                                  [[JYXUserManager shareInstance].user clear];
-                                                  [[JYXUserManager shareInstance] save];
-                                                  JYXLoginViewController *login = [[JYXLoginViewController alloc] init];
-                                                  [[JYXBaseViewController getCurrentVC] presentViewController:login animated:YES completion:nil];
-                                              }else{
-                                                  [MBProgressHUD hideHUD];
-                                                  [MBProgressHUD showErrorMessage:[responseObject objectForKey:@"msg"]];
                                               }
+//                                              else{
+//                                                  [MBProgressHUD hideHUD];
+//                                                  [MBProgressHUD showErrorMessage:[responseObject objectForKey:@"msg"]];
+//                                              }
                                           } failure:^(NSURLSessionDataTask *task, NSError *error) {
                                               [self handlerErrorWithTask:task error:error complete:failed];
                                           }];

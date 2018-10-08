@@ -86,7 +86,7 @@
         [self.dataSourceArray removeAllObjects];
         NSDictionary *dict = [api fetchDataWithReformer:request];
         self.dataSourceDict = dict;
-//        self.dataSourceArray = [dict[@"list"] mutableCopy];
+        self.dataSourceArray = [dict[@"list"] mutableCopy];
         [self.dataSourceArray addObjectsFromArray:dict[@"list"]];
         [self.tableView reloadData];
         [self.tableView.mj_header endRefreshing];

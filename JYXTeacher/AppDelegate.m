@@ -21,6 +21,7 @@
 #import <AMapSearchKit/AMapSearchKit.h>
 #import <IQKeyboardManager.h>
 #import "MyHandler.h"
+#import "TeacherWorkHandler.h"
 
 @interface AppDelegate ()<RCIMUserInfoDataSource,WXApiDelegate,JPUSHRegisterDelegate>
 
@@ -31,6 +32,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
+    [NSThread sleepForTimeInterval:3];
     [self.window makeKeyAndVisible];
     
     self.window = [JYXApplicationHandler shareInstance].window;
@@ -80,11 +82,16 @@
             
             //上传注册id
             [[NSUserDefaults standardUserDefaults] setValue:registrationID forKey:Registionid];
+            [JPUSHService setAlias:registrationID completion:^(NSInteger iResCode, NSString *iAlias, NSInteger seq) {
+                
+            } seq:1];
         }
         else{
             //            NSLog(@"registrationID获取失败，code：%d",resCode);
         }
     }];
+    
+    
     [AMapServices sharedServices].apiKey = @"642c4c0ef4c2fb53f373f09d7bf64bb6";
     [WXApi registerApp:@"wxad796f19bfe091d0"];
     
@@ -415,7 +422,7 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     } success:^(id obj) {
         NSDictionary *dic = (NSDictionary *)obj;
         info.name = dic[@"nick"];
-        info.portraitUri = [NSString stringWithFormat:@"http://www.jiaoyuxuevip.com/%@", dic[@"head"]];
+        info.portraitUri = [NSString stringWithFormat:@"%@%@",API_Login, dic[@"head"]];
 //        info.userId = [userId substringFromIndex:1];
         completion(info);
     } failed:^(NSInteger statusCode, id json) {

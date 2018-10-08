@@ -74,7 +74,7 @@
 {
     NSDictionary *accountManagement = @{@"title" : @"账户管理", @"icon" : [UIImage imageNamed:@"accountManagement"], @"type" : @1};
     NSDictionary *shareEarnings = @{@"title" : @"共享收益", @"icon" : [UIImage imageNamed:@"shareEarnings"], @"type" : @2};
-    NSDictionary *myWelfare = @{@"title" : @"我的福利", @"icon" : [UIImage imageNamed:@"shareEarnings"], @"type" : @3};
+    NSDictionary *myWelfare = @{@"title" : @"我的福利", @"icon" : [UIImage imageNamed:@"fuli"], @"type" : @3};
     NSDictionary *classFee = @{@"title" : @"课时费", @"icon" : [UIImage imageNamed:@"classFee"], @"type" : @4};
     self.dataSourceArray = [@[accountManagement, shareEarnings, myWelfare, classFee] mutableCopy];
     [self.tableView reloadData];

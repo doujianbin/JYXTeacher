@@ -135,6 +135,13 @@
         make.top.equalTo(self.shareAddressBgView).offset(10);
     }];
     
+    self.shareAddressTitleSwitch = [[UISwitch alloc]init];
+    [self.shareAddressBgView addSubview:self.shareAddressTitleSwitch];
+    [self.shareAddressTitleSwitch mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self.shareAddressTitleLabel);
+        make.right.equalTo(self.shareAddressBgView).offset(-7);
+    }];
+    
     [self addSubview:self.remarkLabel];
     [self.remarkLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self).offset(8);
@@ -157,8 +164,10 @@
     [self.teacherVisitTitleSwitch setOn:[[model objectForKey:@"teachertohome"] boolValue]];
     [self.studentVisitTitleSwitch setOn:[[model objectForKey:@"studenttohome"] boolValue]];
     [self.otherAddressTitleSwitch setOn:[[model objectForKey:@"otheraddr"] boolValue]];
+    [self.shareAddressTitleSwitch setOn:[[model objectForKey:@"shareaddr"] boolValue]];
     self.addressLabel.text = [model objectForKey:@"addr"];
     self.distanceLabel.text = [NSString stringWithFormat:@"%@KM",[model objectForKey:@"range"]];
+    
 }
 
 //修改地址

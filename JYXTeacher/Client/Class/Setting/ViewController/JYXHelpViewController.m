@@ -92,7 +92,7 @@
         {
             JYXWebViewViewController *vc = [[JYXWebViewViewController alloc]init];
             vc.str_title = @"常见问题";
-            vc.str_url = @"http://www.jiaoyuxuevip.com/API_DOC/help/commonProblem.html";
+            vc.str_url = [NSString stringWithFormat:@"%@API_DOC/help/commonProblem.html",API_Login];
             [self.navigationController pushViewController:vc animated:YES];
         }
             break;
@@ -106,7 +106,7 @@
         {
             JYXWebViewViewController *vc = [[JYXWebViewViewController alloc]init];
             vc.str_title = @"用户协议";
-            vc.str_url = @"http://www.jiaoyuxuevip.com/API_DOC/help/agreement.html";
+            vc.str_url = [NSString stringWithFormat:@"%@API_DOC/help/agreement.html",API_Login];
             [self.navigationController pushViewController:vc animated:YES];
         }
             break;

@@ -52,16 +52,16 @@
     
     [self.avatarBgView addSubview:self.avatarImg];
     [self.avatarImg mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self.avatarBgView).offset(-7);
-        make.top.equalTo(self.avatarBgView).offset(5);
-        make.height.width.equalTo(@70);
-        make.bottom.equalTo(self.avatarBgView).offset(-5);
+        make.right.equalTo(self.avatarBgView).offset(-15);
+        make.top.equalTo(self.avatarBgView).offset(15);
+        make.height.width.equalTo(@50);
+        make.bottom.equalTo(self.avatarBgView).offset(-15);
     }];
     
     [self.avatarBgView addSubview:self.avatarTitleLabel];
     [self.avatarTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.avatarBgView);
-        make.left.equalTo(self.avatarBgView).offset(7);
+        make.left.equalTo(self.avatarBgView).offset(15);
     }];
     
     [self addSubview:self.nicknameBgView];
@@ -74,12 +74,12 @@
     [self.nicknameBgView addSubview:self.nicknameTitleLabel];
     [self.nicknameTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.nicknameBgView);
-        make.left.equalTo(self.nicknameBgView).offset(7);
+        make.left.equalTo(self.nicknameBgView).offset(15);
     }];
     
     [self.nicknameBgView addSubview:self.arrowImg1];
     [self.arrowImg1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self.nicknameBgView).offset(-7);
+        make.right.equalTo(self.nicknameBgView).offset(-15);
         make.centerY.equalTo(self.nicknameBgView);
         make.height.offset(16);
         make.width.offset(9);
@@ -101,12 +101,12 @@
     [self.nameBgView addSubview:self.nameTitleLabel];
     [self.nameTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.nameBgView);
-        make.left.equalTo(self.nameBgView).offset(7);
+        make.left.equalTo(self.nameBgView).offset(15);
     }];
     
     [self.nameBgView addSubview:self.nameLabel];
     [self.nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self.nameBgView).offset(-7);
+        make.right.equalTo(self.nameBgView).offset(-15);
         make.centerY.equalTo(self.nameBgView);
     }];
     
@@ -120,12 +120,12 @@
     [self.genderBgView addSubview:self.genderTitleLabel];
     [self.genderTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.genderBgView);
-        make.left.equalTo(self.genderBgView).offset(7);
+        make.left.equalTo(self.genderBgView).offset(15);
     }];
     
     [self.genderBgView addSubview:self.arrowImg2];
     [self.arrowImg2 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self.genderBgView).offset(-7);
+        make.right.equalTo(self.genderBgView).offset(-15);
         make.centerY.equalTo(self.genderBgView);
         make.height.offset(16);
         make.width.offset(9);
@@ -246,6 +246,9 @@
     if (!_avatarBgView) {
         _avatarBgView = [[UIView alloc] init];
         _avatarBgView.backgroundColor = [UIColor whiteColor];
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changeAvatarAction:)];
+        [_avatarBgView addGestureRecognizer:tap];
     }
     return _avatarBgView;
 }
@@ -267,10 +270,10 @@
     if (!_avatarImg) {
         _avatarImg = [[UIImageView alloc] init];
         _avatarImg.contentMode = UIViewContentModeScaleToFill;
-        JYXViewBorderRadius(_avatarImg, 70/2.0, 0, [UIColor clearColor]);
+        JYXViewBorderRadius(_avatarImg, 50/2.0, 0, [UIColor clearColor]);
         _avatarImg.userInteractionEnabled = YES;
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changeAvatarAction:)];
-        [_avatarImg addGestureRecognizer:tap];
+//        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changeAvatarAction:)];
+//        [_avatarImg addGestureRecognizer:tap];
     }
     return _avatarImg;
 }

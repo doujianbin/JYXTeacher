@@ -28,10 +28,11 @@
                                           success:^(NSURLSessionDataTask *task, id responseObject) {
                                               if ([[responseObject objectForKey:@"code"] intValue] == 1000) {
                                                   success(responseObject[@"result"]);
-                                              }else{
-                                                  [MBProgressHUD hideHUD];
-                                                  [MBProgressHUD showErrorMessage:[responseObject objectForKey:@"msg"]];
                                               }
+//                                              else{
+//                                                  [MBProgressHUD hideHUD];
+//                                                  [MBProgressHUD showErrorMessage:[responseObject objectForKey:@"msg"]];
+//                                              }
                                           } failure:^(NSURLSessionDataTask *task, NSError *error) {
                                               [self handlerErrorWithTask:task error:error complete:failed];
                                           }];
@@ -148,7 +149,7 @@
                                           }];
 }
 
-+ (void)postTeacherFangShiWithTeachertohome:(BOOL)teachertohome studenttohome:(BOOL)studenttohome addr:(NSString *)addr otheraddr:(BOOL)otheraddr prepare:(PrepareBlock)prepare success:(SuccessBlock)success failed:(FailedBlock)failed{
++ (void)postTeacherFangShiWithTeachertohome:(BOOL)teachertohome studenttohome:(BOOL)studenttohome addr:(NSString *)addr otheraddr:(BOOL)otheraddr shareaddr:(BOOL)shareaddr prepare:(PrepareBlock)prepare success:(SuccessBlock)success failed:(FailedBlock)failed{
     NSString *str_url = [NSString stringWithFormat:@"%@%@",API_Login,API_POST_TeacherLessonClass];
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     JYXUser *user = [JYXUserManager shareInstance].user;
@@ -161,6 +162,7 @@
     [dic setObject:[NSNumber numberWithBool:teachertohome] forKey:@"teachertohome"];
     [dic setObject:[NSNumber numberWithBool:studenttohome] forKey:@"studenttohome"];
     [dic setObject:[NSNumber numberWithBool:otheraddr] forKey:@"otheraddr"];
+    [dic setObject:[NSNumber numberWithBool:shareaddr] forKey:@"shareaddr"];
     if (addr) {
         [dic setObject:addr forKey:@"addr"];
     }

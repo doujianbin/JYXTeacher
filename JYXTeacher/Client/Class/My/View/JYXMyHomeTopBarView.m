@@ -71,7 +71,11 @@
     if (!model) return;
     JYXUser *user = [JYXUserManager shareInstance].user;
     [self.avatarImg sd_setImageWithURL:[NSURL URLWithString:user.avatar] placeholderImage:[UIImage imageWithColor:[UIColor whiteColor] size:CGSizeMake(200, 200)]];
-    self.nameLabel.text = user.nickname;
+    if ([user.nickname isEqualToString:@""]) {
+       self.nameLabel.text = @"教予学教师";
+    }else{
+        self.nameLabel.text = user.nickname;
+    }
     self.idNumberLabel.text = [NSString stringWithFormat:@"ID:%@",user.teacherId];
     self.gradeLabel.text = [NSString stringWithFormat:@"综合评分：%@分",user.credit];
 }

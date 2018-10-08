@@ -19,6 +19,7 @@
 - (void)dealloc
 {
     NSLog(@"%@ ------> %@", NSStringFromSelector(_cmd), NSStringFromClass([self class]));
+    
 }
 
 - (void)loadView

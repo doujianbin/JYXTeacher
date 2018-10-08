@@ -17,6 +17,7 @@
 #import "JYXHomeTeacherSetupApi.h"//接单设置
 #import "JYXHomeGetTeacherInfoApi.h"
 #import "TakeOrderSettingHandler.h"
+#import "JYXWebViewViewController.h"
 
 @interface JYXTakeOrdersSetViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, assign) NSInteger currentRange;//当前设置的授课距离
@@ -65,7 +66,22 @@
 {
     [super viewDidLoad];
     self.navigationItem.title = NSLocalizedString(@"接单设置", nil);
+    [self setRightBarButton];
     [self loadData];
+}
+
+- (void)setRightBarButton
+{
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn addTarget:self action:@selector(rightBarAction) forControlEvents:UIControlEventTouchUpInside];
+    [btn setTitle:NSLocalizedString(@"基本服务准则", nil) forState:UIControlStateNormal];
+    [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    btn.titleLabel.font = FONT_SIZE(13);
+    // 设置尺寸
+    btn.size = CGSizeMake(40, 40);
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:btn];
+    self.navigationItem.rightBarButtonItem = item;
+//    [btn layoutButtonWithEdgeInsetsStyle:MKButtonEdgeInsetsStyleTop imageTitleSpace:5];
 }
 
 - (void)setupViews
@@ -78,10 +94,10 @@
 
 - (void)loadData
 {
-    NSDictionary *teachingTime = @{@"title":@"计划授课时间", @"type":@1};
-    NSDictionary *teachingType = @{@"title":@"授课方式设置", @"type":@2};
-    NSDictionary *teachingDistance = @{@"title":@"授课距离设置", @"type":@3};
-    NSDictionary *recommendTeacher = @{@"title":@"推荐名师预设价格", @"type":@5};
+    NSDictionary *teachingTime = @{@"title":@"计划授课时间", @"type":@1,@"detailTitle":@""};
+    NSDictionary *teachingType = @{@"title":@"授课方式设置", @"type":@2,@"detailTitle":@""};
+    NSDictionary *teachingDistance = @{@"title":@"授课距离设置", @"type":@3,@"detailTitle":@""};
+    NSDictionary *recommendTeacher = @{@"title":@"推荐名师预设价格", @"type":@5,@"detailTitle":@"*未预设推荐名师预设价格则按照平台价格的1.5倍执行。"};
     self.dataSourceArray = [@[teachingTime, teachingType, teachingDistance, recommendTeacher] mutableCopy];
     
     JYXUser *user = [JYXUserManager shareInstance].user;
@@ -114,9 +130,26 @@
 
 #pragma mark - notification                 - Method -
 
+- (void)rightBarAction{
+    JYXWebViewViewController *vc = [[JYXWebViewViewController alloc]init];
+    vc.str_title = @"基本服务准则";
+    vc.str_url = [NSString stringWithFormat:@"%@API_DOC/help/service.html",API_Login];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 #pragma mark - privateMethods               - Method -
 
 #pragma mark - objective-cDelegate          - Method -
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.row == 3) {
+        return 65;
+    }else{
+        return 45;
+    }
+    return 0.01;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSNumber *type = self.dataSourceArray[indexPath.row][@"type"];
@@ -201,7 +234,7 @@
     if (!_tableView) {
         _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        _tableView.rowHeight = 45;
+//        _tableView.rowHeight = 45;
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.backgroundColor = [UIColor clearColor];

@@ -224,10 +224,10 @@
         dayView.textLabel.textColor = [UIColor whiteColor];
     } else if (![_calendarManager.dateHelper date:_calendarContentView.date isTheSameMonthThan:myDate] || ([myDate compare:[NSDate date]] == NSOrderedAscending)){
         dayView.circleView.hidden = YES;
-        dayView.textLabel.textColor = [UIColor colorWithHex:0x787878 Alpha:0.5];
+        dayView.textLabel.textColor = [UIColor colorWithHexString:@"#555555" alpha:0.3];
     } else {
         dayView.circleView.hidden = YES;
-        dayView.textLabel.textColor = [UIColor colorWithHex:0x787878];
+        dayView.textLabel.textColor = [UIColor colorWithHexString:@"#555555"];
     }
 }
 - (void)calendar:(JTCalendarManager *)calendar didTouchDayView:(JTCalendarDayView *)dayView

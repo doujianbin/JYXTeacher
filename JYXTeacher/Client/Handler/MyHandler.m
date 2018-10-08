@@ -171,7 +171,7 @@
 
 //获取融云通讯用户的头像和昵称
 + (void)selectRCIMInformationWithUserId:(NSString *)userid prepare:(PrepareBlock)prepare success:(SuccessBlock)success failed:(FailedBlock)failed{
-    NSString *str_url = @"http://www.jiaoyuxuevip.com/home/student/getheadname";
+    NSString *str_url = [NSString stringWithFormat:@"%@home/student/getheadname",API_Login];
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     [dic setObject:userid forKey:@"id"];
     [[RTHttpClient defaultClient] requestWithPath:str_url

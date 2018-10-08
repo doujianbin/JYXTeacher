@@ -90,6 +90,7 @@
     datePicker.isHiddenMiddleText = false;
     datePicker.datePickerType = PGPickerViewType3;
     datePicker.datePickerMode = PGDatePickerModeDate;
+//    datePicker.minimumDate = [self returnToDay0Clock];
     [datePicker setDate:[[NSDate date] stringToDateWithStr:self.dateSelectBtn.titleLabel.text]];
     WeakSelf(weakSelf);
     [datePicker setSelectedDate:^(NSDateComponents *dateComponents) {
@@ -112,5 +113,25 @@
     }];
     return _yearAndMonthAndDayDatePickManager;
 }
+
+//获取当天0点时间
+- (NSDate *)returnToDay0Clock
+{
+    NSDate *now = [NSDate date];
+    NSCalendar *calender = [NSCalendar currentCalendar];
+    NSUInteger unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
+    NSDateComponents *dateComponent = [calender components:unitFlags fromDate:now];
+    int hour = (int)[dateComponent hour];
+    int minute = (int)[dateComponent minute];
+    int second = (int)[dateComponent second];
+    //当前时分秒:hour,minute,second
+    //返回当前时间(hour * 3600 + minute * 60 + second)之前的时间,即为今天凌晨0点
+    NSDate *nowDay = [NSDate dateWithTimeIntervalSinceNow: - (hour * 3600 + minute * 60 + second)];
+    long long inter = [nowDay timeIntervalSince1970] * 1000;
+    NSDate *newDate = [NSDate dateWithTimeIntervalSince1970:inter / 1000];
+    return newDate;
+}
+
+
 
 @end

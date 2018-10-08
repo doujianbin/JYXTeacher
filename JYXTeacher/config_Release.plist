@@ -5,9 +5,9 @@
 	<key>ServerAddress</key>
 	<dict>
 		<key>msvr://</key>
-		<string>http://jiaoyuxuevip.com/</string>
+		<string>http://10.2.4.130/</string>
 		<key>img://</key>
-		<string>http://jiaoyuxuevip.com</string>
+		<string>http://10.2.4.130</string>
 	</dict>
 </dict>
 </plist>

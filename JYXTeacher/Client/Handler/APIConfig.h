@@ -18,18 +18,21 @@
 
 #if (SERVER_TYPE == 1)
 //appstore环境
-#define API_Login                   @"http://www.jiaoyuxuevip.com/"
+#define API_Login                   @"http://10.2.4.130/"
 #define KEY_JPUSH                   @"9ce67bdc962baa16d9abb8c8"
 #define Jpush                       @"YES"
 #define SERVER_HOST                 @"47.97.174.40:9001"
 
 #elif (SERVER_TYPE == 2)
 //测试打包
-#define API_Login                   @"http://www.jiaoyuxuevip.com/"
+#define API_Login                   @"http://10.2.4.130/"
 #define KEY_JPUSH                   @"9ce67bdc962baa16d9abb8c8"
 #define Jpush                       @"NO"
 #define SERVER_HOST                 @"47.97.174.40:9001"
 #endif
+
+//http://www.jiaoyuxuevip.com/
+
 
 //HTTP_PROTOCOL 用来区分 http与https
 //#define HTTPS_PROTOCOL
@@ -58,6 +61,8 @@
 
 #define IsLookDaoHang       @"LookDaoHang"   //是否显示导航页
 
+//上传版本号
+#define BasicSystem @"home/basic/system"
 
 
 /*

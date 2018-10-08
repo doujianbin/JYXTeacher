@@ -113,7 +113,7 @@
     JYXUserDelegateViewController *vc = [[JYXUserDelegateViewController alloc]init];
     JYXBaseNavigationController *nav = [[JYXBaseNavigationController alloc]initWithRootViewController:vc];
     vc.str_title = @"用户协议";
-    vc.str_url = @"http://www.jiaoyuxuevip.com/API_DOC/help/agreement.html";
+    vc.str_url = [NSString stringWithFormat:@"%@API_DOC/help/agreement.html",API_Login];
     [self presentViewController:nav animated:YES completion:^{
         
     }];

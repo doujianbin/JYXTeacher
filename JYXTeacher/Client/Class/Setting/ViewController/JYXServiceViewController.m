@@ -13,6 +13,8 @@
 @property (nonatomic, strong) UIButton *emailBtn;
 @property (nonatomic, strong) UILabel *phoneNumberTitleLabel;
 @property (nonatomic, strong) UIButton *phoneNumberBtn;
+@property (nonatomic, strong) UIView *vback_btnMail;
+@property (nonatomic, strong) UIView *vback_btnPhone;
 @end
 
 @implementation JYXServiceViewController
@@ -52,21 +54,31 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.navigationItem.title = NSLocalizedString(@"联系我们", nil);
+    self.navigationItem.title = NSLocalizedString(@"联系客服", nil);
     [self loadData];
 }
 
 - (void)setupViews
 {
+
+    
     [self.view addSubview:self.emailTitleLabel];
     [self.emailTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view).offset(7);
         make.top.equalTo(self.view).offset(13);
     }];
     
+    [self.view addSubview:self.vback_btnMail];
+    [self.vback_btnMail mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(self.view);
+        make.top.equalTo(self.emailTitleLabel.mas_bottom).offset(13);
+        make.height.offset(46);
+    }];
+    
     [self.view addSubview:self.emailBtn];
     [self.emailBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(self.view);
+        make.left.equalTo(self.view).offset(12);
+        make.right.equalTo(self.view);
         make.top.equalTo(self.emailTitleLabel.mas_bottom).offset(13);
         make.height.offset(46);
     }];
@@ -77,9 +89,20 @@
         make.top.equalTo(self.emailBtn.mas_bottom).offset(13);
     }];
     
+    
+    self.vback_btnPhone = [[UIView alloc]init];
+    [self.vback_btnPhone setBackgroundColor:[UIColor whiteColor]];
+    [self.view addSubview:self.vback_btnPhone];
+    [self.vback_btnPhone mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(self.view);
+        make.top.equalTo(self.phoneNumberTitleLabel.mas_bottom).offset(13);
+        make.height.offset(46);
+    }];
+    
     [self.view addSubview:self.phoneNumberBtn];
     [self.phoneNumberBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(self.view);
+        make.left.equalTo(self.view).offset(12);
+        make.right.equalTo(self.view);
         make.top.equalTo(self.phoneNumberTitleLabel.mas_bottom).offset(13);
         make.height.offset(46);
     }];
@@ -108,6 +131,8 @@
 #pragma mark - objective-cDelegate          - Method -
 
 #pragma mark - getters and setters          - Method -
+
+
 - (UILabel *)emailTitleLabel
 {
     if (!_emailTitleLabel) {
@@ -119,6 +144,24 @@
     }
     return _emailTitleLabel;
 }
+
+- (UIView *)vback_btnMail
+{
+    if (!_vback_btnMail) {
+        _vback_btnMail = [[UIView alloc] init];
+        [_vback_btnMail setBackgroundColor:[UIColor whiteColor]];
+    }
+    return _vback_btnMail;
+}
+
+//- (UIView *)_vback_btnPhone
+//{
+//    if (!_vback_btnPhone) {
+//        _vback_btnPhone = [[UIView alloc] init];
+//        [_vback_btnPhone setBackgroundColor:[UIColor redColor]];
+//    }
+//    return _vback_btnPhone;
+//}
 
 - (UILabel *)phoneNumberTitleLabel
 {
@@ -138,7 +181,9 @@
         _emailBtn = [[UIButton alloc] init];
         _emailBtn.backgroundColor = [UIColor whiteColor];
         _emailBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-        [_emailBtn setTitle:NSLocalizedString(@"  service@jiaoyuxuevip.com", nil) forState:UIControlStateNormal];
+        [_emailBtn setTitle:NSLocalizedString(@"service@jiaoyuxuevip.com", nil) forState:UIControlStateNormal];
+        [_emailBtn setImage:[UIImage imageNamed:@"youxiang"] forState:UIControlStateNormal];
+        [_emailBtn setImageEdgeInsets:UIEdgeInsetsMake(0.0, -4, 0.0, 0.0)];
         [_emailBtn setTitleColor:[UIColor colorWithHex:0x6f6e6e6e] forState:UIControlStateNormal];
         _emailBtn.titleLabel.font = FONT_SIZE(14);
     }
@@ -151,7 +196,9 @@
         _phoneNumberBtn = [[UIButton alloc] init];
         _phoneNumberBtn.backgroundColor = [UIColor whiteColor];
         _phoneNumberBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-        [_phoneNumberBtn setTitle:NSLocalizedString(@"  010-57214966（周一至周日：9:00-18:00）", nil) forState:UIControlStateNormal];
+        [_phoneNumberBtn setTitle:NSLocalizedString(@"010-57214966（周一至周日：9:00-18:00）", nil) forState:UIControlStateNormal];
+        [_phoneNumberBtn setImage:[UIImage imageNamed:@"dianhua"] forState:UIControlStateNormal];
+        [_phoneNumberBtn setImageEdgeInsets:UIEdgeInsetsMake(0.0, -4, 0.0, 0.0)];
         [_phoneNumberBtn setTitleColor:[UIColor colorWithHex:0x6f6e6e6e] forState:UIControlStateNormal];
         _phoneNumberBtn.titleLabel.font = FONT_SIZE(14);
         [_phoneNumberBtn addTarget:self action:@selector(tellAction) forControlEvents:UIControlEventTouchUpInside];

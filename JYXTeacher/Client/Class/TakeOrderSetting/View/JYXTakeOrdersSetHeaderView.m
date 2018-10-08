@@ -38,13 +38,13 @@
     
     [self.gradeSubjectSelectBgView addSubview:self.titleLabel];
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.gradeSubjectSelectBgView).offset(22);
+        make.left.equalTo(self.gradeSubjectSelectBgView).offset(15);
         make.centerY.equalTo(self.gradeSubjectSelectBgView);
     }];
     
     [self.gradeSubjectSelectBgView addSubview:self.arrowImg];
     [self.arrowImg mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self.gradeSubjectSelectBgView).offset(-30);
+        make.right.equalTo(self.gradeSubjectSelectBgView).offset(-15);
         make.centerY.equalTo(self.gradeSubjectSelectBgView);
         make.height.offset(14);
         make.width.offset(8);

@@ -65,6 +65,29 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        //上传版本号
+        [TeacherWorkHandler postVersionSystemWithNum:nil type:nil prepare:^{
+            
+        } success:^(id obj) {
+            NSDictionary *dic = (NSDictionary *)obj;
+            if ([[dic objectForKey:@"code"] intValue] != 1000) {
+                UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:[dic objectForKey:@"msg"] preferredStyle:UIAlertControllerStyleAlert];
+                
+                UIAlertAction *again = [UIAlertAction actionWithTitle:@"更新" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    
+                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://itunes.apple.com/cn/app/%E6%95%99%E4%BA%88%E5%AD%A6-%E6%95%99%E5%B8%88%E7%89%88/id1436676442?mt=8"]];
+                }];
+                [alert addAction:again];
+                [[JYXBaseViewController getCurrentVC].navigationController pushViewController:alert animated:YES];
+            }
+        } failed:^(NSInteger statusCode, id json) {
+            
+        }];
+        
+    });
+    
     //连接融云服务器
     [self connectRCIM];
     
@@ -267,9 +290,6 @@
         _segmentedControl.backgroundColor = [UIColor whiteColor];
         _segmentedControl.selectedTitleTextAttributes = @{NSForegroundColorAttributeName : [UIColor colorWithHex:0x1aabfd], NSFontAttributeName:FONT_SIZE(15)};
         _segmentedControl.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor colorWithHex:0x6d6d6d], NSFontAttributeName:FONT_SIZE(15)};
-        
-        //        _segmentedControl.tintColor = [UIColor colorWithHexString:@"#ffffff"];
-        //        [_segmentedControl setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#4167b2"]} forState:UIControlStateSelected];
         
         _segmentedControl.selectionIndicatorColor = [UIColor colorWithHex:0x1aabfd];
         _segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleTextWidthStripe;

@@ -30,6 +30,7 @@
 
 @property (nonatomic, strong) UIView *shareAddressBgView;//共享地址
 @property (nonatomic, strong) UILabel *shareAddressTitleLabel;
+@property (nonatomic, strong) UISwitch *shareAddressTitleSwitch;
 
 @property (nonatomic, strong) UILabel *remarkLabel;//提示
 @property (nonatomic, strong) UILabel *addressExplainLabel;//地址说明

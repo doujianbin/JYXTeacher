@@ -132,7 +132,6 @@
 		188DC88E212522BA001096C1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 188DC888212522BA001096C1 /* AppDelegate.m */; };
 		188DC88F212522BA001096C1 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 188DC88A212522BA001096C1 /* Info.plist */; };
 		188DC890212522BA001096C1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 188DC88B212522BA001096C1 /* main.m */; };
-		188DC89521252E80001096C1 /* Assets in Resources */ = {isa = PBXBuildFile; fileRef = 188DC89421252E80001096C1 /* Assets */; };
 		188DC8A121253AFE001096C1 /* JYXApplicationConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 188DC8A021253AFE001096C1 /* JYXApplicationConfig.m */; };
 		188DC8A721253B38001096C1 /* JYXInitializeApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 188DC8A621253B38001096C1 /* JYXInitializeApplication.m */; };
 		188DC8A921253C3E001096C1 /* JYXApplicationHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 188DC8A821253C3E001096C1 /* JYXApplicationHandler.m */; };
@@ -592,7 +591,6 @@
 		188DC889212522BA001096C1 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = JYXTeacher/AppDelegate.h; sourceTree = SOURCE_ROOT; };
 		188DC88A212522BA001096C1 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = JYXTeacher/Info.plist; sourceTree = SOURCE_ROOT; };
 		188DC88B212522BA001096C1 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = JYXTeacher/main.m; sourceTree = SOURCE_ROOT; };
-		188DC89421252E80001096C1 /* Assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Assets; sourceTree = "<group>"; };
 		188DC89F21253AFE001096C1 /* JYXApplicationConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JYXApplicationConfig.h; sourceTree = "<group>"; };
 		188DC8A021253AFE001096C1 /* JYXApplicationConfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JYXApplicationConfig.m; sourceTree = "<group>"; };
 		188DC8A221253B1A001096C1 /* JYXApplicationHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JYXApplicationHandler.h; sourceTree = "<group>"; };
@@ -1690,7 +1688,6 @@
 				74B9FB17214796CD00257243 /* NetWork */,
 				74B9FB10214796AA00257243 /* base */,
 				185000E7212E9F27002A05C9 /* UserManager */,
-				188DC89421252E80001096C1 /* Assets */,
 				188DC875212521B0001096C1 /* App */,
 				188DC876212521B0001096C1 /* PublicAPIManager */,
 				188DC877212521B0001096C1 /* ClientSupporting */,
@@ -2407,13 +2404,13 @@
 		74E53873215DCFBF000D5C98 /* VideoPlayer */ = {
 			isa = PBXGroup;
 			children = (
-				74E53874215DCFBF000D5C98 /* SelPlaybackControls.m */,
-				74E53875215DCFBF000D5C98 /* SelVideoPlayer.m */,
-				74E53876215DCFBF000D5C98 /* SelVideoSlider.h */,
 				74E53877215DCFBF000D5C98 /* SelPlaybackControls.h */,
-				74E53878215DCFBF000D5C98 /* Configs */,
-				74E5387D215DCFBF000D5C98 /* SelVideoPlayer.h */,
+				74E53874215DCFBF000D5C98 /* SelPlaybackControls.m */,
+				74E53876215DCFBF000D5C98 /* SelVideoSlider.h */,
 				74E5387E215DCFBF000D5C98 /* SelVideoSlider.m */,
+				74E5387D215DCFBF000D5C98 /* SelVideoPlayer.h */,
+				74E53875215DCFBF000D5C98 /* SelVideoPlayer.m */,
+				74E53878215DCFBF000D5C98 /* Configs */,
 			);
 			name = VideoPlayer;
 			path = ../../../Desktop/VideoPlayer;
@@ -2422,10 +2419,10 @@
 		74E53878215DCFBF000D5C98 /* Configs */ = {
 			isa = PBXGroup;
 			children = (
-				74E53879215DCFBF000D5C98 /* UIViewController+PlayerRotation.m */,
 				74E5387A215DCFBF000D5C98 /* SelPlayerConfiguration.h */,
-				74E5387B215DCFBF000D5C98 /* UIViewController+PlayerRotation.h */,
 				74E5387C215DCFBF000D5C98 /* SelPlayerConfiguration.m */,
+				74E5387B215DCFBF000D5C98 /* UIViewController+PlayerRotation.h */,
+				74E53879215DCFBF000D5C98 /* UIViewController+PlayerRotation.m */,
 			);
 			path = Configs;
 			sourceTree = "<group>";
@@ -2569,7 +2566,6 @@
 			files = (
 				18FFDAF521376B3E009F6863 /* AlipaySDK.bundle in Resources */,
 				188DC88C212522BA001096C1 /* LaunchScreen.storyboard in Resources */,
-				188DC89521252E80001096C1 /* Assets in Resources */,
 				74E7A7A2214A6A5A003FE137 /* README.txt in Resources */,
 				1814811C212FDA4B00313209 /* PGDatePicker.bundle in Resources */,
 				74B9D23C2150F982005064C9 /* Assets.xcassets in Resources */,
