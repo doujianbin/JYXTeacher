@@ -61,7 +61,7 @@
     
     [self addSubview:self.gradeLabel];
     [self.gradeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self).offset(-25);
+        make.right.equalTo(self).offset(-45);
         make.centerY.equalTo(self.idNumberLabel);
     }];
 }
@@ -71,10 +71,10 @@
     if (!model) return;
     JYXUser *user = [JYXUserManager shareInstance].user;
     [self.avatarImg sd_setImageWithURL:[NSURL URLWithString:user.avatar] placeholderImage:[UIImage imageWithColor:[UIColor whiteColor] size:CGSizeMake(200, 200)]];
-    if ([user.nickname isEqualToString:@""]) {
+    if ([user.cardname isEqualToString:@""]) {
        self.nameLabel.text = @"教予学教师";
     }else{
-        self.nameLabel.text = user.nickname;
+        self.nameLabel.text = user.cardname;
     }
     self.idNumberLabel.text = [NSString stringWithFormat:@"ID:%@",user.teacherId];
     self.gradeLabel.text = [NSString stringWithFormat:@"综合评分：%@分",user.credit];

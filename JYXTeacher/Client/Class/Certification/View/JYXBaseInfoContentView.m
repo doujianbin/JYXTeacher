@@ -269,23 +269,23 @@
     //    self.introduceTextView.text = user.oneselfinfo;
     //    self.workDateView.content = [NSDate timeStampToDate:user.worktime];
     if ([self.realNameField.text isEqualToString:@""]) {
-        [MBProgressHUD showErrorMessage:@"请填写姓名"];
+        [MBProgressHUD showInfoMessage:@"请填写姓名"];
         return;
     }
     if (self.sexView.content == nil) {
-        [MBProgressHUD showErrorMessage:@"请选择性别"];
+        [MBProgressHUD showInfoMessage:@"请选择性别"];
         return;
     }
     if (self.educationView.content == nil) {
-        [MBProgressHUD showErrorMessage:@"请填写学历"];
+        [MBProgressHUD showInfoMessage:@"请填写学历"];
         return;
     }
     if (self.workDateView.content == nil) {
-        [MBProgressHUD showErrorMessage:@"请选择从业时间"];
+        [MBProgressHUD showInfoMessage:@"请选择从业时间"];
         return;
     }
     if ([self.affiliatedUnitField.text isEqualToString:@""]) {
-        [MBProgressHUD showErrorMessage:@"请填写所属单位"];
+        [MBProgressHUD showInfoMessage:@"请填写所属单位"];
         return;
     }
     NSInteger workTime = [self timeSwitchTimestamp:self.workDateView.content andFormatter:@"YYYY-MM-dd"];

@@ -132,7 +132,7 @@
 
 - (void)applyBtnAction{
     if ([self.topClassFeeLabel.text floatValue] < 100) {
-        [MBProgressHUD showErrorMessage:@"满100提现"];
+        [MBProgressHUD showInfoMessage:@"满100提现"];
     }else{
         JYXWithdrawViewController *vc = [[JYXWithdrawViewController alloc]init];
         vc.money = [self.topClassFeeLabel.text floatValue];

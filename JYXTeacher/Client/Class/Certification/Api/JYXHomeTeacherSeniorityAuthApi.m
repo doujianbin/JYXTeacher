@@ -64,11 +64,7 @@
         
         NSNumber *business = data[@"code"];
         if (business.intValue == 1000) {
-            
-            if ([data[@"result"] isKindOfClass:[NSArray class]]) {
-                
-                return YES;
-            }
+            return YES;
         } else {
             [WLToast show:data[@"msg"]];
             return NO;

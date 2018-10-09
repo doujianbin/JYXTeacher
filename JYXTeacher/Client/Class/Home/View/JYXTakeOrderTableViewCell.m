@@ -164,26 +164,74 @@
 - (void)takeOrderAction:(UIButton *)btn
 {
     JYXUser *user = [JYXUserManager shareInstance].user;
-    if ([_cellDictData[@"status"] isEqualToString:@"待抢单"]) {//抢单
-        JYXHomeTeacherSearchteacherGrabApi *api = [[JYXHomeTeacherSearchteacherGrabApi alloc] initWithUserid:user.userId WithToken:user.token courseId:_cellDictData[@"id"]];
-        [SVProgressHUD show];
-        [api sendRequestWithCompletionBlockWithSuccess:^(__kindof RXBaseRequest *request) {
-            [SVProgressHUD dismiss];
-            [self.takeOrderBtn setTitle:NSLocalizedString(@"取消", nil) forState:UIControlStateNormal];
-            self.statusLabel.text = NSLocalizedString(@"抢单中", nil);
-        } failure:^(__kindof RXBaseRequest *request) {
-            [SVProgressHUD dismiss];
-        }];
-    } else if ([_cellDictData[@"status"] isEqualToString:@"抢单中"]) {//取消抢单
-        JYXHomeTeacherSearchRemoveApi *api = [[JYXHomeTeacherSearchRemoveApi alloc] initWithUserid:user.userId WithToken:user.token courseId:_cellDictData[@"id"]];
-        [SVProgressHUD show];
-        [api sendRequestWithCompletionBlockWithSuccess:^(__kindof RXBaseRequest *request) {
-            [SVProgressHUD dismiss];
-            [self.takeOrderBtn setTitle:NSLocalizedString(@"抢单", nil) forState:UIControlStateNormal];
-            self.statusLabel.text = NSLocalizedString(@"待抢单", nil);
-        } failure:^(__kindof RXBaseRequest *request) {
-            [SVProgressHUD dismiss];
-        }];
+    //认证状态
+    if ([user.cardname isEqualToString:@""]) {
+        //未认证 不能点击
+    }else{
+        if ([user.teachertype isEqualToString:@"全职教师"] || [user.teachertype isEqualToString:@"自由教师"]) {
+            if ([user.cardstatu intValue] == 2 && [user.educationstatu intValue] == 2 && [user.senioritystatu intValue] == 2) {
+                //认证通过
+                if ([_cellDictData[@"status"] isEqualToString:@"待抢单"]) {//抢单
+                    JYXHomeTeacherSearchteacherGrabApi *api = [[JYXHomeTeacherSearchteacherGrabApi alloc] initWithUserid:user.userId WithToken:user.token courseId:_cellDictData[@"id"]];
+                    [SVProgressHUD show];
+                    [api sendRequestWithCompletionBlockWithSuccess:^(__kindof RXBaseRequest *request) {
+                        [SVProgressHUD dismiss];
+                        [self.takeOrderBtn setTitle:NSLocalizedString(@"取消", nil) forState:UIControlStateNormal];
+                        self.statusLabel.text = NSLocalizedString(@"抢单中", nil);
+                    } failure:^(__kindof RXBaseRequest *request) {
+                        [SVProgressHUD dismiss];
+                    }];
+                } else if ([_cellDictData[@"status"] isEqualToString:@"抢单中"]) {//取消抢单
+                    JYXHomeTeacherSearchRemoveApi *api = [[JYXHomeTeacherSearchRemoveApi alloc] initWithUserid:user.userId WithToken:user.token courseId:_cellDictData[@"id"]];
+                    [SVProgressHUD show];
+                    [api sendRequestWithCompletionBlockWithSuccess:^(__kindof RXBaseRequest *request) {
+                        [SVProgressHUD dismiss];
+                        [self.takeOrderBtn setTitle:NSLocalizedString(@"抢单", nil) forState:UIControlStateNormal];
+                        self.statusLabel.text = NSLocalizedString(@"待抢单", nil);
+                    } failure:^(__kindof RXBaseRequest *request) {
+                        [SVProgressHUD dismiss];
+                    }];
+                }
+            }else if([user.cardstatu intValue] == 1 || [user.educationstatu intValue] == 1 || [user.senioritystatu intValue] == 1){
+                //认证中
+                
+            }else if ([user.cardstatu intValue] == 3 || [user.educationstatu intValue] == 3 || [user.senioritystatu intValue] == 3){
+                //认证失败
+                
+            }
+        }
+        if ([user.teachertype isEqualToString:@"大学生"]) {
+            if ([user.cardstatu intValue] == 2 && [user.educationstatu intValue] == 2) {
+                //认证通过
+                if ([_cellDictData[@"status"] isEqualToString:@"待抢单"]) {//抢单
+                    JYXHomeTeacherSearchteacherGrabApi *api = [[JYXHomeTeacherSearchteacherGrabApi alloc] initWithUserid:user.userId WithToken:user.token courseId:_cellDictData[@"id"]];
+                    [SVProgressHUD show];
+                    [api sendRequestWithCompletionBlockWithSuccess:^(__kindof RXBaseRequest *request) {
+                        [SVProgressHUD dismiss];
+                        [self.takeOrderBtn setTitle:NSLocalizedString(@"取消", nil) forState:UIControlStateNormal];
+                        self.statusLabel.text = NSLocalizedString(@"抢单中", nil);
+                    } failure:^(__kindof RXBaseRequest *request) {
+                        [SVProgressHUD dismiss];
+                    }];
+                } else if ([_cellDictData[@"status"] isEqualToString:@"抢单中"]) {//取消抢单
+                    JYXHomeTeacherSearchRemoveApi *api = [[JYXHomeTeacherSearchRemoveApi alloc] initWithUserid:user.userId WithToken:user.token courseId:_cellDictData[@"id"]];
+                    [SVProgressHUD show];
+                    [api sendRequestWithCompletionBlockWithSuccess:^(__kindof RXBaseRequest *request) {
+                        [SVProgressHUD dismiss];
+                        [self.takeOrderBtn setTitle:NSLocalizedString(@"抢单", nil) forState:UIControlStateNormal];
+                        self.statusLabel.text = NSLocalizedString(@"待抢单", nil);
+                    } failure:^(__kindof RXBaseRequest *request) {
+                        [SVProgressHUD dismiss];
+                    }];
+                }
+            }else if([user.cardstatu intValue] == 1 || [user.educationstatu intValue] == 1){
+                //认证中
+               
+            }else if ([user.cardstatu intValue] == 3 || [user.educationstatu intValue] == 3){
+                //认证失败
+                
+            }
+        }
     }
 }
 

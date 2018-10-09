@@ -155,11 +155,11 @@
     //        self.submitAppraiseBlock(@{});
     //    }
     if (_selectedLabelMArray.count <= 0) {
-        [MBProgressHUD showErrorMessage:@"请选择标签"];
+        [MBProgressHUD showInfoMessage:@"请选择标签"];
         return;
     }
     if ([self.contentTextView.text isEqualToString:@""]) {
-        [MBProgressHUD showErrorMessage:@"请填写评价"];
+        [MBProgressHUD showInfoMessage:@"请填写评价"];
         return;
     }
     NSString *str_biaoqian = @"";

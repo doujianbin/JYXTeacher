@@ -13,5 +13,6 @@
 #import "NSURLRequest+Extension.h"
 #import "MSNetworkStatusObserver.h"
 #import "WLToast.h"
+#import "BaseTableView.h"
 
 #endif /* PublicHeader_h */

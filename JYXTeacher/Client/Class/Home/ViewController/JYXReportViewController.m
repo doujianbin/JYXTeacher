@@ -96,7 +96,7 @@
 
 - (void)btn_tijiaoAction{
     if ([_contentTextView.text isEqualToString:@""]) {
-        [MBProgressHUD showErrorMessage:@"请填写举报内容"];
+        [MBProgressHUD showInfoMessage:@"请填写举报内容"];
         return;
     }
     [TeacherWorkHandler teacherReportWithPhone:self.dic_data[@"teacherPhone"] targetphone:[[[self.dic_data objectForKey:@"studentData"] objectAtIndex:0] objectForKey:@"phone"] targettype:2 content:_contentTextView.text prepare:^{

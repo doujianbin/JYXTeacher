@@ -35,7 +35,7 @@
     configuration.shouldAutorotate = YES;
     configuration.repeatPlay = YES;
     configuration.statusBarHideState = SelStatusBarHideStateFollowControls;
-    configuration.sourceUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@public/teacher.mp4",API_Login]]
+    configuration.sourceUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@public/teacher.mp4",API_Login]];
     configuration.videoGravity = SelVideoGravityResizeAspect;
     
     CGFloat width = self.view.frame.size.width;

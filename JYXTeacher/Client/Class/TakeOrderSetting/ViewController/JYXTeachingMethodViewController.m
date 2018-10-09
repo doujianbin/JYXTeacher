@@ -83,7 +83,7 @@
     
     if (self.contentView.studentVisitTitleSwitch.on == YES) {
         if ([self.contentView.addressLabel.text isEqualToString:@""] || [self.contentView.addressLabel.text isEqualToString:@"1"]) {
-            [MBProgressHUD showErrorMessage:@"请先设置地址学生才能上门"];
+            [MBProgressHUD showInfoMessage:@"请先设置地址学生才能上门"];
             return;
         }
     }

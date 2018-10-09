@@ -153,7 +153,7 @@
                 [self.urlArray addObject:dict[@"picaddr"]];
                 [btn setImage:photo forState:UIControlStateNormal];
             }else{
-                [MBProgressHUD showErrorMessage:@"请上传正确的身份证图片"];
+                [MBProgressHUD showInfoMessage:@"请上传正确的身份证图片"];
             }
         }else{
             [self.urlArray addObject:dict[@"picaddr"]];

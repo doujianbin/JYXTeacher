@@ -165,10 +165,16 @@
         default:
             break;
     }
+    NSDictionary *aptitude = [NSDictionary dictionary];
+    if ([user.teachertype isEqualToString:@"大学生"]) {
+        aptitude = @{@"title":@"资质认证", @"type":@4, @"status":senioritystatu};
+    }else{
+        aptitude = @{@"title":@"资质认证（必填）", @"type":@4, @"status":senioritystatu};
+    }
     NSDictionary *teacherType = @{@"title":@"教师类型（必填）", @"type":@1, @"status":user.teachertype?:@""};
     NSDictionary *IDcard = @{@"title":@"身份认证（必填）", @"type":@2, @"status":cardstatu};
     NSDictionary *education = @{@"title":@"学历认证（必填）", @"type":@3, @"status":educationstatu};
-    NSDictionary *aptitude = @{@"title":@"资质认证（必填）", @"type":@4, @"status":senioritystatu};
+    
     NSDictionary *major = @{@"title":@"专业认证", @"type":@5, @"status":@""};
     self.dataSourceArray = [@[teacherType, IDcard, education, aptitude, major] mutableCopy];
 }
@@ -177,35 +183,52 @@
 //提交资料
 - (void)submitAction:(UIButton *)sender
 {
+    NSDictionary *dic_teacherType = [self.dataSourceArray objectAtIndex:0];
+    NSDictionary *dic_card = [self.dataSourceArray objectAtIndex:1];
+    NSDictionary *dic_stu = [self.dataSourceArray objectAtIndex:2];
+    NSDictionary *dic_zizhi = [self.dataSourceArray objectAtIndex:3];
+    if ([[dic_teacherType objectForKey:@"status"] isEqualToString:@"全职教师"]) {
+        if ([[dic_card objectForKey:@"status"] isEqualToString:@"未认证"] || [[dic_card objectForKey:@"status"] isEqualToString:@"未通过"]) {
+            [MBProgressHUD showInfoMessage:@"请上传身份证照片"];
+            return;
+        }
+        if ([[dic_stu objectForKey:@"status"] isEqualToString:@"未认证"] || [[dic_stu objectForKey:@"status"] isEqualToString:@"未通过"]) {
+            [MBProgressHUD showInfoMessage:@"请上传学历认证照片"];
+            return;
+        }
+        if ([[dic_zizhi objectForKey:@"status"] isEqualToString:@"未认证"] || [[dic_zizhi objectForKey:@"status"] isEqualToString:@"未通过"]) {
+            [MBProgressHUD showInfoMessage:@"请上传资质认证照片"];
+            return;
+        }
+    }
+    if ([[dic_teacherType objectForKey:@"status"] isEqualToString:@"大学生"] || [[dic_teacherType objectForKey:@"status"] isEqualToString:@"自由教师"]) {
+        if ([[dic_card objectForKey:@"status"] isEqualToString:@"未认证"] || [[dic_card objectForKey:@"status"] isEqualToString:@"未通过"]) {
+            [MBProgressHUD showInfoMessage:@"请上传身份证照片"];
+            return;
+        }
+        if ([[dic_stu objectForKey:@"status"] isEqualToString:@"未认证"] || [[dic_stu objectForKey:@"status"] isEqualToString:@"未通过"]) {
+            [MBProgressHUD showInfoMessage:@"请上传学历认证照片"];
+            return;
+        }
+    }
+    
     JYXUser *user = [JYXUserManager shareInstance].user;
-    JYXHomeTeacherTeacherEditApi *api = [[JYXHomeTeacherTeacherEditApi alloc] initWithUserid:user.userId token:user.token cardname:user.cardname teachertype:_currentTeacherType];
+    JYXHomeTeacherTeacherEditApi *api = [[JYXHomeTeacherTeacherEditApi alloc] initWithUserid:user.userId token:user.token cardname:user.cardname teachertype:[dic_teacherType objectForKey:@"status"]];
     [SVProgressHUD show];
     [api sendRequestWithCompletionBlockWithSuccess:^(__kindof RXBaseRequest *request) {
         [SVProgressHUD dismiss];
         NSNumber *isSuccess = [api fetchDataWithReformer:request];
         if (isSuccess.boolValue) {
-            [WLToast show:@"提交成功！"];
-//            NSArray *arr_vc = self.navigationController.viewControllers;
-//            for (NSUInteger index = arr_vc.count - 1; arr_vc >= 0; index--) {
-//                UIViewController *vc = [arr_vc objectAtIndex:index];
-//                if (![vc isKindOfClass:[JYXCertificationMaterialsViewController class]] && ![vc isKindOfClass:[JYXCertificationBaseInfoViewController class]]) {
-//                    [self.navigationController popToViewController:vc animated:YES];
-//                    return;
-//                }
-//            }
-            [self.navigationController popToRootViewControllerAnimated:YES];
-//            WeakSelf(weakSelf);
-//            dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0/*延迟执行时间*/ * NSEC_PER_SEC));
-//            dispatch_after(delayTime, dispatch_get_main_queue(), ^{
-//                [weakSelf.navigationController.tabBarController setSelectedIndex:0];
-//            });
-
+            dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0/*延迟执行时间*/ * NSEC_PER_SEC));
+            dispatch_after(delayTime, dispatch_get_main_queue(), ^{
+                [WLToast show:@"提交成功！"];
+                [self.navigationController popToRootViewControllerAnimated:YES];
+            });
         }
     } failure:^(__kindof RXBaseRequest *request) {
         [SVProgressHUD dismiss];
     }];
     
-//    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 #pragma mark - customDelegate               - Method -
@@ -213,7 +236,83 @@
 #pragma mark - notification                 - Method -
 
 #pragma mark - privateMethods               - Method -
+- (void)naviBack:(UIButton *)btn{
+    NSDictionary *dic_teacherType = [self.dataSourceArray objectAtIndex:0];
+    NSDictionary *dic_card = [self.dataSourceArray objectAtIndex:1];
+    NSDictionary *dic_stu = [self.dataSourceArray objectAtIndex:2];
+    NSDictionary *dic_zizhi = [self.dataSourceArray objectAtIndex:3];
+    if ([[dic_teacherType objectForKey:@"status"] isEqualToString:@"全职教师"]) {
+        if ([[dic_card objectForKey:@"status"] isEqualToString:@"未认证"] || [[dic_card objectForKey:@"status"] isEqualToString:@"未通过"]) {
 
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"您还没有完成认证" message:@"未上传身份证照片" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *again = [UIAlertAction actionWithTitle:@"继续设置" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+
+            }];
+            UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"稍后设置" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                [self.navigationController popViewControllerAnimated:YES];
+            }];
+            [alert addAction:cancel];
+            [alert addAction:again];
+            [self presentViewController:alert animated:YES completion:nil];
+            return;
+        }
+        if ([[dic_stu objectForKey:@"status"] isEqualToString:@"未认证"] || [[dic_stu objectForKey:@"status"] isEqualToString:@"未通过"]) {
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"您还没有完成认证" message:@"未上传学历认证照片" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *again = [UIAlertAction actionWithTitle:@"继续设置" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                
+            }];
+            UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"稍后设置" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                [self.navigationController popViewControllerAnimated:YES];
+            }];
+            [alert addAction:cancel];
+            [alert addAction:again];
+            [self presentViewController:alert animated:YES completion:nil];
+            return;
+        }
+        if ([[dic_zizhi objectForKey:@"status"] isEqualToString:@"未认证"] || [[dic_zizhi objectForKey:@"status"] isEqualToString:@"未通过"]) {
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"您还没有完成认证" message:@"未上传资质认证照片" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *again = [UIAlertAction actionWithTitle:@"继续设置" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                
+            }];
+            UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"稍后设置" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                [self.navigationController popViewControllerAnimated:YES];
+            }];
+            [alert addAction:cancel];
+            [alert addAction:again];
+            [self presentViewController:alert animated:YES completion:nil];
+            return;
+        }
+    }
+    if ([[dic_teacherType objectForKey:@"status"] isEqualToString:@"大学生"]|| [[dic_teacherType objectForKey:@"status"] isEqualToString:@"自由教师"]) {
+        if ([[dic_card objectForKey:@"status"] isEqualToString:@"未认证"] || [[dic_card objectForKey:@"status"] isEqualToString:@"未通过"]) {
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"您还没有完成认证" message:@"未上传身份证照片" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *again = [UIAlertAction actionWithTitle:@"继续设置" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                
+            }];
+            UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"稍后设置" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                [self.navigationController popViewControllerAnimated:YES];
+            }];
+            [alert addAction:cancel];
+            [alert addAction:again];
+            [self presentViewController:alert animated:YES completion:nil];
+            return;
+        }
+        if ([[dic_stu objectForKey:@"status"] isEqualToString:@"未认证"] || [[dic_stu objectForKey:@"status"] isEqualToString:@"未通过"]) {
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"您还没有完成认证" message:@"未上传学历认证照片" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *again = [UIAlertAction actionWithTitle:@"继续设置" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                
+            }];
+            UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"稍后设置" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                [self.navigationController popViewControllerAnimated:YES];
+            }];
+            [alert addAction:cancel];
+            [alert addAction:again];
+            [self presentViewController:alert animated:YES completion:nil];
+            return;
+        }
+    }
+    [self.navigationController popViewControllerAnimated:YES];
+}
 #pragma mark - objective-cDelegate          - Method -
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -232,6 +331,15 @@
                         weakSelf.currentTeacherType = type;
                         NSDictionary *teacherType = @{@"title":@"教师类型（必填）", @"type":@1, @"status":type};
                         [weakSelf.dataSourceArray replaceObjectAtIndex:0 withObject:teacherType];
+                        if ([[teacherType objectForKey:@"status"] isEqualToString:@"大学生"] || [[teacherType objectForKey:@"status"] isEqualToString:@"自由教师"]) {
+                            NSDictionary *dic_data = [self.dataSourceArray objectAtIndex:3];
+                            NSDictionary *zizhiType = @{@"title":@"资质认证", @"type":@4, @"status":[dic_data objectForKey:@"status"]};
+                            [weakSelf.dataSourceArray replaceObjectAtIndex:3 withObject:zizhiType];
+                        }else{
+                            NSDictionary *dic_data = [self.dataSourceArray objectAtIndex:3];
+                            NSDictionary *zizhiType = @{@"title":@"资质认证（必填）", @"type":@4, @"status":[dic_data objectForKey:@"status"]};
+                            [weakSelf.dataSourceArray replaceObjectAtIndex:3 withObject:zizhiType];
+                        }
                         [weakSelf.tableView reloadData];
                         [weakPopView dismiss];
                     };

@@ -9,12 +9,18 @@
 #import "JYXMyShareViewController.h"
 #import "JYXShareListViewController.h"
 #import <UShareUI/UShareUI.h>
+#import "TakeOrderSettingHandler.h"
+#import "JYXCertificationBaseInfoViewController.h"
+#import "JYXCertificationMaterialsViewController.h"
 
 @interface JYXMyShareViewController ()
 @property (nonatomic, strong) UIScrollView *mScrollView;
 @property (nonatomic, strong) UIImageView *contentView;
 @property (nonatomic, strong) UILabel *inviteFriendTitleLabel;
 @property (nonatomic, strong) UIButton *inviteFriendBtn;
+@property (nonatomic, assign) int          teacherStatus;
+
+
 @end
 
 @implementation JYXMyShareViewController
@@ -71,6 +77,7 @@
     self.navigationItem.title = NSLocalizedString(@"我要共享", nil);
 //    [self setRightBarButton];
     [self loadData];
+    [self selectTeacherStatus];
 }
 
 - (void)setupViews
@@ -102,6 +109,38 @@
     }];
 }
 
+- (void)selectTeacherStatus{
+    //查询认证状态  如果没认证  给去认证的提示
+    JYXUser *user = [JYXUserManager shareInstance].user;
+    [TakeOrderSettingHandler getTeacherInfoWithUserid:user.userId prepare:^{
+        
+    } success:^(id obj) {
+        NSDictionary *dic = (NSMutableDictionary *)obj;
+        NSLog(@"dic = %@",dic);
+        //使用cardname进行资本资料是否填写的判断   其余使用单独字段
+        if ([[dic objectForKey:@"cardname"] isEqualToString:@""] || [dic[@"cardstatu"] intValue] == 0 || [dic[@"educationstatu"] intValue] == 0 || [dic[@"senioritystatu"] intValue] == 0) {
+            //未认证
+            self.teacherStatus = 0;
+        }else if (![[dic objectForKey:@"cardname"] isEqualToString:@""] && ([dic[@"cardstatu"] intValue] == 0 || [dic[@"educationstatu"] intValue] == 0 || [dic[@"senioritystatu"] intValue] == 0)){
+            //只进行了基本资料认证
+            self.teacherStatus = 4;
+        }
+        else if ([dic[@"cardstatu"] intValue] == 1 || [dic[@"educationstatu"] intValue] == 1 || [dic[@"senioritystatu"] intValue] == 1){
+            //认证中
+            self.teacherStatus = 1;
+        }else if ([dic[@"cardstatu"] intValue] == 3 || [dic[@"educationstatu"] intValue] == 3 || [dic[@"senioritystatu"] intValue] == 3){
+            //认证失败
+            self.teacherStatus = 2;
+        }else{
+            //认证通过  接单设置已完成
+            self.teacherStatus = 3;
+        }
+        
+    } failed:^(NSInteger statusCode, id json) {
+        
+    }];
+}
+
 - (void)loadData
 {
     
@@ -126,11 +165,39 @@
 }
 
 - (void)fenxiangAction{
-    [UMSocialUIManager setPreDefinePlatforms:@[@(UMSocialPlatformType_WechatTimeLine),@(UMSocialPlatformType_WechatSession),@(UMSocialPlatformType_Qzone), @(UMSocialPlatformType_QQ)]];
-    [UMSocialUIManager showShareMenuViewInWindowWithPlatformSelectionBlock:^(UMSocialPlatformType platformType, NSDictionary *userInfo) {
-        // 根据获取的platformType确定所选平台进行下一步操作
-        [self shareWebPageToPlatformType:platformType];
-    }];
+    
+    if (self.teacherStatus == 0 || self.teacherStatus == 2 || self.teacherStatus == 4) {
+        //弹窗提示去认证
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"您尚未进行认证" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *again = [UIAlertAction actionWithTitle:@"去认证" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            if (self.teacherStatus == 4) {
+                //跳到基本资料认证
+                //去基本设置界面
+                JYXCertificationBaseInfoViewController *vc = [[JYXCertificationBaseInfoViewController alloc]init];
+                [self.navigationController pushViewController:vc animated:YES];
+            }else{
+                //跳到资质认证
+                JYXCertificationMaterialsViewController *vc = [[JYXCertificationMaterialsViewController alloc]init];
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+        }];
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }];
+        [alert addAction:cancel];
+        [alert addAction:again];
+        [self presentViewController:alert animated:YES completion:nil];
+    }else if (self.teacherStatus == 1){
+        //弹窗提示认证中
+        [MBProgressHUD showInfoMessage:@"认证中请耐心等候"];
+    }else{
+        //跳转界面
+        [UMSocialUIManager setPreDefinePlatforms:@[@(UMSocialPlatformType_WechatTimeLine),@(UMSocialPlatformType_WechatSession),@(UMSocialPlatformType_Qzone), @(UMSocialPlatformType_QQ)]];
+        [UMSocialUIManager showShareMenuViewInWindowWithPlatformSelectionBlock:^(UMSocialPlatformType platformType, NSDictionary *userInfo) {
+            // 根据获取的platformType确定所选平台进行下一步操作
+            [self shareWebPageToPlatformType:platformType];
+        }];
+    }   
 }
 
 - (void)shareWebPageToPlatformType:(UMSocialPlatformType)platformType
@@ -155,7 +222,7 @@
     [[UMSocialManager defaultManager] shareToPlatform:platformType messageObject:messageObject currentViewController:self completion:^(id data, NSError *error) {
         if (error) {
             UMSocialLogInfo(@"************Share fail with error %@*********",error);
-            [MBProgressHUD showErrorMessage:@"分享失败"];
+            [MBProgressHUD showInfoMessage:@"分享失败"];
         }else{
             if ([data isKindOfClass:[UMSocialShareResponse class]]) {
                 UMSocialShareResponse *resp = data;

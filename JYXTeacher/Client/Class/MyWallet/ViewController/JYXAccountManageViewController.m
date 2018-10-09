@@ -154,11 +154,11 @@
 - (void)saveAction:(UIButton *)btn
 {
     if (self.bankCardView.accountField.text.length > 0 && self.nameView.accountField.text.length <= 0) {
-        [MBProgressHUD showErrorMessage:@"请输入姓名"];
+        [MBProgressHUD showInfoMessage:@"请输入姓名"];
         return;
     }
     if (self.bankCardView.accountField.text.length <= 0 && self.nameView.accountField.text.length > 0) {
-        [MBProgressHUD showErrorMessage:@"请输入银联卡号"];
+        [MBProgressHUD showInfoMessage:@"请输入银联卡号"];
         return;
     }
     [MyHandler teacherPayNumWithUserType:2 weixin:self.wechatView.accountField.text zhifubao:self.alipayView.accountField.text yinlian:self.bankCardView.accountField.text cardname:self.nameView.accountField.text prepare:^{

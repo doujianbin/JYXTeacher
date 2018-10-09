@@ -104,15 +104,15 @@
 
 - (void)submitBtnAction{
     if ([self.contentView.inputMoneyField.text isEqualToString:@""]) {
-        [MBProgressHUD showErrorMessage:@"请输入提现金额"];
+        [MBProgressHUD showInfoMessage:@"请输入提现金额"];
         return;
     }
     if (self.selectIndex == 999) {
-        [MBProgressHUD showErrorMessage:@"请选择提现方式"];
+        [MBProgressHUD showInfoMessage:@"请选择提现方式"];
         return;
     }
     if ([self.contentView.inputMoneyField.text floatValue] > self.money) {
-        [MBProgressHUD showErrorMessage:@"提现金额不能大于可提现金额"];
+        [MBProgressHUD showInfoMessage:@"提现金额不能大于可提现金额"];
         return;
     }    
 

@@ -335,14 +335,14 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
                 
             case WXErrCodeUserCancel:
             {
-                [MBProgressHUD showErrorMessage:@"支付取消"];
+                [MBProgressHUD showInfoMessage:@"支付取消"];
 //                [[NSNotificationCenter defaultCenter] postNotificationName:NF_WECHAT_PAY_USER_CANCEL object:nil];
             }
                 break;
                 
             default:
             {
-                [MBProgressHUD showErrorMessage:[NSString stringWithFormat:@"支付失败，retcode=%d", resp.errCode]];
+                [MBProgressHUD showInfoMessage:[NSString stringWithFormat:@"支付失败，retcode=%d", resp.errCode]];
             }
                 break;
         }

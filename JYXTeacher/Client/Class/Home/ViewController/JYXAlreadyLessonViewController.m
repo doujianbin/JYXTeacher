@@ -10,11 +10,19 @@
 #import "JYXAlreadyLessonTableViewCell.h"
 #import "JYXCourseDetailViewController.h"
 #import "JYXHomeTeacherWorkListApi.h"
+#import "TakeOrderSettingHandler.h"
+#import "JYXCertificationBaseInfoViewController.h"
+#import "JYXCertificationMaterialsViewController.h"
+#import "JYXTakeOrdersSetViewController.h"
 
 @interface JYXAlreadyLessonViewController ()<UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, assign) NSInteger page;
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataSourceArray;
+@property (nonatomic ,strong) UIView   *v_back;
+@property (nonatomic ,strong) UIButton   *btn_action;
+@property (nonatomic ,strong) UILabel    *lb_detail;
+@property (nonatomic, strong) NSDictionary *dic_teacherInfo;
 
 @end
 
@@ -35,6 +43,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self selectTeacherStatus];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -56,7 +65,7 @@
 {
     [super viewDidLoad];
     self.page = 1;//默认第一页
-    [self loadData];
+//    [self loadData];
 }
 
 - (void)setupViews
@@ -66,8 +75,109 @@
         make.edges.equalTo(self.view);
     }];
     
+    self.v_back = [[UIView alloc]init];
+    [self.view addSubview:self.v_back];
+    [self.v_back mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.view);
+    }];
+    [self.v_back setBackgroundColor:[UIColor clearColor]];
+    
+    self.btn_action = [[UIButton alloc]init];
+    [self.v_back addSubview:self.btn_action];
+    [self.btn_action mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.v_back);
+        make.centerY.equalTo(self.v_back).offset(-45);
+        make.width.mas_equalTo(125);
+        make.height.mas_equalTo(35);
+    }];
+    self.btn_action.backgroundColor = [UIColor colorWithHexString:@"#1AABFD"];
+    self.btn_action.layer.cornerRadius = 18;
+    self.btn_action.layer.masksToBounds = YES;
+    self.btn_action.titleLabel.font = [UIFont systemFontOfSize:16];
+    [self.btn_action addTarget:self action:@selector(btn_actionAction) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.lb_detail = [[UILabel alloc]init];
+    [self.v_back addSubview:self.lb_detail];
+    [self.lb_detail mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.btn_action.mas_bottom).offset(8);
+        make.left.mas_equalTo(0);
+        make.width.mas_equalTo(self.v_back);
+        make.height.mas_equalTo(12);
+    }];
+    [self.lb_detail setTextColor:[UIColor colorWithHexString:@"#6D6D6D"]];
+    self.lb_detail.font = [UIFont systemFontOfSize:11];
+    [self.lb_detail setTextAlignment:NSTextAlignmentCenter];
+    
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMore)];
+}
+
+- (void)selectTeacherStatus{
+    //查询认证状态  如果没认证  给去认证的提示
+    JYXUser *user = [JYXUserManager shareInstance].user;
+    [TakeOrderSettingHandler getTeacherInfoWithUserid:user.userId prepare:^{
+        
+    } success:^(id obj) {
+        NSDictionary *dic = (NSMutableDictionary *)obj;
+        NSLog(@"dic = %@",dic);
+        self.dic_teacherInfo = dic;
+        //使用cardname进行资本资料是否填写的判断   其余使用单独字段
+        if ([[dic objectForKey:@"cardname"] isEqualToString:@""] || [dic[@"cardstatu"] intValue] == 0 || [dic[@"educationstatu"] intValue] == 0) {
+            //未认证
+            [self.tableView setHidden:YES];
+            [self.v_back setHidden:NO];
+            [self.btn_action setHidden:NO];
+            [self.lb_detail setHidden:NO];
+            [self.btn_action setTitle:@"去认证" forState:UIControlStateNormal];
+            [self.lb_detail setText:@"未进行认证"];
+            self.lb_detail.font = [UIFont systemFontOfSize:11];
+            if ([[dic objectForKey:@"teachertype"] isEqualToString:@"全职教师"]) {
+                if ([dic[@"senioritystatu"] intValue] == 0) {
+                    //未认证
+                    [self.tableView setHidden:YES];
+                    [self.v_back setHidden:NO];
+                    [self.btn_action setHidden:NO];
+                    [self.lb_detail setHidden:NO];
+                    [self.btn_action setTitle:@"去认证" forState:UIControlStateNormal];
+                    [self.lb_detail setText:@"未进行认证"];
+                    self.lb_detail.font = [UIFont systemFontOfSize:11];
+                }
+            }
+        }else if ([dic[@"cardstatu"] intValue] == 1 || [dic[@"educationstatu"] intValue] == 1 || [dic[@"senioritystatu"] intValue] == 1){
+            //认证中
+            [self.tableView setHidden:YES];
+            [self.v_back setHidden:NO];
+            [self.btn_action setHidden:YES];
+            [self.lb_detail setHidden:NO];
+            [self.lb_detail setText:@"认证中请耐心等待"];
+            self.lb_detail.font = [UIFont systemFontOfSize:17];
+        }else if ([dic[@"cardstatu"] intValue] == 3 || [dic[@"educationstatu"] intValue] == 3 || [dic[@"senioritystatu"] intValue] == 3){
+            //认证失败
+            [self.tableView setHidden:YES];
+            [self.v_back setHidden:NO];
+            [self.btn_action setHidden:NO];
+            [self.btn_action setTitle:@"重新认证" forState:UIControlStateNormal];
+            [self.lb_detail setText:@"您的认证审核未通过"];
+            self.lb_detail.font = [UIFont systemFontOfSize:11];
+            [self.lb_detail setHidden:NO];
+        }
+        else if ([dic[@"planhour"] intValue] == 0){
+            //认证通过   未接单设置
+            [self.tableView setHidden:YES];
+            [self.v_back setHidden:NO];
+            [self.btn_action setTitle:@"接单设置" forState:UIControlStateNormal];
+            [self.lb_detail setText:@"未进行接单设置"];
+            self.lb_detail.font = [UIFont systemFontOfSize:11];
+        }else{
+            //认证通过  接单设置已完成
+            [self.tableView setHidden:NO];
+            [self.v_back setHidden:YES];
+            [self loadData];
+        }
+        
+    } failed:^(NSInteger statusCode, id json) {
+        
+    }];
 }
 
 - (void)loadData
@@ -111,6 +221,24 @@
 }
 
 #pragma mark - eventResponse                - Method -
+
+- (void)btn_actionAction{
+    if ([self.btn_action.titleLabel.text isEqualToString:@"去认证"] || [self.btn_action.titleLabel.text isEqualToString:@"重新认证"]) {
+        if ([[self.dic_teacherInfo objectForKey:@"cardname"] isEqualToString:@""]) {
+            //去基本设置界面
+            JYXCertificationBaseInfoViewController *vc = [[JYXCertificationBaseInfoViewController alloc]init];
+            [self.navigationController pushViewController:vc animated:YES];
+        }else{
+            //去身份、学历认证界面
+            JYXCertificationMaterialsViewController *vc = [[JYXCertificationMaterialsViewController alloc]init];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+    }else{
+        //去接单设置界面
+        JYXTakeOrdersSetViewController *vc = [[JYXTakeOrdersSetViewController alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+}
 
 #pragma mark - customDelegate               - Method -
 

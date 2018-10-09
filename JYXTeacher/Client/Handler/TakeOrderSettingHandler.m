@@ -28,6 +28,13 @@
                                           success:^(NSURLSessionDataTask *task, id responseObject) {
                                               if ([[responseObject objectForKey:@"code"] intValue] == 1000) {
                                                   success(responseObject[@"result"]);
+                                                JYXUser *user = [JYXUserManager shareInstance].user;
+                                                  [user configUserData:[responseObject objectForKey:@"result"]];
+                                              }else if ([[responseObject objectForKey:@"code"] intValue] == 1004){
+                                                  [[JYXUserManager shareInstance].user clear];
+                                                  [[JYXUserManager shareInstance] save];
+                                                  JYXLoginViewController *login = [[JYXLoginViewController alloc] init];
+                                                  [[JYXBaseViewController getCurrentVC] presentViewController:login animated:YES completion:nil];
                                               }
 //                                              else{
 //                                                  [MBProgressHUD hideHUD];
@@ -56,7 +63,7 @@
                                                   success(responseObject[@"result"]);
                                               }else{
                                                   [MBProgressHUD hideHUD];
-                                                  [MBProgressHUD showErrorMessage:[responseObject objectForKey:@"msg"]];
+                                                  [MBProgressHUD showInfoMessage:[responseObject objectForKey:@"msg"]];
                                               }
                                           } failure:^(NSURLSessionDataTask *task, NSError *error) {
                                               [self handlerErrorWithTask:task error:error complete:failed];
@@ -84,7 +91,7 @@
                                                   success(responseObject[@"result"]);
                                               }else{
                                                   [MBProgressHUD hideHUD];
-                                                  [MBProgressHUD showErrorMessage:[responseObject objectForKey:@"msg"]];
+                                                  [MBProgressHUD showInfoMessage:[responseObject objectForKey:@"msg"]];
                                               }
                                           } failure:^(NSURLSessionDataTask *task, NSError *error) {
                                               [self handlerErrorWithTask:task error:error complete:failed];
@@ -113,7 +120,7 @@
                                                   success(responseObject[@"result"]);
                                               }else{
                                                   [MBProgressHUD hideHUD];
-                                                  [MBProgressHUD showErrorMessage:[responseObject objectForKey:@"msg"]];
+                                                  [MBProgressHUD showInfoMessage:[responseObject objectForKey:@"msg"]];
                                               }
                                           } failure:^(NSURLSessionDataTask *task, NSError *error) {
                                               [self handlerErrorWithTask:task error:error complete:failed];
@@ -142,7 +149,7 @@
                                                   success(responseObject[@"result"]);
                                               }else{
                                                   [MBProgressHUD hideHUD];
-                                                  [MBProgressHUD showErrorMessage:[responseObject objectForKey:@"msg"]];
+                                                  [MBProgressHUD showInfoMessage:[responseObject objectForKey:@"msg"]];
                                               }
                                           } failure:^(NSURLSessionDataTask *task, NSError *error) {
                                               [self handlerErrorWithTask:task error:error complete:failed];
@@ -174,7 +181,7 @@
                                                   success(responseObject[@"result"]);
                                               }else{
                                                   [MBProgressHUD hideHUD];
-                                                  [MBProgressHUD showErrorMessage:[responseObject objectForKey:@"msg"]];
+                                                  [MBProgressHUD showInfoMessage:[responseObject objectForKey:@"msg"]];
                                               }
                                           } failure:^(NSURLSessionDataTask *task, NSError *error) {
                                               [self handlerErrorWithTask:task error:error complete:failed];

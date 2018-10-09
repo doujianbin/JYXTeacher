@@ -48,6 +48,7 @@ static NSString *const unitlook           = @"unitlook";
 static NSString *const oneselfinfo        = @"oneselfinfo";
 static NSString *const unittype           = @"unittype";
 static NSString *const teachertype        = @"teachertype";
+static NSString *const planhour           = @"planhour";
 
 @implementation JYXUser
 {
@@ -116,6 +117,7 @@ MJExtensionCodingImplementation
     self.unitlook = dict[unitlook];
     self.oneselfinfo = dict[oneselfinfo];
     self.teachertype = dict[teachertype];
+    self.planhour = dict[planhour];
 }
 
 /**

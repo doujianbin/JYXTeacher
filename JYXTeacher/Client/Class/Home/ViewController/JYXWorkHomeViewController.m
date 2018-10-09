@@ -20,12 +20,15 @@
 #import "JYXPayPenaltyViewController.h"
 #import "TakeOrderSettingHandler.h"
 #import "JYXCertificationBaseInfoViewController.h"
-
+#import "JYXCertificationMaterialsViewController.h"
 
 @interface JYXWorkHomeViewController ()<WLPageViewDataSource, WLPageViewDelegate>
 @property (nonatomic, strong) WLPageView *pageView;
 @property (nonatomic, strong) NSMutableArray *vcArrM;
 @property (nonatomic, strong) HMSegmentedControl *segmentedControl;
+@property (nonatomic, assign) int            teacherStatus;
+//teacherStatus 0：新账户 1：只进行基本资料认证  2：资质认证通过 3.认证中 4.认证失败 5.接单设置完成（可操作账户）
+
 @end
 
 @implementation JYXWorkHomeViewController
@@ -45,6 +48,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self loadData];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -95,6 +99,7 @@
     [self setRightBarButton];
     NSArray *titleArray = @[@"待上课",@"已上课",@"抢单"];
     self.segmentedControl.sectionTitles = titleArray;
+    
     //待上课
     JYXWaitLessonViewController *waitLessonVC = [[JYXWaitLessonViewController alloc] init];
     waitLessonVC.detailVC = self;
@@ -103,6 +108,7 @@
     JYXAlreadyLessonViewController *alreadyLessonVC = [[JYXAlreadyLessonViewController alloc] init];
     alreadyLessonVC.detailVC = self;
     [self.vcArrM addObject:alreadyLessonVC];
+    
     //抢单
     JYXTakeOrderViewController *takeOrderVC = [[JYXTakeOrderViewController alloc] init];
     takeOrderVC.detailVC = self;
@@ -111,7 +117,7 @@
     [self.pageView reloadData];
     [self.pageView setSelectedIndex:0];
     
-    [self loadData];
+    
 }
 
 - (void)setupViews
@@ -150,28 +156,40 @@
     //查询认证状态  如果没认证  给去认证的提示
     JYXUser *user = [JYXUserManager shareInstance].user;
     [TakeOrderSettingHandler getTeacherInfoWithUserid:user.userId prepare:^{
-        
+
     } success:^(id obj) {
-        NSDictionary *dic = (NSMutableDictionary *)obj;
-        NSLog(@"dic = %@",dic);
-        if ([dic[@"cardstatu"] intValue] == 0 || [dic[@"educationstatu"] intValue] == 0 || [dic[@"senioritystatu"] intValue] == 0) {
-            
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:@"您还没有进行认证\n请您到设置中进行认证" preferredStyle:UIAlertControllerStyleAlert];
-            UIAlertAction *forgetPassword = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                
-            }];
-            UIAlertAction *again = [UIAlertAction actionWithTitle:@"去认证" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                
-                [again setValue:[UIColor colorWithHexString:@"#1AABFD"] forKey:@"titleTextColor"];
-                JYXCertificationBaseInfoViewController *vc = [[JYXCertificationBaseInfoViewController alloc]init];
-                [self.navigationController pushViewController:vc animated:YES];
-            }];
-            [alert addAction:forgetPassword];
-            [alert addAction:again];
-            [self presentViewController:alert animated:YES completion:nil];
+        //先判断是否进行资质认证  认证通过后才可以进行接单设置
+        JYXUser *user = [JYXUserManager shareInstance].user;
+        if ([user.cardname isEqualToString:@""]) {
+            self.teacherStatus = 0;
+        }else{
+            if ([user.teachertype isEqualToString:@"全职教师"] || [user.teachertype isEqualToString:@"自由教师"]) {
+                if ([user.cardstatu intValue] == 2 && [user.educationstatu intValue] == 2 && [user.senioritystatu intValue] == 2) {
+                    //认证通过
+                    self.teacherStatus = 2;
+                }else if([user.cardstatu intValue] == 1 || [user.educationstatu intValue] == 1 || [user.senioritystatu intValue] == 1){
+                    //认证中
+                    self.teacherStatus = 3;
+                }else if ([user.cardstatu intValue] == 3 || [user.educationstatu intValue] == 3 || [user.senioritystatu intValue] == 3){
+                    //认证失败
+                    self.teacherStatus = 4;
+                }
+            }
+            if ([user.teachertype isEqualToString:@"大学生"]) {
+                if ([user.cardstatu intValue] == 2 && [user.educationstatu intValue] == 2) {
+                    //认证通过
+                    self.teacherStatus = 2;
+                }else if([user.cardstatu intValue] == 1 || [user.educationstatu intValue] == 1){
+                    //认证中
+                    self.teacherStatus = 3;
+                }else if ([user.cardstatu intValue] == 3 || [user.educationstatu intValue] == 3){
+                    //认证失败
+                    self.teacherStatus = 4;
+                }
+            }
         }
     } failed:^(NSInteger statusCode, id json) {
-        
+
     }];
 }
 
@@ -207,11 +225,33 @@
 
 - (void)naviRightAction:(UIButton *)btn
 {
-    JYXTakeOrdersSetViewController *vc = [[JYXTakeOrdersSetViewController alloc] init];
-    [self.navigationController pushViewController:vc animated:YES];
-    
-//    JYXPayPenaltyViewController *vc = [[JYXPayPenaltyViewController alloc]init];
-//    [self.navigationController pushViewController:vc animated:YES];
+    //teacherStatus 0：新账户 1：只进行基本资料认证  2：资质认证通过 3.认证中 4.认证失败 5.接单设置完成（可操作账户）
+    if (self.teacherStatus == 0 || self.teacherStatus == 1 || self.teacherStatus == 4) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"您还没有完成认证" message:@"是否立即认证？" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *again = [UIAlertAction actionWithTitle:@"稍后认证" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+        }];
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"立即认证" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            if (self.teacherStatus == 0) {
+                //跳到基本资料认证
+                //去基本设置界面
+                JYXCertificationBaseInfoViewController *vc = [[JYXCertificationBaseInfoViewController alloc]init];
+                [self.navigationController pushViewController:vc animated:YES];
+            }else{
+                //跳到资质认证
+                JYXCertificationMaterialsViewController *vc = [[JYXCertificationMaterialsViewController alloc]init];
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+        }];
+        [alert addAction:again];
+        [alert addAction:cancel];
+        [self presentViewController:alert animated:YES completion:nil];
+    }else if (self.teacherStatus == 3){
+        [MBProgressHUD showInfoMessage:@"认证中，认证通过后才能进行接单设置"];
+    }else{
+        JYXTakeOrdersSetViewController *vc = [[JYXTakeOrdersSetViewController alloc]init];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
 #pragma mark - customDelegate               - Method -

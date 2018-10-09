@@ -45,6 +45,8 @@
 @property (nonatomic, strong) NSNumber *shareaddr;
 //是否推送0否1是
 @property (nonatomic, strong) NSNumber *ispush;
+//是否进行接单设置  （只要不为0就是进行了接单设置）
+@property (nonatomic, strong) NSNumber *planhour;
 //身份验证状态0未认证1认证中2已通过3未通过
 @property (nonatomic, strong) NSNumber *cardstatu;
 //学历认证状态0未认证1认证中2已通过3未通过
