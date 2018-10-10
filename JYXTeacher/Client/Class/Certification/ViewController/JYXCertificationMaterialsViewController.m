@@ -427,7 +427,7 @@
 
 - (void)helpImgAction{
     
-    NSString *msg = @"大学生：拥有从事教育培训工作能力且学籍正常的在校大学生。\n自由教师：自由从事教育工作的家教、退休教师或正在从事其他行业但有能力兼职教育培训工作的人群（必须为毕业生）。\n全职教师：专业从事教育行业工作的在职教师（如：公立或私立学校的在职教师或教育机构的在职教师等）；全职教师必须有相关工作证明（如：单位开具的工作证明、工作证或工牌等能证明身份的证明）。";
+    NSString *msg = @"大学生：拥有从事教育培训工作能力且学籍正常的在校大学生。\n\n自由教师：自由从事教育工作的家教、退休教师或正在从事其他行业但有能力兼职教育培训工作的人群（必须为毕业生）。\n\n全职教师：专业从事教育行业工作的在职教师（如：公立或私立学校的在职教师或教育机构的在职教师等）；全职教师必须有相关工作证明（如：单位开具的工作证明、工作证或工牌等能证明身份的证明）。";
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"教师类型" message:msg preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *again = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
