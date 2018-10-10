@@ -170,9 +170,9 @@
 {
     if (!_subTitleLabel) {
         _subTitleLabel = [[UILabel alloc] init];
-        _subTitleLabel.text = NSLocalizedString(@"资质认证必填", nil);
-        _subTitleLabel.font = FONT_SIZE(14);
-        _subTitleLabel.textColor = [UIColor colorWithHex:0x474747];
+        _subTitleLabel.text = NSLocalizedString(@"上传相关证明", nil);
+        _subTitleLabel.font = FONT_SIZE(15);
+        _subTitleLabel.textColor = [UIColor colorWithHexString:@"#FF7031"];
         [_subTitleLabel sizeToFit];
     }
     return _subTitleLabel;

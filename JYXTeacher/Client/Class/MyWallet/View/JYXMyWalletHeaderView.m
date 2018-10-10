@@ -127,7 +127,14 @@
     if (btn == _withdrawBtn1) {
         //课时费提现
         if ([self.classFeeLabel.text floatValue] < 100) {
-            [MBProgressHUD showInfoMessage:@"满100提现"];
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"满100提现" preferredStyle:UIAlertControllerStyleAlert];
+            
+            UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"我知道了" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                
+                
+            }];
+            [alert addAction:cancel];
+            [[JYXBaseViewController getCurrentVC] presentViewController:alert animated:YES completion:nil];
         }else{
             vc.money = [self.classFeeLabel.text doubleValue];
             vc.tixianfangshi = 4;
@@ -136,7 +143,14 @@
     }else{
         //共享收益提现
         if ([self.shareEarningsLabel.text floatValue] < 100) {
-            [MBProgressHUD showInfoMessage:@"满100提现"];
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"满100提现" preferredStyle:UIAlertControllerStyleAlert];
+            
+            UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"我知道了" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                
+                
+            }];
+            [alert addAction:cancel];
+            [[JYXBaseViewController getCurrentVC] presentViewController:alert animated:YES completion:nil];
         }else{
             vc.money = [self.shareEarningsLabel.text doubleValue];
             vc.tixianfangshi = 5;

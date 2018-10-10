@@ -27,9 +27,9 @@
                                           prepare:prepare
                                           success:^(NSURLSessionDataTask *task, id responseObject) {
                                               if ([[responseObject objectForKey:@"code"] intValue] == 1000) {
-                                                  success(responseObject[@"result"]);
-                                                JYXUser *user = [JYXUserManager shareInstance].user;
-                                                  [user configUserData:[responseObject objectForKey:@"result"]];
+                                                  JYXUser *user = [JYXUserManager shareInstance].user;
+                                                  [user configUserData:[responseObject objectForKey:@"result"]]; success(responseObject[@"result"]);
+                                                
                                               }else if ([[responseObject objectForKey:@"code"] intValue] == 1004){
                                                   [[JYXUserManager shareInstance].user clear];
                                                   [[JYXUserManager shareInstance] save];

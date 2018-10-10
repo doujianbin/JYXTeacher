@@ -71,8 +71,8 @@
     NSDictionary *FAQDict = @{@"title":@"常见问题", @"type":@1};
     NSDictionary *feedbackDict = @{@"title":@"用户反馈", @"type":@2};
     NSDictionary *protocolDict = @{@"title":@"用户协议", @"type":@3};
-    NSDictionary *useVideoDict = @{@"title":@"使用视频", @"type":@4};
-    self.dataSourceArray = [@[FAQDict, feedbackDict, protocolDict, useVideoDict] mutableCopy];
+//    NSDictionary *useVideoDict = @{@"title":@"使用视频", @"type":@4};
+    self.dataSourceArray = [@[FAQDict, feedbackDict, protocolDict] mutableCopy];
 }
 
 #pragma mark - eventResponse                - Method -

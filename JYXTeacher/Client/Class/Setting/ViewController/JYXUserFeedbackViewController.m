@@ -7,6 +7,8 @@
 //
 
 #import "JYXUserFeedbackViewController.h"
+#import "ZJPickerView.h"
+#import "MyHandler.h"
 
 @interface JYXUserFeedbackViewController ()<UITextViewDelegate>
 @property (nonatomic, strong) UIButton *feedbackType;
@@ -19,6 +21,7 @@
 @property (nonatomic, strong) UILabel *remarkLabel;
 @property (nonatomic, strong) UIButton *phoneCallBtn;
 @property (nonatomic, strong) UILabel *workdayLabel;
+@property (nonatomic ,strong) NSMutableArray *arr_data;
 @end
 
 @implementation JYXUserFeedbackViewController
@@ -33,6 +36,15 @@
 {
     [super loadView];
     [self setupViews];
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.arr_data = [[NSMutableArray alloc]init];
+    }
+    return self;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -71,6 +83,14 @@
         make.top.equalTo(self.view).offset(7);
         make.right.equalTo(self.view).offset(-17);
         make.height.offset(46);
+    }];
+
+    UIImageView *img_arrow = [[UIImageView alloc]init];
+    [self.feedbackType addSubview:img_arrow];
+    [img_arrow setImage:[UIImage imageNamed:@"arrowjiantou"]];
+    [img_arrow mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.feedbackType.mas_right).offset(-13);
+        make.centerY.equalTo(self.feedbackType);
     }];
     
     [self.feedbackType addSubview:self.typeTitleLabel];
@@ -134,10 +154,56 @@
 
 - (void)loadData
 {
-    
+    [MyHandler getFeedbackquestionPrepare:^{
+        
+    } success:^(id obj) {
+        NSDictionary *dic = (NSDictionary *)obj;
+        NSMutableArray *arr = [[NSMutableArray alloc]initWithArray:[dic objectForKey:@"result"]];
+        for (int i = 0; i < arr.count; i++) {
+            NSDictionary *dic = [arr objectAtIndex:i];
+            [self.arr_data addObject:[dic objectForKey:@"name"]];
+        }
+//        [self.arr_data addObjectsFromArray:[dic objectForKey:@"result"]];
+    } failed:^(NSInteger statusCode, id json) {
+        
+    }];
 }
 
 #pragma mark - eventResponse                - Method -
+
+- (void)feedbackAction{
+    
+    [ZJPickerView zj_showWithDataList:self.arr_data propertyDict:nil completion:^(NSString *selectContent) {
+//        NSLog(@"ZJPickerView log tip：---> selectContent:%@", selectContent);
+        [self.typeTitleLabel setText:selectContent];
+    }];
+}
+
+- (void)submitionAction{
+    if ([self.typeTitleLabel.text isEqualToString:@"产品使用"]) {
+        [MBProgressHUD showInfoMessage:@"请选择产品使用问题类型"];
+        return;
+    }
+    if ([self.feedbackTextView.text isEqualToString:@""]) {
+        [MBProgressHUD showInfoMessage:@"请填入您的建议"];
+        return;
+    }
+    if ([self.contactField.text isEqualToString:@""]) {
+        [MBProgressHUD showInfoMessage:@"请填入您的邮箱或手机号"];
+        return;
+    }
+    [MyHandler postUserQusetionWithPhone:[[NSUserDefaults standardUserDefaults] valueForKey:TeacherPhone] question:self.typeTitleLabel.text email:self.contactField.text content:self.feedbackTextView.text prepare:^{
+        
+    } success:^(id obj) {
+        [MBProgressHUD showSuccessMessage:@"提交成功"];
+        dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0/*延迟执行时间*/ * NSEC_PER_SEC));
+        dispatch_after(delayTime, dispatch_get_main_queue(), ^{
+            [self.navigationController popViewControllerAnimated:YES];
+        });
+    } failed:^(NSInteger statusCode, id json) {
+        
+    }];
+}
 
 #pragma mark - customDelegate               - Method -
 
@@ -178,6 +244,7 @@
     if (!_feedbackType) {
         _feedbackType = [[UIButton alloc] init];
         JYXViewBorderRadius(_feedbackType, 5, 1, [UIColor colorWithHex:0xc1c1c1]);
+        [_feedbackType addTarget:self action:@selector(feedbackAction) forControlEvents:UIControlEventTouchUpInside];
     }
     return _feedbackType;
 }
@@ -188,6 +255,7 @@
         _typeTitleLabel = [[UILabel alloc] init];
         _typeTitleLabel.text = @"产品使用";
         _typeTitleLabel.textColor = [UIColor colorWithHex:0xc0c0c0];
+        [_typeTitleLabel setTextColor:[UIColor colorWithHexString:@"#ABABAB"]];
         _typeTitleLabel.font = FONT_SIZE(12);
         [_typeTitleLabel sizeToFit];
     }
@@ -213,6 +281,7 @@
         _feedbackTextView.textColor = [UIColor colorWithHex:0xc0c0c0];
         JYXViewBorderRadius(_feedbackTextView, 5, 1, [UIColor colorWithHex:0xc1c1c1]);
         _feedbackTextView.contentInset = EdgeInsets(5, 7, 20, 7);
+        [_feedbackTextView setTextColor:[UIColor colorWithHexString:@"#ABABAB"]];
         _feedbackTextView.delegate = self;
     }
     return _feedbackTextView;
@@ -237,6 +306,7 @@
         _contactField.font = FONT_SIZE(12);
         _contactField.textColor = [UIColor colorWithHex:0xc0c0c0];
         _contactField.placeholder = NSLocalizedString(@"请留下您的邮箱或手机号（必填）", nil);
+        [_contactField setTextColor:[UIColor colorWithHexString:@"#ABABAB"]];
         JYXViewBorderRadius(_contactField, 5, 1, [UIColor colorWithHex:0xc1c1c1]);
         _contactField.leftViewMode = UITextFieldViewModeAlways;
         _contactField.leftView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, 10, 0)];
@@ -253,6 +323,7 @@
         [_submitBtn setTitle:NSLocalizedString(@"提交", nil) forState:UIControlStateNormal];
         _submitBtn.titleLabel.font = FONT_SIZE(18);
         JYXViewBorderRadius(_submitBtn, 5, 0, [UIColor clearColor]);
+        [_submitBtn addTarget:self action:@selector(submitionAction) forControlEvents:UIControlEventTouchUpInside];
     }
     return _submitBtn;
 }

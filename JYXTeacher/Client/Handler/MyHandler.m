@@ -207,4 +207,72 @@
                                           }];
 }
 
+//获取问题反馈列表
++ (void)getFeedbackquestionPrepare:(PrepareBlock)prepare success:(SuccessBlock)success failed:(FailedBlock)failed{
+    NSString *str_url = [NSString stringWithFormat:@"%@%@",API_Login,API_POST_Feedbackquestion];
+    [[RTHttpClient defaultClient] requestWithPath:str_url
+                                           method:RTHttpRequestGet                                parameters:nil
+                                          prepare:prepare
+                                          success:^(NSURLSessionDataTask *task, id responseObject) {
+                                              if ([[responseObject objectForKey:@"code"] intValue] == 1000) {
+                                                  success(responseObject);
+                                              }else{
+                                                  [MBProgressHUD hideHUD];
+                                                  [MBProgressHUD showInfoMessage:[responseObject objectForKey:@"msg"]];
+                                              }
+                                          } failure:^(NSURLSessionDataTask *task, NSError *error) {
+                                              [self handlerErrorWithTask:task error:error complete:failed];
+                                          }];
+}
+
+//提交用户反馈
++ (void)postUserQusetionWithPhone:(NSString *)phone question:(NSString *)question email:(NSString *)email content:(NSString *)content prepare:(PrepareBlock)prepare success:(SuccessBlock)success failed:(FailedBlock)failed{
+    NSString *str_url = [NSString stringWithFormat:@"%@%@",API_Login,API_POST_Postfeedback];
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    [dic setObject:phone forKey:@"phone"];
+    [dic setObject:question forKey:@"question"];
+    [dic setObject:email forKey:@"email"];
+    [dic setObject:content forKey:@"content"];
+    [[RTHttpClient defaultClient] requestWithPath:str_url
+                                           method:RTHttpRequestGet                                parameters:dic
+                                          prepare:prepare
+                                          success:^(NSURLSessionDataTask *task, id responseObject) {
+                                              if ([[responseObject objectForKey:@"code"] intValue] == 1000) {
+                                                  success([responseObject objectForKey:@"result"]);
+                                              }else{
+                                                  [MBProgressHUD hideHUD];
+                                                  [MBProgressHUD showInfoMessage:[responseObject objectForKey:@"msg"]];
+                                              }
+                                          } failure:^(NSURLSessionDataTask *task, NSError *error) {
+                                              [self handlerErrorWithTask:task error:error complete:failed];
+                                          }];
+}
+
+//获取共享列表数据
++ (void)getShareListDataPrepare:(PrepareBlock)prepare success:(SuccessBlock)success failed:(FailedBlock)failed{
+    NSString *str_url = [NSString stringWithFormat:@"%@%@",API_Login,API_POST_Sharelist];
+    JYXUser *user = [JYXUserManager shareInstance].user;
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    if (user.userId) {
+        [dic setObject:user.userId forKey:@"userid"];
+    }
+    if (user.token) {
+        [dic setObject:user.token forKey:@"token"];
+    }
+    [dic setObject:@"2" forKey:@"type"];
+    [[RTHttpClient defaultClient] requestWithPath:str_url
+                                           method:RTHttpRequestGet                                parameters:dic
+                                          prepare:prepare
+                                          success:^(NSURLSessionDataTask *task, id responseObject) {
+                                              if ([[responseObject objectForKey:@"code"] intValue] == 1000) {
+                                                  success([responseObject objectForKey:@"result"]);
+                                              }else{
+                                                  [MBProgressHUD hideHUD];
+                                                  [MBProgressHUD showInfoMessage:[responseObject objectForKey:@"msg"]];
+                                              }
+                                          } failure:^(NSURLSessionDataTask *task, NSError *error) {
+                                              [self handlerErrorWithTask:task error:error complete:failed];
+                                          }];
+}
+
 @end

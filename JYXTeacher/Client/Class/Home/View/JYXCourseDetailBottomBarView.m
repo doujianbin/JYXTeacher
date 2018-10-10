@@ -87,6 +87,7 @@
     [self.takeOrderBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self).offset(-7);
         make.centerY.equalTo(self);
+        make.height.mas_equalTo(43);
     }];
 }
 

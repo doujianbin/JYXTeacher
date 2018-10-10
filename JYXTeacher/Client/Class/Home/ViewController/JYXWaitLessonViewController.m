@@ -140,22 +140,10 @@
             [self.btn_action setHidden:NO];
             [self.lb_detail setHidden:NO];
             [self.btn_action setTitle:@"去认证" forState:UIControlStateNormal];
-            [self.lb_detail setText:@"未进行认证"];
+            [self.lb_detail setText:@"您尚未进行认证"];
             self.lb_detail.font = [UIFont systemFontOfSize:11];
             
-            if ([[dic objectForKey:@"teachertype"] isEqualToString:@"全职教师"]) {
-                if ([dic[@"senioritystatu"] intValue] == 0) {
-                    //未认证
-                    [self.tableView setHidden:YES];
-                    [self.v_back setHidden:NO];
-                    [self.btn_action setHidden:NO];
-                    [self.lb_detail setHidden:NO];
-                    [self.btn_action setTitle:@"去认证" forState:UIControlStateNormal];
-                    [self.lb_detail setText:@"未进行认证"];
-                    self.lb_detail.font = [UIFont systemFontOfSize:11];
-                }
-            }
-        }else if ([dic[@"cardstatu"] intValue] == 1 || [dic[@"educationstatu"] intValue] == 1 || [dic[@"senioritystatu"] intValue] == 1){
+        }else if ([dic[@"cardstatu"] intValue] == 1 || [dic[@"educationstatu"] intValue] == 1){
             //认证中
             [self.tableView setHidden:YES];
             [self.v_back setHidden:NO];
@@ -163,7 +151,7 @@
             [self.lb_detail setHidden:NO];
             [self.lb_detail setText:@"认证中请耐心等待"];
             self.lb_detail.font = [UIFont systemFontOfSize:17];
-        }else if ([dic[@"cardstatu"] intValue] == 3 || [dic[@"educationstatu"] intValue] == 3 || [dic[@"senioritystatu"] intValue] == 3){
+        }else if ([dic[@"cardstatu"] intValue] == 3 || [dic[@"educationstatu"] intValue] == 3){
             //认证失败
             [self.tableView setHidden:YES];
             [self.v_back setHidden:NO];

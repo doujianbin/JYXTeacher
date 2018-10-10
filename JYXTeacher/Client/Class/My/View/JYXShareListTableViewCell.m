@@ -49,8 +49,8 @@
 - (void)configShareListCellWithData:(id)model
 {
     if (!model) return;
-    self.userNameLabel.text = @"用户1：1234212312";
-    self.shareDateLabel.text = @"08.08 12:00";
+    self.userNameLabel.text = [model objectForKey:@"phone"];
+    self.shareDateLabel.text = [model objectForKey:@"createtime"];
 }
 
 - (UILabel *)userNameLabel

@@ -77,7 +77,7 @@
 {
     if (!_detailTitleLabel) {
         _detailTitleLabel = [[UILabel alloc] init];
-        _detailTitleLabel.font = FONT_SIZE(14);
+        _detailTitleLabel.font = FONT_SIZE(12.5);
         _detailTitleLabel.textColor = [UIColor colorWithHex:0x1aabfd];
         [_detailTitleLabel sizeToFit];
     }

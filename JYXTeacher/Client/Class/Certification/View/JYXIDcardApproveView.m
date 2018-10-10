@@ -46,7 +46,7 @@
     [self addSubview:self.bgView];
     [self.bgView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self);
-        make.height.offset(239);
+        make.height.offset(285);
         make.width.offset(300);
     }];
     CGSize size = [self systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
@@ -108,8 +108,9 @@
     
     [self.bgView addSubview:self.remarkLabel];
     [self.remarkLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.bgView).offset(28);
-        make.top.equalTo(self.idcardFrontLabel.mas_bottom).offset(5);
+        make.left.equalTo(self.bgView).offset(35);
+        make.right.equalTo(self.bgView).offset(-35);
+        make.top.equalTo(self.idcardFrontLabel.mas_bottom).offset(15);
     }];
     
     [self.bgView addSubview:self.uploadBtn];
@@ -167,6 +168,12 @@
 //提交
 - (void)uploadAction:(UIButton *)btn
 {
+    if ([[[NSUserDefaults standardUserDefaults] valueForKey:@"teacherType"] isEqualToString:@"全职教师"]) {
+        if (self.urlArray.count != 3) {
+            [MBProgressHUD showInfoMessage:@"您还未提交工作相关证明"];
+            return;
+        }
+    }
     JYXUser *user = [JYXUserManager shareInstance].user;
     JYXHomeTeacherCardAuthApi *api = [[JYXHomeTeacherCardAuthApi alloc] initWithUserid:user.userId WithToken:user.token pic:[self.urlArray componentsJoinedByString:@","]];
     [SVProgressHUD show];
@@ -207,9 +214,13 @@
 {
     if (!_subTitleLabel) {
         _subTitleLabel = [[UILabel alloc] init];
-        _subTitleLabel.text = NSLocalizedString(@"身份认证必填", nil);
-        _subTitleLabel.font = FONT_SIZE(14);
-        _subTitleLabel.textColor = [UIColor colorWithHex:0x474747];
+        if ([[[NSUserDefaults standardUserDefaults] valueForKey:@"teacherType"] isEqualToString:@"大学生"] || [[[NSUserDefaults standardUserDefaults] valueForKey:@"teacherType"] isEqualToString:@"自由教师"]) {
+            _subTitleLabel.text = NSLocalizedString(@"身份证必填", nil);
+        }else{
+            _subTitleLabel.text = NSLocalizedString(@"必须上传身份证，工作相关证明", nil);
+        }
+        _subTitleLabel.font = FONT_SIZE(15);
+        _subTitleLabel.textColor = [UIColor colorWithHexString:@"#FF7031"];
         [_subTitleLabel sizeToFit];
     }
     return _subTitleLabel;
@@ -291,10 +302,12 @@
 {
     if (!_remarkLabel) {
         _remarkLabel = [[UILabel alloc] init];
-        _remarkLabel.text = NSLocalizedString(@"上传身份证 工作相关证明", nil);
+        _remarkLabel.text = NSLocalizedString(@"说明文字：如实填写相关信息，提交相关认证，有助于提高您的信誉度，得到学生信赖，获得更多课程订单。", nil);
         _remarkLabel.font = FONT_SIZE(12);
         _remarkLabel.textColor = [UIColor colorWithHex:0x474747];
+        _remarkLabel.numberOfLines = 0;
         [_remarkLabel sizeToFit];
+        
     }
     return _remarkLabel;
 }

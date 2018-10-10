@@ -153,6 +153,10 @@
 //保存设置
 - (void)saveAction:(UIButton *)btn
 {
+    if (self.bankCardView.accountField.text.length == 0 && self.nameView.accountField.text.length == 0 && self.wechatView.accountField.text.length == 0 && self.alipayView.accountField.text.length == 0) {
+        [MBProgressHUD showInfoMessage:@"请填写账户信息"];
+        return;
+    }
     if (self.bankCardView.accountField.text.length > 0 && self.nameView.accountField.text.length <= 0) {
         [MBProgressHUD showInfoMessage:@"请输入姓名"];
         return;

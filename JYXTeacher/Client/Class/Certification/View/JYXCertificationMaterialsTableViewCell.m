@@ -59,15 +59,20 @@
 {
     if (!model) return;
     NSDictionary *dict = model;
-    NSNumber *type = dict[@"type"];
     self.titleLabel.text = dict[@"title"];
+    if ([dict[@"status"] isEqualToString:@"认证中"] || [dict[@"status"] isEqualToString:@"未通过"] || [dict[@"status"] isEqualToString:@"已通过"]) {
+        [self.statusLabel setTextColor:[UIColor colorWithHexString:@"#FF7031"]];
+    }else{
+        [self.statusLabel setTextColor:[UIColor colorWithHex:0x474747]];
+    }
     self.statusLabel.text = dict[@"status"];
-    if (type.integerValue == 1) {
+
+    if ([dict[@"status"] isEqualToString:@"全职教师"] || [dict[@"status"] isEqualToString:@"自由教师"] || [dict[@"status"] isEqualToString:@"大学生"]) {
+        
         self.helpImg.hidden = NO;
-    } else {
+    }else{
         self.helpImg.hidden = YES;
     }
-            
 }
 
 - (void)setFrame:(CGRect)frame
@@ -96,6 +101,7 @@
         _helpImg = [[UIButton alloc] init];
         [_helpImg setBackgroundImage:[UIImage imageNamed:@"help"] forState:UIControlStateNormal];
         _helpImg.contentMode = UIViewContentModeScaleAspectFit;
+       
     }
     return _helpImg;
 }

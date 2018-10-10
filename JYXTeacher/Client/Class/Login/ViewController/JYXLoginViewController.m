@@ -88,7 +88,7 @@
     
     [self.view addSubview:self.appProtocolBtn];
     [self.appProtocolBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(self.view).offset(-Iphone6ScaleHeight(26));
+        make.bottom.equalTo(self.view).offset(-Iphone6ScaleHeight(66));
         make.centerX.equalTo(self.view);
     }];
     
@@ -176,10 +176,19 @@
 {
     if (!_appProtocolBtn) {
         _appProtocolBtn = [[UIButton alloc] init];
-        [_appProtocolBtn setTitle:NSLocalizedString(@"登录视为认可《教予学APP许可协议》", nil) forState:UIControlStateNormal];
+        NSString * aStr = @"登录视为认可《教予学APP许可协议》";
+        NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@",aStr]];
+        [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Arial-BoldItalicMT" size:14.0] range:NSMakeRange(0,6)];
+        [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#474747"]range:NSMakeRange(0,6)];
+        
+        [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Arial-BoldItalicMT" size:14.0] range:NSMakeRange(6,12)];
+        [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHex:0x67C8FF] range:NSMakeRange(6,12)];
+        
+
+        [_appProtocolBtn setAttributedTitle:str forState:UIControlStateNormal];
         [_appProtocolBtn setTitleColor:[UIColor colorWithHex:0x67C8FF] forState:UIControlStateNormal];
-        _appProtocolBtn.titleLabel.font = FONT_SIZE(14);
-        [_appProtocolBtn sizeToFit];
+//        _appProtocolBtn.titleLabel.font = FONT_SIZE(14);
+//        [_appProtocolBtn sizeToFit];
         [_appProtocolBtn addTarget:self action:@selector(appProtocolBtnAction) forControlEvents:UIControlEventTouchUpInside];
     }
     return _appProtocolBtn;

@@ -64,37 +64,37 @@
         make.left.equalTo(self.avatarBgView).offset(15);
     }];
     
-    [self addSubview:self.nicknameBgView];
-    [self.nicknameBgView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(self);
-        make.top.equalTo(self.avatarBgView.mas_bottom).offset(1);
-        make.height.offset(44);
-    }];
-    
-    [self.nicknameBgView addSubview:self.nicknameTitleLabel];
-    [self.nicknameTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.nicknameBgView);
-        make.left.equalTo(self.nicknameBgView).offset(15);
-    }];
-    
-    [self.nicknameBgView addSubview:self.arrowImg1];
-    [self.arrowImg1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self.nicknameBgView).offset(-15);
-        make.centerY.equalTo(self.nicknameBgView);
-        make.height.offset(16);
-        make.width.offset(9);
-    }];
-    
-    [self.nicknameBgView addSubview:self.nicknameLabel];
-    [self.nicknameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self.arrowImg1.mas_left).offset(-21);
-        make.centerY.equalTo(self.nicknameBgView);
-    }];
+//    [self addSubview:self.nicknameBgView];
+//    [self.nicknameBgView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.right.equalTo(self);
+//        make.top.equalTo(self.avatarBgView.mas_bottom).offset(1);
+//        make.height.offset(44);
+//    }];
+//
+//    [self.nicknameBgView addSubview:self.nicknameTitleLabel];
+//    [self.nicknameTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerY.equalTo(self.nicknameBgView);
+//        make.left.equalTo(self.nicknameBgView).offset(15);
+//    }];
+//
+//    [self.nicknameBgView addSubview:self.arrowImg1];
+//    [self.arrowImg1 mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.right.equalTo(self.nicknameBgView).offset(-15);
+//        make.centerY.equalTo(self.nicknameBgView);
+//        make.height.offset(16);
+//        make.width.offset(9);
+//    }];
+//
+//    [self.nicknameBgView addSubview:self.nicknameLabel];
+//    [self.nicknameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.right.equalTo(self.arrowImg1.mas_left).offset(-21);
+//        make.centerY.equalTo(self.nicknameBgView);
+//    }];
     
     [self addSubview:self.nameBgView];
     [self.nameBgView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(self);
-        make.top.equalTo(self.nicknameBgView.mas_bottom).offset(5);
+        make.top.equalTo(self.avatarBgView.mas_bottom).offset(5);
         make.height.offset(44);
     }];
     

@@ -14,25 +14,25 @@
  */
 
 //1:正式网 2:测试打包
-#define SERVER_TYPE  2
+#define SERVER_TYPE  1
 
 #if (SERVER_TYPE == 1)
 //appstore环境
-#define API_Login                   @"http://10.2.4.130/"
+#define API_Login                   @"http://www.jiaoyuxuevip.com/"
 #define KEY_JPUSH                   @"9ce67bdc962baa16d9abb8c8"
 #define Jpush                       @"YES"
 #define SERVER_HOST                 @"47.97.174.40:9001"
 
 #elif (SERVER_TYPE == 2)
 //测试打包
-#define API_Login                   @"http://10.2.4.130/"
+#define API_Login                   @"http://www.jiaoyuxuevip.com/"
 #define KEY_JPUSH                   @"9ce67bdc962baa16d9abb8c8"
 #define Jpush                       @"NO"
 #define SERVER_HOST                 @"47.97.174.40:9001"
 #endif
 
 //http://www.jiaoyuxuevip.com/
-
+//http://10.2.4.130/
 
 //HTTP_PROTOCOL 用来区分 http与https
 //#define HTTPS_PROTOCOL
@@ -112,5 +112,14 @@
 
 //上传registratid
 #define API_POST_GetRegistration @"home/base/getregistration_id"
+
+//问题反馈列表
+#define API_POST_Feedbackquestion @"home/basic/feedbackquestion"
+
+//提交问题反馈
+#define API_POST_Postfeedback @"home/basic/feedback"
+
+//获取用户分享列表数据
+#define API_POST_Sharelist @"home/basic/sharelist"
 
 #endif

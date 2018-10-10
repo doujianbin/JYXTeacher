@@ -10,4 +10,6 @@
 typedef void (^SubmitSuccessBlock) (void);
 @interface JYXIDcardApproveView : UIView
 @property (nonatomic, copy) SubmitSuccessBlock submitSuccessBlock;
+@property (nonatomic ,strong) NSString *teacherType;
+
 @end

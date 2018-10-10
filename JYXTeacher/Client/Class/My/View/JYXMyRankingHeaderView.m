@@ -10,6 +10,8 @@
 #import "JYXDFGZViewController.h"
 @interface JYXMyRankingHeaderView ()
 @property (nonatomic, strong) UILabel *remarkLabel;
+@property (nonatomic, strong) UILabel *remarkGradeLabel;
+@property (nonatomic, strong) UILabel *remarklastLabel;
 @property (nonatomic, strong) UIButton *helpImg;
 @property (nonatomic, strong) UILabel *unitLabel;
 
@@ -32,15 +34,35 @@
 
 - (void)setupViews
 {
+    
     [self.contentView addSubview:self.remarkLabel];
     [self.remarkLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.contentView).offset(15);
-        make.top.equalTo(self.contentView).offset(18);
+        make.left.mas_equalTo(15);
+        make.top.mas_equalTo(18);
+        make.height.mas_equalTo(20);
     }];
+    
+//    self.remarkGradeLabel = [[UILabel alloc]init];
+    [self.contentView addSubview:self.remarkGradeLabel];
+    [self.remarkGradeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.remarkLabel.mas_right).offset(3);
+        make.top.height.equalTo(self.remarkLabel);
+    }];
+    self.remarkGradeLabel.font = [UIFont systemFontOfSize:20];
+    self.remarkGradeLabel.textColor = [UIColor colorWithHexString:@"#FF6937"];
+    
+//    self.remarklastLabel = [[UILabel alloc]init];
+    [self.contentView addSubview:self.remarklastLabel];
+    [self.remarklastLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.remarkGradeLabel.mas_right).offset(3);
+        make.top.height.equalTo(self.remarkLabel);
+    }];
+    self.remarklastLabel.font = FONT_SIZE(14);
+    self.remarklastLabel.textColor = [UIColor colorWithHex:0x6d6d6d];
     
     [self.contentView addSubview:self.helpImg];
     [self.helpImg mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.remarkLabel.mas_right).offset(5);
+        make.left.equalTo(self.remarklastLabel.mas_right).offset(5);
         make.centerY.equalTo(self.remarkLabel);
         make.height.width.offset(12);
     }];
@@ -93,12 +115,34 @@
     self.rankingLabel.text = model[@"ranking"];
     self.nameLabel.text = model[@"cardname"];
     self.gradeLabel.text = model[@"credit"];
-    self.remarkLabel.text = [NSString stringWithFormat:@"距离推荐名师还差 %@ 名",model[@"lack"]];
+    self.remarkLabel.text = @"距离推荐名师还差";
+    self.remarkGradeLabel.text = [NSString stringWithFormat:@"%@",model[@"lack"]];
+    self.remarklastLabel.text = @"名";
 }
 
 - (void)helpImgAction{
-    JYXDFGZViewController *vc = [[JYXDFGZViewController alloc]init];
-    [[JYXBaseViewController getCurrentVC].navigationController pushViewController:vc animated:YES];
+//    JYXDFGZViewController *vc = [[JYXDFGZViewController alloc]init];
+//    [[JYXBaseViewController getCurrentVC].navigationController pushViewController:vc animated:YES];
+    NSString *msg = @"1、平台根据综合评分对教师进行排名（详情查看《常见问题》），选出各省市推荐名师。\n2、在您进入平台时，需预设进入推荐名师版块的价格。\n3、在进入推荐名师版块后，课时费按照您的预设价格执行。\n4、推荐名师价格教师可随时在后台进行更改和设置。\n5、预设价格是对学生收取的总价，正常上课后教予学平台会收取30%的平台费用，70%归教师所有。);";
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"推荐名师价格预设说明" message:msg preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *again = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+    }];
+    UIView *subView1 = alert.view.subviews[0];
+    
+    UIView *subView2 = subView1.subviews[0];
+    
+    UIView *subView3 = subView2.subviews[0];
+    
+    UIView *subView4 = subView3.subviews[0];
+    
+    UIView *subView5 = subView4.subviews[0];
+    
+    UILabel *message = subView5.subviews[2];
+    
+    message.textAlignment = NSTextAlignmentLeft;
+    [alert addAction:again];
+    [[JYXBaseViewController getCurrentVC] presentViewController:alert animated:YES completion:nil];
 }
 
 - (UILabel *)remarkLabel
@@ -107,9 +151,25 @@
         _remarkLabel = [[UILabel alloc] init];
         _remarkLabel.font = FONT_SIZE(14);
         _remarkLabel.textColor = [UIColor colorWithHex:0x6d6d6d];
-        [_remarkLabel sizeToFit];
+//        [_remarkLabel sizeToFit];
     }
     return _remarkLabel;
+}
+
+- (UILabel *)remarkGradeLabel{
+    if (!_remarkGradeLabel) {
+        _remarkGradeLabel = [[UILabel alloc] init];
+       
+    }
+    return _remarkGradeLabel;
+}
+
+- (UILabel *)remarklastLabel{
+    if (!_remarklastLabel) {
+        _remarklastLabel = [[UILabel alloc] init];
+        
+    }
+    return _remarklastLabel;
 }
 
 - (UIButton *)helpImg

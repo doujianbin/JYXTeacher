@@ -57,27 +57,27 @@
         make.left.equalTo(self).offset(7);
         make.right.equalTo(self).offset(-7);
         make.top.equalTo(self).offset(23);
-        make.height.offset(45);
+        make.height.offset(65);
     }];
     
     [self.realNameBgView addSubview:self.realNameTitleLabel];
     [self.realNameTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.realNameBgView).offset(11);
         make.width.offset(120);
-        make.centerY.equalTo(self.realNameBgView);
+        make.centerY.equalTo(self.realNameBgView).offset(-10);
     }];
     
     [self.realNameBgView addSubview:self.realNameField];
     [self.realNameField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.realNameTitleLabel.mas_right);
-        make.centerY.equalTo(self.realNameBgView);
+        make.centerY.equalTo(self.realNameBgView).offset(-10);
         make.right.equalTo(self.realNameBgView).offset(-11);
     }];
     
-    [self addSubview:self.realNameRemarkLabel];
+    [self.realNameBgView addSubview:self.realNameRemarkLabel];
     [self.realNameRemarkLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self).offset(17);
-        make.top.equalTo(self.realNameBgView.mas_bottom).offset(6);
+        make.top.equalTo(self.realNameTitleLabel.mas_bottom).offset(6);
         make.right.equalTo(self).offset(-17);
     }];
     

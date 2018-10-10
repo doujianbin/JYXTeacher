@@ -266,6 +266,7 @@
 		18FFDB0D2137CAFD009F6863 /* city.plist in Resources */ = {isa = PBXBuildFile; fileRef = 18FFDB092137CAFD009F6863 /* city.plist */; };
 		18FFDB102137F106009F6863 /* JYXAddEditApproveCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18FFDB0F2137F106009F6863 /* JYXAddEditApproveCollectionViewCell.m */; };
 		6D13500843FE5FF071290C01 /* libPods-JYXTeacher.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 804AEC4CCFCA77115A6840FD /* libPods-JYXTeacher.a */; };
+		7409B007216DBB6B004247EF /* ZJPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7409B005216DBB6B004247EF /* ZJPickerView.m */; };
 		74A290872152315E0032DC11 /* JYXAboutMeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 74A290862152315E0032DC11 /* JYXAboutMeViewController.m */; };
 		74A2908A2152406E0032DC11 /* JYXWebViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 74A290892152406E0032DC11 /* JYXWebViewViewController.m */; };
 		74A2908D215243E60032DC11 /* JYXNavWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 74A2908C215243E60032DC11 /* JYXNavWebViewController.m */; };
@@ -872,6 +873,8 @@
 		18FFDB0E2137F106009F6863 /* JYXAddEditApproveCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JYXAddEditApproveCollectionViewCell.h; sourceTree = "<group>"; };
 		18FFDB0F2137F106009F6863 /* JYXAddEditApproveCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JYXAddEditApproveCollectionViewCell.m; sourceTree = "<group>"; };
 		4037956341D467A046964615 /* Pods-JYXTeacher.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JYXTeacher.release.xcconfig"; path = "Pods/Target Support Files/Pods-JYXTeacher/Pods-JYXTeacher.release.xcconfig"; sourceTree = "<group>"; };
+		7409B005216DBB6B004247EF /* ZJPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJPickerView.m; sourceTree = "<group>"; };
+		7409B006216DBB6B004247EF /* ZJPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJPickerView.h; sourceTree = "<group>"; };
 		74A290852152315E0032DC11 /* JYXAboutMeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JYXAboutMeViewController.h; sourceTree = "<group>"; };
 		74A290862152315E0032DC11 /* JYXAboutMeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JYXAboutMeViewController.m; sourceTree = "<group>"; };
 		74A290882152406E0032DC11 /* JYXWebViewViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JYXWebViewViewController.h; sourceTree = "<group>"; };
@@ -1787,6 +1790,7 @@
 		188DC87D212521B0001096C1 /* PublicViews */ = {
 			isa = PBXGroup;
 			children = (
+				7409B004216DBB6B004247EF /* ZJPickerView */,
 				18D21267213E5BF80091B28F /* HelpView */,
 				18FFDB012137C9BF009F6863 /* HAddressPickerView */,
 				181255C62135333000CEE196 /* DLPickerView */,
@@ -2317,6 +2321,15 @@
 				804AEC4CCFCA77115A6840FD /* libPods-JYXTeacher.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7409B004216DBB6B004247EF /* ZJPickerView */ = {
+			isa = PBXGroup;
+			children = (
+				7409B006216DBB6B004247EF /* ZJPickerView.h */,
+				7409B005216DBB6B004247EF /* ZJPickerView.m */,
+			);
+			path = ZJPickerView;
 			sourceTree = "<group>";
 		};
 		74B9FB10214796AA00257243 /* base */ = {
@@ -2856,6 +2869,7 @@
 				18F49DBE212BFDDD00DB3AAF /* RXURLResponse.m in Sources */,
 				181AB65B212D34F90069BD9B /* JYXTeacherPriceSetViewController.m in Sources */,
 				18FFDAEE2136C1AE009F6863 /* JYXShareListChildViewController.m in Sources */,
+				7409B007216DBB6B004247EF /* ZJPickerView.m in Sources */,
 				18FBADED212AB4A400FD1DFA /* JYXLoginViewController.m in Sources */,
 				188DC912212545A8001096C1 /* AGBaseTabBarView.m in Sources */,
 				18522FA9213141560055CACB /* JYXHomeTeacherTeachercommentAddApi.m in Sources */,

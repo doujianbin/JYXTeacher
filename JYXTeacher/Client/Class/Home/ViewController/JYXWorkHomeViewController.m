@@ -84,7 +84,7 @@
                     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://itunes.apple.com/cn/app/%E6%95%99%E4%BA%88%E5%AD%A6-%E6%95%99%E5%B8%88%E7%89%88/id1436676442?mt=8"]];
                 }];
                 [alert addAction:again];
-                [[JYXBaseViewController getCurrentVC].navigationController pushViewController:alert animated:YES];
+                [[JYXBaseViewController getCurrentVC] presentViewController:alert animated:YES completion:nil];
             }
         } failed:^(NSInteger statusCode, id json) {
             
@@ -163,28 +163,18 @@
         if ([user.cardname isEqualToString:@""]) {
             self.teacherStatus = 0;
         }else{
-            if ([user.teachertype isEqualToString:@"全职教师"] || [user.teachertype isEqualToString:@"自由教师"]) {
-                if ([user.cardstatu intValue] == 2 && [user.educationstatu intValue] == 2 && [user.senioritystatu intValue] == 2) {
-                    //认证通过
-                    self.teacherStatus = 2;
-                }else if([user.cardstatu intValue] == 1 || [user.educationstatu intValue] == 1 || [user.senioritystatu intValue] == 1){
-                    //认证中
-                    self.teacherStatus = 3;
-                }else if ([user.cardstatu intValue] == 3 || [user.educationstatu intValue] == 3 || [user.senioritystatu intValue] == 3){
-                    //认证失败
-                    self.teacherStatus = 4;
-                }
-            }
-            if ([user.teachertype isEqualToString:@"大学生"]) {
+            if ([user.teachertype isEqualToString:@"全职教师"] || [user.teachertype isEqualToString:@"大学生"]|| [user.teachertype isEqualToString:@"自由教师"]) {
                 if ([user.cardstatu intValue] == 2 && [user.educationstatu intValue] == 2) {
                     //认证通过
                     self.teacherStatus = 2;
-                }else if([user.cardstatu intValue] == 1 || [user.educationstatu intValue] == 1){
+                }else if([user.cardstatu intValue] == 1 && [user.educationstatu intValue] == 1){
                     //认证中
                     self.teacherStatus = 3;
                 }else if ([user.cardstatu intValue] == 3 || [user.educationstatu intValue] == 3){
                     //认证失败
                     self.teacherStatus = 4;
+                }else{
+                    self.teacherStatus = 1;
                 }
             }
         }
@@ -227,27 +217,56 @@
 {
     //teacherStatus 0：新账户 1：只进行基本资料认证  2：资质认证通过 3.认证中 4.认证失败 5.接单设置完成（可操作账户）
     if (self.teacherStatus == 0 || self.teacherStatus == 1 || self.teacherStatus == 4) {
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"您还没有完成认证" message:@"是否立即认证？" preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *again = [UIAlertAction actionWithTitle:@"稍后认证" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            
-        }];
-        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"立即认证" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            if (self.teacherStatus == 0) {
-                //跳到基本资料认证
-                //去基本设置界面
-                JYXCertificationBaseInfoViewController *vc = [[JYXCertificationBaseInfoViewController alloc]init];
-                [self.navigationController pushViewController:vc animated:YES];
-            }else{
-                //跳到资质认证
-                JYXCertificationMaterialsViewController *vc = [[JYXCertificationMaterialsViewController alloc]init];
-                [self.navigationController pushViewController:vc animated:YES];
-            }
-        }];
-        [alert addAction:again];
-        [alert addAction:cancel];
-        [self presentViewController:alert animated:YES completion:nil];
+        if (self.teacherStatus == 0 || self.teacherStatus == 1) {
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"您尚未进行认证" message:nil preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *again = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                
+            }];
+            UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"去认证" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                
+                if (self.teacherStatus == 0) {
+                    //跳到基本资料认证
+                    //去基本设置界面
+                    JYXCertificationBaseInfoViewController *vc = [[JYXCertificationBaseInfoViewController alloc]init];
+                    [self.navigationController pushViewController:vc animated:YES];
+                }else{
+                    //跳到资质认证
+                    JYXCertificationMaterialsViewController *vc = [[JYXCertificationMaterialsViewController alloc]init];
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
+            }];
+            [again setValue:[UIColor colorWithHexString:@"#bebebe"] forKey:@"titleTextColor"];
+            [cancel setValue:[UIColor colorWithHexString:@"#1caafe"] forKey:@"titleTextColor"];
+            [alert addAction:again];
+            [alert addAction:cancel];
+            [self presentViewController:alert animated:YES completion:nil];
+        }else{
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"您的认真审核未通过" message:nil preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *again = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                
+            }];
+            UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"重新认证 " style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                
+                if (self.teacherStatus == 0) {
+                    //跳到基本资料认证
+                    //去基本设置界面
+                    JYXCertificationBaseInfoViewController *vc = [[JYXCertificationBaseInfoViewController alloc]init];
+                    [self.navigationController pushViewController:vc animated:YES];
+                }else{
+                    //跳到资质认证
+                    JYXCertificationMaterialsViewController *vc = [[JYXCertificationMaterialsViewController alloc]init];
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
+            }];
+            [again setValue:[UIColor colorWithHexString:@"#bebebe"] forKey:@"titleTextColor"];
+            [cancel setValue:[UIColor colorWithHexString:@"#1caafe"] forKey:@"titleTextColor"];
+            [alert addAction:again];
+            [alert addAction:cancel];
+            [self presentViewController:alert animated:YES completion:nil];
+        }
+        
     }else if (self.teacherStatus == 3){
-        [MBProgressHUD showInfoMessage:@"认证中，认证通过后才能进行接单设置"];
+        [MBProgressHUD showInfoMessage:@"认证中请耐心等待"];
     }else{
         JYXTakeOrdersSetViewController *vc = [[JYXTakeOrdersSetViewController alloc]init];
         [self.navigationController pushViewController:vc animated:YES];

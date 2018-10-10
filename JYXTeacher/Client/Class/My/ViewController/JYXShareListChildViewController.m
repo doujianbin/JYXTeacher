@@ -8,9 +8,10 @@
 
 #import "JYXShareListChildViewController.h"
 #import "JYXShareListTableViewCell.h"
+#import "MyHandler.h"
 
-@interface JYXShareListChildViewController ()<UITableViewDelegate, UITableViewDataSource>
-@property (nonatomic, strong) UITableView *tableView;
+@interface JYXShareListChildViewController ()<UITableViewDelegate, UITableViewDataSource,BaseTableViewDelagate>
+@property (nonatomic, strong) BaseTableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataSourceArray;
 @end
 
@@ -20,6 +21,15 @@
 - (void)dealloc
 {
     
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.dataSourceArray = [[NSMutableArray alloc]init];
+    }
+    return self;
 }
 
 - (void)loadView
@@ -51,7 +61,23 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self loadData];
+//    [self loadData];
+    self.title = @"已共享列表";
+//    UIImage *backgroundImage = [UIImage imageNamed:@"navBarBg"];
+//    backgroundImage = [backgroundImage resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5) resizingMode:UIImageResizingModeStretch];
+//    UIImage *shadowImage = [UIImage imageWithColor:[UIColor clearColor]
+//                                              size:CGSizeMake(self.navigationController.navigationBar.size.width, 0.5)];
+//
+//    UIColor *titleColor = [UIColor colorWithHex:0xffffff];
+//
+//    [self.navigationController.navigationBar setBackgroundImage:backgroundImage
+//                                                  forBarMetrics:UIBarMetricsDefault];
+//
+//    [self.navigationController.navigationBar setShadowImage:shadowImage];
+//
+//    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : titleColor,
+//                                                                      NSFontAttributeName : [UIFont fontWithName:@"Helvetica-Bold" size:17]}];
+    [self.tableView requestDataSource];
 }
 
 - (void)setupViews
@@ -62,9 +88,18 @@
     }];
 }
 
-- (void)loadData
-{
-    
+- (void)tableView:(BaseTableView *)tableView requestDataSourceWithPageNum:(NSInteger)pageNum complete:(DataCompleteBlock)complete{
+    [MyHandler getShareListDataPrepare:^{
+        
+    } success:^(id obj) {
+        [self.dataSourceArray addObjectsFromArray:(NSArray *)obj];
+        if (self.dataSourceArray.count == 0) {
+            self.tableView.defaultView = [[TableBackgroudView alloc] initWithFrame:self.tableView.frame withDefaultImage:nil withNoteTitle:@"暂无分享数据" withNoteDetail:nil withButtonAction:nil];
+        }
+        [self.tableView reloadData];
+    } failed:^(NSInteger statusCode, id json) {
+        
+    }];
 }
 
 #pragma mark - eventResponse                - Method -
@@ -80,24 +115,25 @@
 {
     JYXShareListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([JYXShareListTableViewCell class]) forIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [cell configShareListCellWithData:@{}];
+    [cell configShareListCellWithData:[self.dataSourceArray objectAtIndex:indexPath.row]];
     return cell;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+    return self.dataSourceArray.count;
 }
 
 #pragma mark - getters and setters          - Method -
 - (UITableView *)tableView
 {
     if (!_tableView) {
-        _tableView = [[UITableView alloc] init];
+        _tableView = [[BaseTableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain hasHeaderRefreshing:NO hasFooterRefreshing:NO];
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableView.backgroundColor = [UIColor clearColor];
         _tableView.delegate = self;
         _tableView.dataSource =self;
+        _tableView.tableViewDelegate = self;
         _tableView.rowHeight = 72;
         
         [_tableView registerClass:[JYXShareListTableViewCell class] forCellReuseIdentifier:NSStringFromClass([JYXShareListTableViewCell class])];

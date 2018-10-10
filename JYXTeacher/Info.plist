@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>BuildTimes</key>
-	<string>1809271437</string>
+	<string>1810102103</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>zh_CN</string>
 	<key>CFBundleDisplayName</key>
@@ -19,7 +19,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>1.0.1</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -54,7 +54,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.0.1809271437</string>
+	<string>1.0.1.1810102103</string>
 	<key>Configuration</key>
 	<string>$(CONFIGURATION)</string>
 	<key>LSApplicationQueriesSchemes</key>
