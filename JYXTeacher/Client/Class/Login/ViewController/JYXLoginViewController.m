@@ -183,7 +183,8 @@
         
         [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Arial-BoldItalicMT" size:14.0] range:NSMakeRange(6,12)];
         [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHex:0x67C8FF] range:NSMakeRange(6,12)];
-        
+        [str addAttribute:NSUnderlineStyleAttributeName value:        [NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(6, 12)]; // 下划线类型
+        [str addAttribute:NSUnderlineColorAttributeName value:[UIColor colorWithHex:0x67C8FF] range:NSMakeRange(6, 12)]; // 下划线颜色
 
         [_appProtocolBtn setAttributedTitle:str forState:UIControlStateNormal];
         [_appProtocolBtn setTitleColor:[UIColor colorWithHex:0x67C8FF] forState:UIControlStateNormal];

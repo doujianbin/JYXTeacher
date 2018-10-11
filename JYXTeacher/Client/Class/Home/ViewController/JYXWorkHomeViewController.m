@@ -117,7 +117,7 @@
     [self.pageView reloadData];
     [self.pageView setSelectedIndex:0];
     
-    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(renzhengshibaiAction) name:@"renzhengshibai" object:nil];
 }
 
 - (void)setupViews
@@ -297,6 +297,23 @@
 }
 
 #pragma mark - notification                 - Method -
+
+- (void)renzhengshibaiAction{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"您的认证审核未通过" message:nil preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *again = [UIAlertAction actionWithTitle:@"稍后认证" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+    }];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"立即认证" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        //跳到资质认证
+        JYXCertificationMaterialsViewController *vc = [[JYXCertificationMaterialsViewController alloc]init];
+        [self.navigationController pushViewController:vc animated:YES];
+    }];
+    [again setValue:[UIColor colorWithHexString:@"#bebebe"] forKey:@"titleTextColor"];
+    [cancel setValue:[UIColor colorWithHexString:@"#1caafe"] forKey:@"titleTextColor"];
+    [alert addAction:again];
+    [alert addAction:cancel];
+    [self presentViewController:alert animated:YES completion:nil];
+}
 
 #pragma mark - privateMethods               - Method -
 - (void)setLeftBarButton

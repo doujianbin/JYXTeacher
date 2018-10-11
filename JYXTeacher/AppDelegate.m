@@ -82,6 +82,15 @@
             
             //上传注册id
             [[NSUserDefaults standardUserDefaults] setValue:registrationID forKey:Registionid];
+            
+//            [MyHandler pushJpushRegistionidWithRegistionid:[[NSUserDefaults standardUserDefaults] valueForKey:Registionid] prepare:^{
+//
+//            } success:^(id obj) {
+//
+//            } failed:^(NSInteger statusCode, id json) {
+//
+//            }];
+            
             [JPUSHService setAlias:registrationID completion:^(NSInteger iResCode, NSString *iAlias, NSInteger seq) {
                 
             } seq:1];
@@ -169,7 +178,11 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
         //程序在前台
         //        NSLog(@"iOS10 前台收到远程通知:%@", [self logDic:userInfo]);
         //        NSLog(@"iOS10 前台收到本地通知:{\nbody:%@，\ntitle:%@,\nsubtitle:%@,\nbadge：%@，\nsound：%@，\nuserInfo：%@\n}",body,title,subtitle,badge,sound,userInfo);
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"cashcomplete" object:nil userInfo:nil];
+        
+        if ([[userInfo objectForKey:@"content"] intValue] == 2){
+            //认证失败  需给提示  点击跳转认证资料界面
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"renzhengshibai" object:nil];
+        }
     }
     else {
         // 程序打开走这里拿到通知信息
@@ -196,7 +209,9 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
         [JPUSHService handleRemoteNotification:userInfo];
         //        NSLog(@"iOS10 收到远程通知:%@", [self logDic:userInfo]);
         //        NSLog(@"iOS10 前台收到本地通知:{\nbody:%@，\ntitle:%@,\nsubtitle:%@,\nbadge：%@，\nsound：%@，\nuserInfo：%@\n}",body,title,subtitle,badge,sound,userInfo);
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"cashcomplete" object:nil userInfo:nil];
+        //认证失败  需给提示  点击跳转认证资料界面
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"renzhengshibai" object:nil];
+        
     }
     else {
         // 判断为本地通知

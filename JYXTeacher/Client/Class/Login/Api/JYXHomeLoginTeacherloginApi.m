@@ -41,6 +41,7 @@
     NSMutableDictionary *dictM = [NSMutableDictionary dictionaryWithDictionary:param];
     [dictM setValue:_phone forKey:@"phone"];
     [dictM setValue:_sms forKey:@"sms"];
+    [dictM setObject:[[NSUserDefaults standardUserDefaults] valueForKey:Registionid] forKey:@"rid"];
     return dictM;
 }
 

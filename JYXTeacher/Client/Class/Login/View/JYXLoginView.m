@@ -111,6 +111,7 @@
 //获取验证码
 - (void)getPhoneCode
 {
+    [self.phoneField resignFirstResponder];
     JYXHomeLoginSendsmsApi *api = [[JYXHomeLoginSendsmsApi alloc] initWithPhone:self.phoneField.text];
     [api sendRequestWithCompletionBlockWithSuccess:^(__kindof RXBaseRequest *request) {
         
