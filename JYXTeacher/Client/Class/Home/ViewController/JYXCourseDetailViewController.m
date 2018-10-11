@@ -198,7 +198,7 @@
         [self.courseDemandView configCourseDemandViewWithData:self.dict];
         [self.coursePersonNumberView configCoursePersonNumberViewWithData:self.dict];
         [self.courseCostView configCourseCostViewWithData:self.dict];
-        self.totalIncomeLabel.text = [NSString stringWithFormat:@"%@",self.dict[@"teacherPrice"]];
+        self.totalIncomeLabel.text = [NSString stringWithFormat:@"%.2f",[self.dict[@"teacherPrice"] doubleValue]];
         if ([self.courseType intValue] == 0) {
             self.bottomType = [self.courseType intValue] + 1;
         }

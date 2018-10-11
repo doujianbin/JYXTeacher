@@ -82,15 +82,6 @@
             
             //上传注册id
             [[NSUserDefaults standardUserDefaults] setValue:registrationID forKey:Registionid];
-            
-//            [MyHandler pushJpushRegistionidWithRegistionid:[[NSUserDefaults standardUserDefaults] valueForKey:Registionid] prepare:^{
-//
-//            } success:^(id obj) {
-//
-//            } failed:^(NSInteger statusCode, id json) {
-//
-//            }];
-            
             [JPUSHService setAlias:registrationID completion:^(NSInteger iResCode, NSString *iAlias, NSInteger seq) {
                 
             } seq:1];
@@ -190,6 +181,10 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     else {
         // 程序打开走这里拿到通知信息
         //        NSLog(@"iOS10 前台收到本地通知:{\nbody:%@，\ntitle:%@,\nsubtitle:%@,\nbadge：%@，\nsound：%@，\nuserInfo：%@\n}",body,title,subtitle,badge,sound,userInfo);
+        if ([[userInfo objectForKey:@"content"] intValue] == 2){
+            //认证失败  需给提示  点击跳转认证资料界面
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"renzhengshibai" object:nil];
+        }
     }
     completionHandler(UNNotificationPresentationOptionBadge|UNNotificationPresentationOptionSound|UNNotificationPresentationOptionAlert); // 需要执行这个方法，选择是否提醒用户，有Badge、Sound、Alert三种类型可以设置
 }
@@ -213,7 +208,10 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
         //        NSLog(@"iOS10 收到远程通知:%@", [self logDic:userInfo]);
         //        NSLog(@"iOS10 前台收到本地通知:{\nbody:%@，\ntitle:%@,\nsubtitle:%@,\nbadge：%@，\nsound：%@，\nuserInfo：%@\n}",body,title,subtitle,badge,sound,userInfo);
         //认证失败  需给提示  点击跳转认证资料界面
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"renzhengshibai" object:nil];
+        if ([[userInfo objectForKey:@"content"] intValue] == 2){
+            //认证失败  需给提示  点击跳转认证资料界面
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"renzhengshibai" object:nil];
+        }
         
     }
     else {
@@ -235,7 +233,6 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     
     //    NSLog(@"dic = %@",dic);
   
-    
 }
 //#endif
 
