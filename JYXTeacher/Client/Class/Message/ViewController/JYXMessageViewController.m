@@ -10,6 +10,7 @@
 #import "JYXMessageTableViewCell.h"
 #import "JYXHomeMesRongcloudApi.h"
 #import "MyHandler.h"
+#import "JYXMessageDetailViewController.h"
 
 @interface JYXMessageViewController ()<UITableViewDataSource, UITableViewDelegate>
 //@property (nonatomic, strong) UITableView *tableView;
@@ -96,6 +97,9 @@
         NSDictionary *dict = [api fetchDataWithReformer:request];
         [[RCIM sharedRCIM] connectWithToken:dict[@"token"]  success:^(NSString *userId) {
             NSLog(@"登陆成功。当前登录的用户ID：%@", userId);
+            JYXUser *user = [JYXUserManager shareInstance].user;
+            [RCIM sharedRCIM].currentUserInfo = [[RCUserInfo alloc] initWithUserId:userId name:user.cardname portrait:user.avatar];
+            [RCIM sharedRCIM].enableMessageAttachUserInfo = YES;
         } error:^(RCConnectErrorCode status) {
             NSLog(@"登陆的错误码为:%ld", (long)status);
         } tokenIncorrect:^{
@@ -111,8 +115,10 @@
 
 #pragma mark - eventResponse                - Method -
 - (void)onSelectedTableRow:(RCConversationModelType)conversationModelType conversationModel:(RCConversationModel *)model atIndexPath:(NSIndexPath *)indexPath{
-    RCConversationViewController *vc = [[RCConversationViewController alloc] init];
+    
+    JYXMessageDetailViewController *vc = [[JYXMessageDetailViewController alloc] init];
     vc.conversationType = ConversationType_PRIVATE;
+    vc.displayUserNameInCell = NO;
     vc.targetId = model.targetId;
     vc.title = model.conversationTitle;
     [[JYXBaseViewController getCurrentVC].navigationController pushViewController:vc animated:YES];

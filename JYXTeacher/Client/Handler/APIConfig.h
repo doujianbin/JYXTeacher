@@ -51,6 +51,8 @@
 #define IsLogin       @"IsLogin"
 //手机号
 #define TeacherPhone  @"TeacherPhone"
+//本账号融云的id
+#define RongCould @""
 //头像前缀
 #define HeadQZ @"https://gouku-ware.oss-cn-zhangjiakou.aliyuncs.com/"
 //推送注册id

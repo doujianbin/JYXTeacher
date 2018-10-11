@@ -267,6 +267,7 @@
 		18FFDB102137F106009F6863 /* JYXAddEditApproveCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18FFDB0F2137F106009F6863 /* JYXAddEditApproveCollectionViewCell.m */; };
 		6D13500843FE5FF071290C01 /* libPods-JYXTeacher.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 804AEC4CCFCA77115A6840FD /* libPods-JYXTeacher.a */; };
 		7409B007216DBB6B004247EF /* ZJPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7409B005216DBB6B004247EF /* ZJPickerView.m */; };
+		7409B00A216F17F7004247EF /* JYXMessageDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7409B009216F17F7004247EF /* JYXMessageDetailViewController.m */; };
 		74A290872152315E0032DC11 /* JYXAboutMeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 74A290862152315E0032DC11 /* JYXAboutMeViewController.m */; };
 		74A2908A2152406E0032DC11 /* JYXWebViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 74A290892152406E0032DC11 /* JYXWebViewViewController.m */; };
 		74A2908D215243E60032DC11 /* JYXNavWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 74A2908C215243E60032DC11 /* JYXNavWebViewController.m */; };
@@ -875,6 +876,8 @@
 		4037956341D467A046964615 /* Pods-JYXTeacher.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JYXTeacher.release.xcconfig"; path = "Pods/Target Support Files/Pods-JYXTeacher/Pods-JYXTeacher.release.xcconfig"; sourceTree = "<group>"; };
 		7409B005216DBB6B004247EF /* ZJPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJPickerView.m; sourceTree = "<group>"; };
 		7409B006216DBB6B004247EF /* ZJPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJPickerView.h; sourceTree = "<group>"; };
+		7409B008216F17F7004247EF /* JYXMessageDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JYXMessageDetailViewController.h; sourceTree = "<group>"; };
+		7409B009216F17F7004247EF /* JYXMessageDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JYXMessageDetailViewController.m; sourceTree = "<group>"; };
 		74A290852152315E0032DC11 /* JYXAboutMeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JYXAboutMeViewController.h; sourceTree = "<group>"; };
 		74A290862152315E0032DC11 /* JYXAboutMeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JYXAboutMeViewController.m; sourceTree = "<group>"; };
 		74A290882152406E0032DC11 /* JYXWebViewViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JYXWebViewViewController.h; sourceTree = "<group>"; };
@@ -1255,6 +1258,8 @@
 			children = (
 				188DC91A212546F6001096C1 /* JYXMessageViewController.h */,
 				188DC91B212546F6001096C1 /* JYXMessageViewController.m */,
+				7409B008216F17F7004247EF /* JYXMessageDetailViewController.h */,
+				7409B009216F17F7004247EF /* JYXMessageDetailViewController.m */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -2985,6 +2990,7 @@
 				188DC8A721253B38001096C1 /* JYXInitializeApplication.m in Sources */,
 				18522FA02131214D0055CACB /* JYXHomeBasePicuploadApi.m in Sources */,
 				18522FA321313C700055CACB /* JYXAppraiseViewController.m in Sources */,
+				7409B00A216F17F7004247EF /* JYXMessageDetailViewController.m in Sources */,
 				18FBADD7212A956E00FD1DFA /* JYXShareEarningsContentView.m in Sources */,
 				74B9D227214F50B3005064C9 /* ShowBigPhotoView.m in Sources */,
 				181AB66B212D451C0069BD9B /* JYXWithdrawContentView.m in Sources */,

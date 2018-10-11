@@ -193,6 +193,9 @@
         [SVProgressHUD dismiss];
         NSDictionary *dict = [api fetchDataWithReformer:request];
         [[RCIM sharedRCIM] connectWithToken:dict[@"token"]  success:^(NSString *userId) {
+            JYXUser *user = [JYXUserManager shareInstance].user;
+            [RCIM sharedRCIM].currentUserInfo = [[RCUserInfo alloc] initWithUserId:userId name:user.cardname portrait:user.avatar];
+            [RCIM sharedRCIM].enableMessageAttachUserInfo = YES;
             NSLog(@"登陆成功。当前登录的用户ID：%@", userId);
         } error:^(RCConnectErrorCode status) {
             NSLog(@"登陆的错误码为:%ld", (long)status);

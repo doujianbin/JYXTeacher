@@ -137,6 +137,9 @@
         NSDictionary *dict = [api fetchDataWithReformer:request];
         [[RCIM sharedRCIM] connectWithToken:dict[@"token"]  success:^(NSString *userId) {
             NSLog(@"登陆成功。当前登录的用户ID：%@", userId);
+            JYXUser *user = [JYXUserManager shareInstance].user;
+            [RCIM sharedRCIM].currentUserInfo = [[RCUserInfo alloc] initWithUserId:userId name:user.cardname portrait:user.avatar];
+            [RCIM sharedRCIM].enableMessageAttachUserInfo = YES;
         } error:^(RCConnectErrorCode status) {
             NSLog(@"登陆的错误码为:%ld", (long)status);
         } tokenIncorrect:^{
@@ -431,6 +434,8 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
 - (void)getUserInfoWithUserId:(NSString *)userId completion:(void (^)(RCUserInfo *))completion{
     
     RCUserInfo * info = [[RCUserInfo alloc] init];
+    
+    
 
     [MyHandler selectRCIMInformationWithUserId:userId prepare:^{
 
@@ -438,11 +443,12 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
         NSDictionary *dic = (NSDictionary *)obj;
         info.name = dic[@"nick"];
         info.portraitUri = [NSString stringWithFormat:@"%@%@",API_Login, dic[@"head"]];
-//        info.userId = [userId substringFromIndex:1];
+        info.userId = userId;
         completion(info);
     } failed:^(NSInteger statusCode, id json) {
 
     }];
+    
 }
 
 @end
