@@ -227,7 +227,8 @@
     NSString* thumbURL =  @"https://mmbiz.qlogo.cn/mmbiz_png/icb9PjKn9vwiasv57dUhY6ibUhfic0HEJWiaRUqhSnoVN7tgD9aBIB61qDgumCgNgM9l1jt6yhytZmqh8wkU4iarfghg/0?wx_fmt=png";
     UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:@"教予学教师版" descr:@"您的好友邀请您一起使用教予学" thumImage:thumbURL];
     //设置网页地址
-    NSString * userid = (NSString *)[[NSUserDefaults standardUserDefaults] objectForKey:@"userid"];
+    JYXUser *user = [JYXUserManager shareInstance].user;
+    NSString * userid = user.userId;
     shareObject.webpageUrl = [NSString stringWithFormat:@"http://www.jiaoyuxuevip.com/home/share/share?id=%@&type=1&from=singlemessage", userid];
     NSLog(@"%@", shareObject.webpageUrl);
     
