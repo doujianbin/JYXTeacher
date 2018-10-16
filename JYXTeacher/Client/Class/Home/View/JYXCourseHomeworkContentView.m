@@ -152,7 +152,7 @@
     } else {
         
         if (textView.text.length - range.length + text.length > 300) {
-            [WLToast show:@"不能超过300个字"];
+            [MBProgressHUD showInfoMessage:@"不能超过300个字"];
             return NO;
         } else {
             return YES;

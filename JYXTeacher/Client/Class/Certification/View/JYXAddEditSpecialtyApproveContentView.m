@@ -125,7 +125,7 @@
         [SVProgressHUD show];
         [api sendRequestWithCompletionBlockWithSuccess:^(__kindof RXBaseRequest *request) {
             [SVProgressHUD dismiss];
-            [WLToast show:@"添加成功！"];
+            [MBProgressHUD showInfoMessage:@"添加成功！"];
             [[JYXBaseViewController getCurrentVC].navigationController popViewControllerAnimated:YES];
         } failure:^(__kindof RXBaseRequest *request) {
             [SVProgressHUD dismiss];
@@ -135,7 +135,7 @@
         [SVProgressHUD show];
         [api sendRequestWithCompletionBlockWithSuccess:^(__kindof RXBaseRequest *request) {
             [SVProgressHUD dismiss];
-            [WLToast show:@"修改成功！"];
+            [MBProgressHUD showInfoMessage:@"修改成功！"];
             [[JYXBaseViewController getCurrentVC].navigationController popViewControllerAnimated:YES];
         } failure:^(__kindof RXBaseRequest *request) {
             [SVProgressHUD dismiss];

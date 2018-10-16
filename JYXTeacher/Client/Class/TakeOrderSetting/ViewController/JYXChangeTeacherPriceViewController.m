@@ -125,7 +125,7 @@
         [SVProgressHUD dismiss];
         NSNumber *isSuccess = [api fetchDataWithReformer:request];
         if (isSuccess.boolValue) {
-            [WLToast show:@"修改成功！"];
+            [MBProgressHUD showInfoMessage:@"修改成功！"];
             [self.navigationController popViewControllerAnimated:YES];
         }
     } failure:^(__kindof RXBaseRequest *request) {

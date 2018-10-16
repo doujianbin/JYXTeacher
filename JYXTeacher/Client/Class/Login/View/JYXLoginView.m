@@ -101,11 +101,11 @@
         StrongSelf(strongSelf);
 
         if (self.phoneField.text.length != 11) {
-            [WLToast show:@"请输入正确的手机号!"];
+            [MBProgressHUD showInfoMessage:@"请输入正确的手机号!"];
             return NO;
         }
         if ([[self.phoneField.text substringToIndex:1] intValue] != 1) {
-            [WLToast show:@"请输入正确的手机号!"];
+            [MBProgressHUD showInfoMessage:@"请输入正确的手机号!"];
             return NO;
         }
         [strongSelf getPhoneCode];

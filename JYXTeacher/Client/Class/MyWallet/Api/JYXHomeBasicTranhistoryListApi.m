@@ -69,7 +69,7 @@
                 return YES;
             }
         } else {
-            [WLToast show:data[@"msg"]];
+            [MBProgressHUD showInfoMessage:data[@"msg"]];
             return NO;
         }
     }

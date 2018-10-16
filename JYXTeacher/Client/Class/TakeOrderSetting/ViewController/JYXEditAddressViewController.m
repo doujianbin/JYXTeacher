@@ -162,7 +162,7 @@
             }
             [weakSelf.navigationController popViewControllerAnimated:YES];
         } else {
-            [WLToast show:@"地址太过模糊！"];
+            [MBProgressHUD showInfoMessage:@"地址太过模糊！"];
         }
     }];
 }

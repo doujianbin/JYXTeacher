@@ -84,37 +84,37 @@
     }];
     
     //保险费用
-    [self addSubview:self.premiumTitleLabel];
-    [self.premiumTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self).offset(12);
-        make.top.equalTo(self.line3.mas_bottom).offset(12);
-    }];
-    
-    [self addSubview:self.helpImg];
-    [self.helpImg mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.premiumTitleLabel.mas_right).offset(8);
-        make.centerY.equalTo(self.premiumTitleLabel);
-        make.width.height.offset(13);
-    }];
-    
-    [self addSubview:self.premiumLabel];
-    [self.premiumLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.premiumTitleLabel);
-        make.right.equalTo(self).offset(-12);
-    }];
-    
-    [self addSubview:self.line4];
-    [self.line4 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(self);
-        make.height.offset(1);
-        make.top.equalTo(self.premiumTitleLabel.mas_bottom).offset(12);
-    }];
+//    [self addSubview:self.premiumTitleLabel];
+//    [self.premiumTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.equalTo(self).offset(12);
+//        make.top.equalTo(self.line3.mas_bottom).offset(12);
+//    }];
+//
+//    [self addSubview:self.helpImg];
+//    [self.helpImg mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.equalTo(self.premiumTitleLabel.mas_right).offset(8);
+//        make.centerY.equalTo(self.premiumTitleLabel);
+//        make.width.height.offset(13);
+//    }];
+//
+//    [self addSubview:self.premiumLabel];
+//    [self.premiumLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerY.equalTo(self.premiumTitleLabel);
+//        make.right.equalTo(self).offset(-12);
+//    }];
+//
+//    [self addSubview:self.line4];
+//    [self.line4 mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.right.equalTo(self);
+//        make.height.offset(1);
+//        make.top.equalTo(self.premiumTitleLabel.mas_bottom).offset(12);
+//    }];
     
     //公益基金
     [self addSubview:self.fundTitleLabel];
     [self.fundTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self).offset(12);
-        make.top.equalTo(self.line4.mas_bottom).offset(12);
+        make.top.equalTo(self.line3.mas_bottom).offset(12);
     }];
     
     [self addSubview:self.fundImg];

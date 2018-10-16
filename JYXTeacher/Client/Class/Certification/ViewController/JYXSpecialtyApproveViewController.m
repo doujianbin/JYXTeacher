@@ -95,7 +95,7 @@
 - (void)submitAction:(UIButton *)btn
 {
     if (self.dataSourceArray.count >= 5) {
-        [WLToast show:NSLocalizedString(@"最多只能添加五个专业认证！", nil)];
+        [MBProgressHUD showInfoMessage:NSLocalizedString(@"最多只能添加五个专业认证！", nil)];
         return;
     }
     JYXAddEditSpecialtyApproveViewController *vc = [[JYXAddEditSpecialtyApproveViewController alloc] init];

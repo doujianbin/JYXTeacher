@@ -163,7 +163,7 @@
     [SVProgressHUD show];
     [api sendRequestWithCompletionBlockWithSuccess:^(__kindof RXBaseRequest *request) {
         [SVProgressHUD dismiss];
-        [WLToast show:@"提交成功！"];
+        [MBProgressHUD showInfoMessage:@"提交成功！"];
         if (self.submitSuccessBlock) {
             self.submitSuccessBlock();
         }

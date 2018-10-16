@@ -196,7 +196,7 @@
         [SVProgressHUD dismiss];
         NSNumber *isSuccess = [api fetchDataWithReformer:request];
         if (isSuccess.boolValue) {
-            [WLToast show:@"修改成功！"];
+            [MBProgressHUD showInfoMessage:@"修改成功！"];
         }
         
     } failure:^(__kindof RXBaseRequest *request) {
@@ -233,7 +233,7 @@
         [SVProgressHUD dismiss];
         NSNumber *isSuccess = [api fetchDataWithReformer:request];
         if (isSuccess.boolValue) {
-            [WLToast show:@"修改成功！"];
+            [MBProgressHUD showInfoMessage:@"修改成功！"];
         }
         
     } failure:^(__kindof RXBaseRequest *request) {
