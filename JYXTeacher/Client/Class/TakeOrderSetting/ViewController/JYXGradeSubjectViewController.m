@@ -125,6 +125,7 @@
 #pragma mark - eventResponse                - Method -
 - (void)submitAction:(UIButton *)btn
 {
+    
     NSMutableArray *gradeArray = [NSMutableArray array];
     NSMutableArray *gradeSubjectArray = [NSMutableArray array];
     for (JYXGradeSubjectModel *grade in self.dataSourceArray) {
@@ -133,6 +134,7 @@
             [dictM setValue:grade.value forKey:@"value"];
             [dictM setValue:grade.label forKey:@"label"];
             NSMutableArray *subjectArray = [NSMutableArray array];
+            
             for (JYXGradeSubjectChildrenModel *subject in grade.children) {
                 if (subject.isSelected.boolValue) {
                     [gradeSubjectArray addObject:[NSString stringWithFormat:@"%@-%@",grade.label,subject.label]];
@@ -146,7 +148,10 @@
             [gradeArray addObject:dictM];
         }
     }
-    
+    if (gradeArray.count == 0) {
+        [MBProgressHUD showInfoMessage:@"请选择年级科目"];
+        return;
+    }
     //提交
     NSString *str_date = @"";
     for (NSDictionary *dic in gradeArray) {

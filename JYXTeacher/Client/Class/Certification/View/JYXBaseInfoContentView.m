@@ -63,7 +63,7 @@
     [self.realNameBgView addSubview:self.realNameTitleLabel];
     [self.realNameTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.realNameBgView).offset(11);
-        make.width.offset(120);
+        make.width.offset(130);
         make.centerY.equalTo(self.realNameBgView).offset(-10);
     }];
     

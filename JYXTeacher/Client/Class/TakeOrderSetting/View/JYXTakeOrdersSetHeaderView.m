@@ -74,7 +74,7 @@
 
 - (void)configTakeOrdersSetHeaderView
 {
-    self.titleLabel.text = @"授课年级科目";
+    self.titleLabel.text = @"授课年级科目（必填）";
 }
 
 - (void)contentCellWithDataArr:(NSArray *)arr{
@@ -139,7 +139,7 @@
     if (!_titleLabel) {
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.font = FONT_SIZE(17);
-        _titleLabel.textColor = [UIColor colorWithHex:0x474747];
+        _titleLabel.textColor = [UIColor colorWithHexString:@"#000000"];
         [_titleLabel sizeToFit];
     }
     return _titleLabel;

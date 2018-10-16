@@ -46,6 +46,8 @@
                          imageName:@"TabBar_my"
                  selectedImageName:@"TabBar_my_Sel"
                      hasNavigation:YES];
+    [messageHomeVC view];
+    
 }
 
 /** 拦截TabBar的点击事件 */

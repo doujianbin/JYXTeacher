@@ -104,7 +104,7 @@
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.font = FONT_SIZE(15);
         _titleLabel.text = NSLocalizedString(@"专业认证", nil);
-        _titleLabel.textColor = [UIColor colorWithHex:0x474747];
+        _titleLabel.textColor = [UIColor colorWithHexString:@"#000000"];
         [_titleLabel sizeToFit];
     }
     return _titleLabel;
@@ -125,7 +125,7 @@
     if (!_statusLabel) {
         _statusLabel = [[UILabel alloc] init];
         _statusLabel.font = FONT_SIZE(15);
-        _statusLabel.textColor = [UIColor colorWithHex:0x474747];
+        _statusLabel.textColor = [UIColor colorWithHexString:@"#000000"];
         [_statusLabel sizeToFit];
     }
     return _statusLabel;
@@ -136,7 +136,7 @@
     if (!_nameLabel) {
         _nameLabel = [[UILabel alloc] init];
         _nameLabel.font = FONT_SIZE(15);
-        _nameLabel.textColor = [UIColor colorWithHex:0x474747];
+        _nameLabel.textColor = [UIColor colorWithHexString:@"#000000"];
         [_nameLabel sizeToFit];
     }
     return _nameLabel;

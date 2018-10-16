@@ -8,6 +8,8 @@
 
 #import "JYXMessageDetailViewController.h"
 #import "MyHandler.h"
+#import "AGBaseTabBarController.h"
+#import "UITabBar+littleRedDotBadge.h"
 
 @interface JYXMessageDetailViewController ()
 
@@ -20,6 +22,40 @@
     // Do any additional setup after loading the view.
     [self setLeftBarButton:@"navi_Return"];
 }
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [self setBadageNum];
+}
+
+-(NSInteger)getUnreadCount{
+    int unreadMsgCount = [[RCIMClient sharedRCIMClient] getUnreadCount:@[
+                                                                         @(ConversationType_PRIVATE),
+                                                                         @(ConversationType_DISCUSSION),
+                                                                         @(ConversationType_APPSERVICE),
+                                                                         @(ConversationType_PUBLICSERVICE),
+                                                                         @(ConversationType_GROUP)
+                                                                         ]];
+    return unreadMsgCount ;
+}
+
+-(void)setBadageNum{
+
+    NSInteger unreadMessageCount = [self getUnreadCount];
+    
+    // 设置tabbar 的icon
+    AGBaseTabBarController *tabbar = (AGBaseTabBarController *)[UIApplication sharedApplication].keyWindow.rootViewController ;
+    if ([tabbar isKindOfClass:[AGBaseTabBarController class]]) {
+        
+        // 如果没有未读消息返回值为nil
+        if (unreadMessageCount == 0 || unreadMessageCount == (long)nil) {
+            [tabbar.tabBar hideNumBadgeOnItemIndex:1];
+        }else{
+            [tabbar.tabBar showNumBadgeOnItemIndex:1 Count:(int)unreadMessageCount];
+        }
+    }
+}
+
 
 - (void)setLeftBarButton:(NSString *)image
 {
@@ -43,5 +79,7 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+
 
 @end

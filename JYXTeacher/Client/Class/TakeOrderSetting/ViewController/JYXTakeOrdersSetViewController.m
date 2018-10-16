@@ -94,7 +94,7 @@
 
 - (void)loadData
 {
-    NSDictionary *teachingTime = @{@"title":@"计划授课时间", @"type":@1,@"detailTitle":@""};
+    NSDictionary *teachingTime = @{@"title":@"计划授课时间（必填）", @"type":@1,@"detailTitle":@""};
     NSDictionary *teachingType = @{@"title":@"授课方式设置", @"type":@2,@"detailTitle":@""};
     NSDictionary *teachingDistance = @{@"title":@"授课距离设置", @"type":@3,@"detailTitle":@""};
     NSDictionary *recommendTeacher = @{@"title":@"推荐名师预设价格", @"type":@5,@"detailTitle":@"*未预设推荐名师预设价格则按照平台价格的1.5倍执行。"};

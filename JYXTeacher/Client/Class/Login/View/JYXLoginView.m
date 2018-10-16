@@ -99,7 +99,12 @@
     WeakSelf(weakSelf);
     [self.getCodeBtn setGetCodeBlock:^{
         StrongSelf(strongSelf);
-        if (![strongSelf.phoneField.text valiMobile]) {
+
+        if (self.phoneField.text.length != 11) {
+            [WLToast show:@"请输入正确的手机号!"];
+            return NO;
+        }
+        if ([[self.phoneField.text substringToIndex:1] intValue] != 1) {
             [WLToast show:@"请输入正确的手机号!"];
             return NO;
         }
@@ -111,6 +116,7 @@
 //获取验证码
 - (void)getPhoneCode
 {
+    
     [self.phoneField resignFirstResponder];
     JYXHomeLoginSendsmsApi *api = [[JYXHomeLoginSendsmsApi alloc] initWithPhone:self.phoneField.text];
     [api sendRequestWithCompletionBlockWithSuccess:^(__kindof RXBaseRequest *request) {
@@ -123,6 +129,22 @@
 //登录
 - (void)loginAction:(UIButton *)btn
 {
+    if ([self.phoneField.text isEqualToString:@""]) {
+        [MBProgressHUD showInfoMessage:@"请输入手机号"];
+        return;
+    }
+    if (self.phoneField.text.length != 11) {
+        [MBProgressHUD showInfoMessage:@"请输入正确的手机号!"];
+        return;
+    }
+    if ([[self.phoneField.text substringToIndex:1] intValue] != 1) {
+        [MBProgressHUD showInfoMessage:@"请输入正确的手机号!"];
+        return;
+    }
+    if ([self.verificationCodeField.text isEqualToString:@""]) {
+        [MBProgressHUD showInfoMessage:@"请输入验证码"];
+        return;
+    }
     JYXHomeLoginTeacherloginApi *api = [[JYXHomeLoginTeacherloginApi alloc] initWithPhone:self.phoneField.text withSMS:self.verificationCodeField.text];
     [SVProgressHUD show];
     [api sendRequestWithCompletionBlockWithSuccess:^(__kindof RXBaseRequest *request) {
@@ -131,26 +153,26 @@
         NSDictionary *dict = [api fetchDataWithReformer:request];
         NSLog(@"%@",dict);
         //上传注册id
-        
+
         //上传推送注册id
         if ([[[NSUserDefaults standardUserDefaults] valueForKey:Registionid] length] > 0) {
-            
+
             [MyHandler pushJpushRegistionidWithRegistionid:[[NSUserDefaults standardUserDefaults] valueForKey:Registionid] prepare:^{
-                
+
             } success:^(id obj) {
-                
+
             } failed:^(NSInteger statusCode, id json) {
-                
+
             }];
         }
-        
+
         if (self.loginSuccessBlock) {
             self.loginSuccessBlock();
         }
-        
+
         //登录成功连接融云
         [self loginRongYun];
-        
+
     } failure:^(__kindof RXBaseRequest *request) {
         [SVProgressHUD dismiss];
     }];
@@ -263,6 +285,44 @@
         [_loginBtn addTarget:self action:@selector(loginAction:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _loginBtn;
+}
+
+-(NSString *)convertToJsonData:(NSDictionary *)dict
+
+{
+    
+    NSError *error;
+    
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dict options:NSJSONWritingPrettyPrinted error:&error];
+    
+    NSString *jsonString;
+    
+    if (!jsonData) {
+        
+        NSLog(@"%@",error);
+        
+    }else{
+        
+        jsonString = [[NSString alloc]initWithData:jsonData encoding:NSUTF8StringEncoding];
+        
+    }
+    
+    NSMutableString *mutStr = [NSMutableString stringWithString:jsonString];
+    
+    NSRange range = {0,jsonString.length};
+    
+    //去掉字符串中的空格
+    
+    [mutStr replaceOccurrencesOfString:@" " withString:@"" options:NSLiteralSearch range:range];
+    
+    NSRange range2 = {0,mutStr.length};
+    
+    //去掉字符串中的换行符
+    
+    [mutStr replaceOccurrencesOfString:@"\n" withString:@"" options:NSLiteralSearch range:range2];
+    
+    return mutStr;
+    
 }
 
 @end

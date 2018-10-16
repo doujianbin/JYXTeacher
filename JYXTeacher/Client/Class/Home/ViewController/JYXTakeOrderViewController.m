@@ -80,6 +80,7 @@
         make.edges.equalTo(self.view);
     }];
     [self.v_back setBackgroundColor:[UIColor clearColor]];
+    [self.v_back setHidden:YES];
     
     self.btn_action = [[UIButton alloc]init];
     [self.v_back addSubview:self.btn_action];
@@ -198,14 +199,13 @@
                 }else if (self.teacherStatus == 2){
                     //认证通过
                     JYXUser *user = [JYXUserManager shareInstance].user;
-                    if ([user.planhour intValue] == 0) {
+                    if ([user.planhour intValue] == 0 || user.gradesubject.count == 0) {
                         //显示接单设置按钮
                         [self.v_back setHidden:NO];
                         [self.tableView setHidden:YES];
                         [self.lb_noData setHidden:YES];
                         [self.btn_action setTitle:@"接单设置" forState:UIControlStateNormal];
                         [self.lb_detail setText:@"未进行接单设置"];
-
                     }else{
                         //进行了接单设置   显示暂无数据
                         [self.v_back setHidden:YES];
@@ -236,7 +236,6 @@
                 [self.tableView setHidden:YES];
                 [self.lb_noData setHidden:NO];
             }
-            
         }
     } failure:^(__kindof RXBaseRequest *request) {
         [self.tableView.mj_header endRefreshing];
@@ -332,7 +331,7 @@
         }else if (self.teacherStatus == 2){
             //认证通过
             JYXUser *user = [JYXUserManager shareInstance].user;
-            if ([user.planhour intValue] == 0) {
+            if ([user.planhour intValue] == 0 || user.gradesubject.count == 0) {
                 //提示进行接单设置
                 UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"您尚未进行接单设置" message:@"是否立即设置？" preferredStyle:UIAlertControllerStyleAlert];
                 UIAlertAction *again = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {

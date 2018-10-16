@@ -169,7 +169,7 @@
         //未认证 不能点击
     }else{
         if ([user.teachertype isEqualToString:@"全职教师"] || [user.teachertype isEqualToString:@"自由教师"]) {
-            if ([user.cardstatu intValue] == 2 && [user.educationstatu intValue] == 2 && [user.senioritystatu intValue] == 2) {
+            if ([user.cardstatu intValue] == 2 && [user.educationstatu intValue] == 2 && [user.planhour intValue] != 0 && user.gradesubject.count > 0) {
                 //认证通过
                 if ([_cellDictData[@"status"] isEqualToString:@"待抢单"]) {//抢单
                     JYXHomeTeacherSearchteacherGrabApi *api = [[JYXHomeTeacherSearchteacherGrabApi alloc] initWithUserid:user.userId WithToken:user.token courseId:_cellDictData[@"id"]];
@@ -192,10 +192,10 @@
                         [SVProgressHUD dismiss];
                     }];
                 }
-            }else if([user.cardstatu intValue] == 1 || [user.educationstatu intValue] == 1 || [user.senioritystatu intValue] == 1){
+            }else if([user.cardstatu intValue] == 1 || [user.educationstatu intValue] == 1){
                 //认证中
                 
-            }else if ([user.cardstatu intValue] == 3 || [user.educationstatu intValue] == 3 || [user.senioritystatu intValue] == 3){
+            }else if ([user.cardstatu intValue] == 3 || [user.educationstatu intValue] == 3 ){
                 //认证失败
                 
             }
@@ -282,7 +282,7 @@
 {
     if (!_dateLabel) {
         _dateLabel = [[UILabel alloc] init];
-        _dateLabel.textColor = [UIColor colorWithHex:0x6d6d6d];
+        _dateLabel.textColor = [UIColor colorWithHex:0x000000];
         _dateLabel.font = FONT_SIZE(14);
     }
     return _dateLabel;
@@ -332,7 +332,7 @@
 {
     if (!_locationLabel) {
         _locationLabel = [[UILabel alloc] init];
-        _locationLabel.textColor = [UIColor colorWithHex:0x6d6d6d];
+        _locationLabel.textColor = [UIColor colorWithHex:0x000000];
         _locationLabel.font = FONT_SIZE(14);
         [_locationLabel sizeToFit];
         
@@ -357,7 +357,7 @@
     if (!_nameLabel) {
         _nameLabel = [[UILabel alloc] init];
         _nameLabel.font = FONT_SIZE(14);
-        _nameLabel.textColor = [UIColor colorWithHex:0x6d6d6d];
+        _nameLabel.textColor = [UIColor colorWithHex:0x000000];
         [_nameLabel sizeToFit];
     }
     return _nameLabel;
@@ -368,7 +368,7 @@
     if (!_priceLabel) {
         _priceLabel = [[UILabel alloc] init];
         _priceLabel.font = FONT_SIZE(14);
-        _priceLabel.textColor = [UIColor colorWithHex:0x6d6d6d];
+        _priceLabel.textColor = [UIColor colorWithHex:0x000000];
         [_priceLabel sizeToFit];
     }
     return _priceLabel;

@@ -65,7 +65,7 @@
 - (id)requestManager:(RXBaseRequest *)manager reformData:(NSDictionary *)data
 {
     if (_type.integerValue==1) {
-        return [data[@"result"] firstObject];
+        return data[@"result"];
     } else if (_type.integerValue==2) {
         return data[@"result"];
     }

@@ -27,6 +27,7 @@
 @property (nonatomic ,strong) UIButton   *btn_action;
 @property (nonatomic ,strong) UILabel    *lb_detail;
 @property (nonatomic, strong) NSDictionary *dic_teacherInfo;
+@property (nonatomic ,assign) BOOL          isRenZheng;
 
 
 @end
@@ -49,7 +50,9 @@
 {
     [super viewWillAppear:animated];
     //查询认证状态  接单设置状态
-    [self selectTeacherStatus];
+    if (self.isRenZheng == NO) {
+        [self selectTeacherStatus];
+    }
     
     self.page = 1;//默认第一页
 //    [self loadData];
@@ -90,6 +93,7 @@
         make.edges.equalTo(self.view);
     }];
     [self.v_back setBackgroundColor:[UIColor clearColor]];
+    [self.v_back setHidden:YES];
     
     self.btn_action = [[UIButton alloc]init];
     [self.v_back addSubview:self.btn_action];
@@ -161,7 +165,7 @@
             [self.lb_detail setHidden:NO];
             self.lb_detail.font = [UIFont systemFontOfSize:11];
         }
-        else if ([dic[@"planhour"] intValue] == 0){
+        else if ([dic[@"planhour"] intValue] == 0 || [[dic objectForKey:@"gradesubject"] count] == 0){
             //认证通过   未接单设置
             [self.tableView setHidden:YES];
             [self.v_back setHidden:NO];
@@ -172,6 +176,7 @@
             //认证通过  接单设置已完成
             [self.tableView setHidden:NO];
             [self.v_back setHidden:YES];
+            self.isRenZheng = YES;
             [self loadData];
         }
     
@@ -190,10 +195,12 @@
         [SVProgressHUD dismiss];
         [self.tableView.mj_header endRefreshing];
         [self.dataSourceArray removeAllObjects];
-        NSDictionary *dict = [api fetchDataWithReformer:request];
-        self.dataSourceDict = dict;
-        self.dataSourceArray = [dict[@"list"] mutableCopy];
-        [self.dataSourceArray addObjectsFromArray:dict[@"list"]];
+        NSArray *arr = [api fetchDataWithReformer:request];
+//        self.dataSourceDict = dict;
+        for (NSDictionary *dic_data in arr) {
+            [self.dataSourceArray addObjectsFromArray:[dic_data objectForKey:@"list"]];
+        }
+//        [self.dataSourceArray addObjectsFromArray:dict[@"list"]];
         if (self.dataSourceArray.count == 0) {
             
         }
@@ -230,14 +237,16 @@
     [SVProgressHUD show];
     [api sendRequestWithCompletionBlockWithSuccess:^(__kindof RXBaseRequest *request) {
         [SVProgressHUD dismiss];
-        NSDictionary *dict = [api fetchDataWithReformer:request];
-        self.dataSourceDict = dict;
-        if ([dict[@"list"] count] > 0) {
-            [self.dataSourceArray addObjectsFromArray:dict[@"list"]];
+        NSArray *arr = [api fetchDataWithReformer:request];
+//        self.dataSourceDict = dict;
+        if (arr.count > 0) {
+            for (NSDictionary *dic_data in arr) {
+                [self.dataSourceArray addObjectsFromArray:[dic_data objectForKey:@"list"]];
+            }
             [self.tableView reloadData];
         }
         [self.tableView.mj_footer endRefreshing];
-        if ([dict[@"list"] count] <= 0) {
+        if (arr.count <= 0) {
             [self.tableView.mj_footer endRefreshingWithNoMoreData];
         }
     } failure:^(__kindof RXBaseRequest *request) {

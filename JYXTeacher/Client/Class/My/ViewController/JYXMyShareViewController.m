@@ -76,6 +76,7 @@
 {
     [super viewDidLoad];
     self.navigationItem.title = NSLocalizedString(@"我要共享", nil);
+    [self.view setBackgroundColor:[UIColor colorWithHexString:@"#ff4934"]];
     [self setRightBarButton];
     [self loadData];
     [self selectTeacherStatus];
@@ -106,7 +107,11 @@
         make.top.equalTo(self.inviteFriendTitleLabel.mas_bottom).offset(10);
         make.centerX.equalTo(self.contentView);
         make.width.offset(Iphone6ScaleWidth(289));
-        make.height.offset(Iphone6ScaleHeight(72));
+        if (IS_IPHONE_X) {
+            make.height.offset(Iphone6ScaleHeight(72));
+        }else{
+            make.height.offset(Iphone6ScaleHeight(92));
+        }
     }];
 }
 

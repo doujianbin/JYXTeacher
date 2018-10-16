@@ -224,7 +224,7 @@
 {
     if (!_dateLabel) {
         _dateLabel = [[UILabel alloc] init];
-        _dateLabel.textColor = [UIColor colorWithHex:0x6d6d6d];
+        _dateLabel.textColor = [UIColor colorWithHex:0x000000];
         _dateLabel.font = FONT_SIZE(14);
     }
     return _dateLabel;
@@ -263,7 +263,7 @@
 {
     if (!_locationLabel) {
         _locationLabel = [[UILabel alloc] init];
-        _locationLabel.textColor = [UIColor colorWithHex:0x6d6d6d];
+        _locationLabel.textColor = [UIColor colorWithHex:0x000000];
         _locationLabel.font = FONT_SIZE(14);
         [_locationLabel sizeToFit];
     }
@@ -287,7 +287,7 @@
     if (!_nameLabel) {
         _nameLabel = [[UILabel alloc] init];
         _nameLabel.font = FONT_SIZE(14);
-        _nameLabel.textColor = [UIColor colorWithHex:0x6d6d6d];
+        _nameLabel.textColor = [UIColor colorWithHex:0x000000];
         [_nameLabel sizeToFit];
     }
     return _nameLabel;
@@ -298,7 +298,7 @@
     if (!_priceLabel) {
         _priceLabel = [[UILabel alloc] init];
         _priceLabel.font = FONT_SIZE(14);
-        _priceLabel.textColor = [UIColor colorWithHex:0x6d6d6d];
+        _priceLabel.textColor = [UIColor colorWithHex:0x000000];
         [_priceLabel sizeToFit];
     }
     return _priceLabel;

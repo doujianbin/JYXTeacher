@@ -63,7 +63,7 @@
     if ([dict[@"status"] isEqualToString:@"认证中"] || [dict[@"status"] isEqualToString:@"未通过"] || [dict[@"status"] isEqualToString:@"已通过"]) {
         [self.statusLabel setTextColor:[UIColor colorWithHexString:@"#FF7031"]];
     }else{
-        [self.statusLabel setTextColor:[UIColor colorWithHex:0x474747]];
+        [self.statusLabel setTextColor:[UIColor colorWithHexString:@"#000000"]];
     }
     self.statusLabel.text = dict[@"status"];
 
@@ -89,7 +89,7 @@
     if (!_titleLabel) {
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.font = FONT_SIZE(17);
-        _titleLabel.textColor = [UIColor colorWithHex:0x474747];
+        _titleLabel.textColor = [UIColor colorWithHexString:@"#000000"];
         [_titleLabel sizeToFit];
     }
     return _titleLabel;
@@ -121,7 +121,7 @@
     if (!_statusLabel) {
         _statusLabel = [[UILabel alloc] init];
         _statusLabel.font = FONT_SIZE(17);
-        _statusLabel.textColor = [UIColor colorWithHex:0x474747];
+        _statusLabel.textColor = [UIColor colorWithHexString:@"#000000"];
         [_statusLabel sizeToFit];
     }
     return _statusLabel;

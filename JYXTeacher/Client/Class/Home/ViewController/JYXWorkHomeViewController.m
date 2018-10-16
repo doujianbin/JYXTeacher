@@ -76,7 +76,24 @@
             
         } success:^(id obj) {
             NSDictionary *dic = (NSDictionary *)obj;
-            if ([[dic objectForKey:@"code"] intValue] != 1000) {
+            if ([[dic objectForKey:@"code"] intValue] == 1000) {
+                if ([[[dic objectForKey:@"result"] objectForKey:@"update"] isEqualToString:@"Yes"]) {
+                    UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:@"有新的版本" preferredStyle:UIAlertControllerStyleAlert];
+                    
+                    UIAlertAction *again = [UIAlertAction actionWithTitle:@"更新" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                        
+                        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://itunes.apple.com/cn/app/%E6%95%99%E4%BA%88%E5%AD%A6-%E6%95%99%E5%B8%88%E7%89%88/id1436676442?mt=8"]];
+                    }];
+                    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                        
+                    }];
+                    [cancel setValue:[UIColor colorWithHexString:@"#bebebe"] forKey:@"titleTextColor"];
+                    [again setValue:[UIColor colorWithHexString:@"#1caafe"] forKey:@"titleTextColor"];
+                    [alert addAction:cancel];
+                    [alert addAction:again];
+                    [[JYXBaseViewController getCurrentVC] presentViewController:alert animated:YES completion:nil];
+                }
+            }else if ([[dic objectForKey:@"code"] intValue] == 1001){
                 UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:[dic objectForKey:@"msg"] preferredStyle:UIAlertControllerStyleAlert];
                 
                 UIAlertAction *again = [UIAlertAction actionWithTitle:@"更新" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -86,6 +103,7 @@
                 [alert addAction:again];
                 [[JYXBaseViewController getCurrentVC] presentViewController:alert animated:YES completion:nil];
             }
+            
         } failed:^(NSInteger statusCode, id json) {
             
         }];
@@ -368,7 +386,8 @@
         _segmentedControl.selectionIndicatorHeight = 2.0f;
         _segmentedControl.backgroundColor = [UIColor whiteColor];
         _segmentedControl.selectedTitleTextAttributes = @{NSForegroundColorAttributeName : [UIColor colorWithHex:0x1aabfd], NSFontAttributeName:FONT_SIZE(15)};
-        _segmentedControl.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor colorWithHex:0x6d6d6d], NSFontAttributeName:FONT_SIZE(15)};
+        
+        _segmentedControl.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor colorWithHex:0x000000], NSFontAttributeName:FONT_SIZE(15)};
         
         _segmentedControl.selectionIndicatorColor = [UIColor colorWithHex:0x1aabfd];
         _segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleTextWidthStripe;

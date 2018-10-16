@@ -65,7 +65,7 @@
     if (!_gradeLabel) {
         _gradeLabel = [[UILabel alloc] init];
         _gradeLabel.font = FONT_SIZE(17);
-        _gradeLabel.textColor = [UIColor colorWithHex:0x474747];
+        _gradeLabel.textColor = [UIColor colorWithHexString:@"#000000"];
         [_gradeLabel sizeToFit];
     }
     return _gradeLabel;
@@ -76,7 +76,7 @@
     if (!_priceLabel) {
         _priceLabel = [[UILabel alloc] init];
         _priceLabel.font = FONT_SIZE(17);
-        _priceLabel.textColor = [UIColor colorWithHex:0x474747];
+        _priceLabel.textColor = [UIColor colorWithHexString:@"#000000"];
         [_priceLabel sizeToFit];
     }
     return _priceLabel;

@@ -22,6 +22,7 @@
 #import <IQKeyboardManager.h>
 #import "MyHandler.h"
 #import "TeacherWorkHandler.h"
+#import <Bugtags/Bugtags.h>
 
 @interface AppDelegate ()<RCIMUserInfoDataSource,WXApiDelegate,JPUSHRegisterDelegate>
 
@@ -98,6 +99,16 @@
     [self loginRongYun];
     
     [[RCIM sharedRCIM] setUserInfoDataSource:self];
+    
+    if (SERVER_TYPE == 1) {
+        //appstore
+        [Bugtags startWithAppKey:@"f3a1acdf09a1b3e4dd13645873284ce2" invocationEvent:BTGInvocationEventNone];
+    }
+    if (SERVER_TYPE == 2) {
+        //测试环境
+        [Bugtags startWithAppKey:@"f3a1acdf09a1b3e4dd13645873284ce2" invocationEvent:BTGInvocationEventBubble];
+    }
+    
     return isFinish;
 }
 
@@ -173,17 +184,22 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
         //        NSLog(@"iOS10 前台收到远程通知:%@", [self logDic:userInfo]);
         //        NSLog(@"iOS10 前台收到本地通知:{\nbody:%@，\ntitle:%@,\nsubtitle:%@,\nbadge：%@，\nsound：%@，\nuserInfo：%@\n}",body,title,subtitle,badge,sound,userInfo);
         
-        if ([[userInfo objectForKey:@"content"] intValue] == 2){
-            //认证失败  需给提示  点击跳转认证资料界面
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"renzhengshibai" object:nil];
+        if(![userInfo objectForKey:@"content"]){
+            if ([[userInfo objectForKey:@"content"] intValue] == 2){
+                //认证失败  需给提示  点击跳转认证资料界面
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"renzhengshibai" object:nil];
+            }
         }
+        
     }
     else {
         // 程序打开走这里拿到通知信息
         //        NSLog(@"iOS10 前台收到本地通知:{\nbody:%@，\ntitle:%@,\nsubtitle:%@,\nbadge：%@，\nsound：%@，\nuserInfo：%@\n}",body,title,subtitle,badge,sound,userInfo);
-        if ([[userInfo objectForKey:@"content"] intValue] == 2){
-            //认证失败  需给提示  点击跳转认证资料界面
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"renzhengshibai" object:nil];
+        if(![userInfo objectForKey:@"content"]){
+            if ([[userInfo objectForKey:@"content"] intValue] == 2){
+                //认证失败  需给提示  点击跳转认证资料界面
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"renzhengshibai" object:nil];
+            }
         }
     }
     completionHandler(UNNotificationPresentationOptionBadge|UNNotificationPresentationOptionSound|UNNotificationPresentationOptionAlert); // 需要执行这个方法，选择是否提醒用户，有Badge、Sound、Alert三种类型可以设置
@@ -208,9 +224,11 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
         //        NSLog(@"iOS10 收到远程通知:%@", [self logDic:userInfo]);
         //        NSLog(@"iOS10 前台收到本地通知:{\nbody:%@，\ntitle:%@,\nsubtitle:%@,\nbadge：%@，\nsound：%@，\nuserInfo：%@\n}",body,title,subtitle,badge,sound,userInfo);
         //认证失败  需给提示  点击跳转认证资料界面
-        if ([[userInfo objectForKey:@"content"] intValue] == 2){
-            //认证失败  需给提示  点击跳转认证资料界面
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"renzhengshibai" object:nil];
+        if(![userInfo objectForKey:@"content"]){
+            if ([[userInfo objectForKey:@"content"] intValue] == 2){
+                //认证失败  需给提示  点击跳转认证资料界面
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"renzhengshibai" object:nil];
+            }
         }
         
     }

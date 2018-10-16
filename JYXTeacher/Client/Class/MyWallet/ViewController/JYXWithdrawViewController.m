@@ -9,6 +9,7 @@
 #import "JYXWithdrawViewController.h"
 #import "JYXWithdrawContentView.h"
 #import "MyHandler.h"
+#import "JYXAccountManageViewController.h"
 
 @interface JYXWithdrawViewController ()
 @property (nonatomic, strong) UIScrollView *mScrollView;
@@ -119,8 +120,30 @@
     [MyHandler teacherCashTargettype:2 accounttype:self.tixianfangshi money:self.contentView.inputMoneyField.text account:self.selectIndex prepare:^{
         
     } success:^(id obj) {
-        [MBProgressHUD showSuccessMessage:@"申请提现成功"];
-        [self.navigationController popViewControllerAnimated:YES];
+        NSDictionary *dic = (NSDictionary *)obj;
+        if ([[dic objectForKey:@"code"] intValue] == 1000) {
+            [MBProgressHUD showSuccessMessage:@"申请提现成功"];
+            [self.navigationController popViewControllerAnimated:YES];
+        }else if ([[dic objectForKey:@"code"] intValue] == 1001){
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"未设置提现账户" message:@"是否立即设置？" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *again = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                
+            }];
+            UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"去设置" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                JYXAccountManageViewController *vc = [[JYXAccountManageViewController alloc]init];
+                [self.navigationController pushViewController:vc animated:YES];
+            }];
+            [again setValue:[UIColor colorWithHexString:@"#bebebe"] forKey:@"titleTextColor"];
+            [cancel setValue:[UIColor colorWithHexString:@"#1caafe"] forKey:@"titleTextColor"];
+            [alert addAction:again];
+            [alert addAction:cancel];
+            [self presentViewController:alert animated:YES completion:nil];
+        }
+        else{
+            [MBProgressHUD hideHUD];
+            [MBProgressHUD showInfoMessage:[dic objectForKey:@"msg"]];
+        }
+        
     } failed:^(NSInteger statusCode, id json) {
         
     }];

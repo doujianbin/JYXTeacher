@@ -93,12 +93,7 @@
                                            method:RTHttpRequestGet                                parameters:dic
                                           prepare:prepare
                                           success:^(NSURLSessionDataTask *task, id responseObject) {
-                                              if ([[responseObject objectForKey:@"code"] intValue] == 1000) {
-                                                  success(responseObject[@"result"]);
-                                              }else{
-                                                  [MBProgressHUD hideHUD];
-                                                  [MBProgressHUD showInfoMessage:[responseObject objectForKey:@"msg"]];
-                                              }
+                                              success(responseObject);
                                           } failure:^(NSURLSessionDataTask *task, NSError *error) {
                                               [self handlerErrorWithTask:task error:error complete:failed];
                                           }];
@@ -274,5 +269,30 @@
                                               [self handlerErrorWithTask:task error:error complete:failed];
                                           }];
 }
+
++ (void)textjiekouWithStr:(NSMutableDictionary *)str prepare:(PrepareBlock)prepare success:(SuccessBlock)success failed:(FailedBlock)failed{
+    NSString *str_url = @"http://192.168.1.101:8080/home/login/sendsms";
+    NSDictionary *parameters = @{
+                                 @"phone":@"18641584903"
+                                 };
+    
+    NSData *data = [NSJSONSerialization dataWithJSONObject:parameters options:kNilOptions error:nil];
+    NSString * temp = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    
+    
+    NSMutableDictionary *dic_pra = [NSMutableDictionary dictionary];
+    [dic_pra setValue:temp forKey:@"jsonParam"];
+    
+    [[RTHttpClient defaultClient] requestWithPath:str_url
+                                           method:RTHttpRequestGet                              parameters:dic_pra
+                                          prepare:prepare
+                                          success:^(NSURLSessionDataTask *task, id responseObject) {
+                                              
+                                          } failure:^(NSURLSessionDataTask *task, NSError *error) {
+                                              [self handlerErrorWithTask:task error:error complete:failed];
+                                          }];
+}
+
+
 
 @end

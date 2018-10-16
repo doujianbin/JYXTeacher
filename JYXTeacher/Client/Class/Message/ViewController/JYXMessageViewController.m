@@ -11,12 +11,13 @@
 #import "JYXHomeMesRongcloudApi.h"
 #import "MyHandler.h"
 #import "JYXMessageDetailViewController.h"
+#import "AGBaseTabBarController.h"
+#import "UITabBar+littleRedDotBadge.h"
 
-@interface JYXMessageViewController ()<UITableViewDataSource, UITableViewDelegate>
+@interface JYXMessageViewController ()<UITableViewDataSource, UITableViewDelegate,RCIMReceiveMessageDelegate>
 //@property (nonatomic, strong) UITableView *tableView;
 //@property (nonatomic, strong) NSMutableArray *dataSourceArray;
 @end
-
 @implementation JYXMessageViewController
 #pragma mark - lifeCycle                    - Method -
 - (instancetype)init{
@@ -40,7 +41,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+    [self setBadageNum];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -74,9 +75,13 @@
     
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : titleColor,
                                                                       NSFontAttributeName : [UIFont fontWithName:@"Helvetica-Bold" size:17]}];
+    
+    [[RCIM sharedRCIM] setReceiveMessageDelegate:self];
+    
     [self loadData];
     
     self.conversationListTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+
 }
 
 - (void)setupViews
@@ -108,9 +113,11 @@
             //如果没有设置token有效期却提示token错误，请检查您客户端和服务器的appkey是否匹配，还有检查您获取token的流程。
             NSLog(@"token错误");
         }];
+        [self setBadageNum];
     } failure:^(__kindof RXBaseRequest *request) {
         [SVProgressHUD dismiss];
     }];
+    
 }
 
 #pragma mark - eventResponse                - Method -
@@ -122,6 +129,42 @@
     vc.targetId = model.targetId;
     vc.title = model.conversationTitle;
     [[JYXBaseViewController getCurrentVC].navigationController pushViewController:vc animated:YES];
+    [self setBadageNum];
+}
+
+-(NSInteger)getUnreadCount{
+    int unreadMsgCount = [[RCIMClient sharedRCIMClient] getUnreadCount:@[
+                                                                         @(ConversationType_PRIVATE),
+                                                                         @(ConversationType_DISCUSSION),
+                                                                         @(ConversationType_APPSERVICE),
+                                                                         @(ConversationType_PUBLICSERVICE),
+                                                                         @(ConversationType_GROUP)
+                                                                         ]];
+    return unreadMsgCount ;
+}
+
+-(void)onRCIMReceiveMessage:(RCMessage *)message left:(int)left{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self setBadageNum];
+    });
+}
+
+-(void)setBadageNum{
+    
+    NSInteger unreadMessageCount = [self getUnreadCount];
+    
+    // 设置tabbar 的icon
+    AGBaseTabBarController *tabbar = (AGBaseTabBarController *)[UIApplication sharedApplication].keyWindow.rootViewController ;
+    if ([tabbar isKindOfClass:[AGBaseTabBarController class]]) {
+        
+        // 如果没有未读消息返回值为nil
+        if (unreadMessageCount == 0 || unreadMessageCount == (long)nil) {
+            [tabbar.tabBar hideNumBadgeOnItemIndex:1];
+        }else{
+            [tabbar.tabBar showNumBadgeOnItemIndex:1 Count:(int)unreadMessageCount];
+        }
+    }
+    
 }
 
 

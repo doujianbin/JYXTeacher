@@ -14,6 +14,7 @@ target 'JYXTeacher' do
   pod 'UICollectionViewLeftAlignedLayout', '~> 1.0.2'
   pod 'MBProgressHUD'
   pod 'AliPay', '~> 2.1.2'
+  pod 'Bugtags'
   # 友盟
 #  pod 'UMCCommon'
 #  pod 'UMCSecurityPlugins'
@@ -29,4 +30,5 @@ target 'JYXTeacher' do
   pod 'AMap3DMap'
   pod 'AMapSearch'
   pod 'AMapLocation'
+  
 end

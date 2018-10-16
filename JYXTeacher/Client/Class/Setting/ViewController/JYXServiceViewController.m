@@ -120,6 +120,28 @@
     [self.view addSubview:callWebview];
 }
 
+- (void)mailAction{
+    NSMutableString *mailUrl = [[NSMutableString alloc] init];
+    //添加收件人：
+    NSArray *toRecipients = @[@"service@jiaoyuxuevip.com"];
+    // 注意：如有多个收件人，可以使用componentsJoinedByString方法连接，连接符为@","
+    [mailUrl appendFormat:@"mailto:%@", toRecipients[0]];
+    //添加抄送人：
+//    NSArray *ccRecipients = @[@"1780575208@qq.com"];
+//    [mailUrl appendFormat:@"?cc=%@", ccRecipients[0]];
+    // 添加密送人：
+//    NSArray *bccRecipients = @[@"1780575208@qq.com"];
+//    [mailUrl appendFormat:@"&bcc=%@", bccRecipients[0]];
+    
+    //添加邮件主题和邮件内容：
+//    [mailUrl appendString:@"&subject=my email"];
+//    [mailUrl appendString:@"&body=<b>Hello</b> World!"];
+    //打开地址，这里会跳转至邮件发送界面：
+    NSString *emailPath = [mailUrl stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:emailPath]];
+    
+}
+
 #pragma mark - eventResponse                - Method -
 
 #pragma mark - customDelegate               - Method -
@@ -186,6 +208,7 @@
         [_emailBtn setImageEdgeInsets:UIEdgeInsetsMake(0.0, -4, 0.0, 0.0)];
         [_emailBtn setTitleColor:[UIColor colorWithHex:0x6f6e6e6e] forState:UIControlStateNormal];
         _emailBtn.titleLabel.font = FONT_SIZE(14);
+        [_emailBtn addTarget:self action:@selector(mailAction) forControlEvents:UIControlEventTouchUpInside];
     }
     return _emailBtn;
 }

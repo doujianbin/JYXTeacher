@@ -268,6 +268,7 @@
 		6D13500843FE5FF071290C01 /* libPods-JYXTeacher.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 804AEC4CCFCA77115A6840FD /* libPods-JYXTeacher.a */; };
 		7409B007216DBB6B004247EF /* ZJPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7409B005216DBB6B004247EF /* ZJPickerView.m */; };
 		7409B00A216F17F7004247EF /* JYXMessageDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7409B009216F17F7004247EF /* JYXMessageDetailViewController.m */; };
+		7409B00D2171D3A5004247EF /* UITabBar+littleRedDotBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 7409B00B2171D3A4004247EF /* UITabBar+littleRedDotBadge.m */; };
 		74A290872152315E0032DC11 /* JYXAboutMeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 74A290862152315E0032DC11 /* JYXAboutMeViewController.m */; };
 		74A2908A2152406E0032DC11 /* JYXWebViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 74A290892152406E0032DC11 /* JYXWebViewViewController.m */; };
 		74A2908D215243E60032DC11 /* JYXNavWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 74A2908C215243E60032DC11 /* JYXNavWebViewController.m */; };
@@ -878,6 +879,8 @@
 		7409B006216DBB6B004247EF /* ZJPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJPickerView.h; sourceTree = "<group>"; };
 		7409B008216F17F7004247EF /* JYXMessageDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JYXMessageDetailViewController.h; sourceTree = "<group>"; };
 		7409B009216F17F7004247EF /* JYXMessageDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JYXMessageDetailViewController.m; sourceTree = "<group>"; };
+		7409B00B2171D3A4004247EF /* UITabBar+littleRedDotBadge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITabBar+littleRedDotBadge.m"; sourceTree = "<group>"; };
+		7409B00C2171D3A4004247EF /* UITabBar+littleRedDotBadge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITabBar+littleRedDotBadge.h"; sourceTree = "<group>"; };
 		74A290852152315E0032DC11 /* JYXAboutMeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JYXAboutMeViewController.h; sourceTree = "<group>"; };
 		74A290862152315E0032DC11 /* JYXAboutMeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JYXAboutMeViewController.m; sourceTree = "<group>"; };
 		74A290882152406E0032DC11 /* JYXWebViewViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JYXWebViewViewController.h; sourceTree = "<group>"; };
@@ -1934,6 +1937,8 @@
 				188DC908212545A8001096C1 /* AGTabBarButton.m */,
 				188DC90F212545A8001096C1 /* AGBaseTabBarView.h */,
 				188DC90A212545A8001096C1 /* AGBaseTabBarView.m */,
+				7409B00C2171D3A4004247EF /* UITabBar+littleRedDotBadge.h */,
+				7409B00B2171D3A4004247EF /* UITabBar+littleRedDotBadge.m */,
 			);
 			path = JYXTabBarController;
 			sourceTree = "<group>";
@@ -2652,6 +2657,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-JYXTeacher/Pods-JYXTeacher-resources.sh",
 				"${PODS_ROOT}/AMap3DMap/MAMapKit.framework/AMap.bundle",
 				"${PODS_ROOT}/AliPay/AlipaySDK.bundle",
+				"${PODS_ROOT}/Bugtags/Bugtags.bundle",
 				"${PODS_ROOT}/IQKeyboardManager/IQKeyboardManager/Resources/IQKeyboardManager.bundle",
 				"${PODS_ROOT}/MJRefresh/MJRefresh/MJRefresh.bundle",
 				"${PODS_ROOT}/RongCloudIM/RongCloudIM/RongCloud.bundle",
@@ -2667,6 +2673,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AMap.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AlipaySDK.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Bugtags.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/IQKeyboardManager.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MJRefresh.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/RongCloud.bundle",
@@ -2767,6 +2774,7 @@
 				18500102212EA0AF002A05C9 /* MSPath.m in Sources */,
 				18FBADF3212AF8AE00FD1DFA /* JYXUserFeedbackViewController.m in Sources */,
 				18500114212ECB9C002A05C9 /* JYXHomeTeacherSearchInfoApi.m in Sources */,
+				7409B00D2171D3A5004247EF /* UITabBar+littleRedDotBadge.m in Sources */,
 				188DC95A2125562D001096C1 /* MASViewConstraint.m in Sources */,
 				185126B12132817E00F4E870 /* JYXHomeBasicMyShareApi.m in Sources */,
 				18FFDB0C2137CAFD009F6863 /* UIView+HExtension.m in Sources */,
@@ -3183,10 +3191,7 @@
 				GCC_PREFIX_HEADER = "$(SRCROOT)/JYXTeacher/JYXTeacher-Prefix.pch";
 				INFOPLIST_FILE = "$(PRODUCT_NAME)/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/JYXTeacher/Client/WeChatOpenSdk",
@@ -3235,10 +3240,7 @@
 				GCC_PREFIX_HEADER = "$(SRCROOT)/JYXTeacher/JYXTeacher-Prefix.pch";
 				INFOPLIST_FILE = "$(PRODUCT_NAME)/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/JYXTeacher/Client/WeChatOpenSdk",
@@ -3273,11 +3275,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BHG2U68K39;
 				INFOPLIST_FILE = JYXTeacherTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jyx.JYXTeacherTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -3292,11 +3290,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BHG2U68K39;
 				INFOPLIST_FILE = JYXTeacherTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jyx.JYXTeacherTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -3310,11 +3304,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BHG2U68K39;
 				INFOPLIST_FILE = JYXTeacherUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jyx.JYXTeacherUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -3328,11 +3318,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BHG2U68K39;
 				INFOPLIST_FILE = JYXTeacherUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jyx.JYXTeacherUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";

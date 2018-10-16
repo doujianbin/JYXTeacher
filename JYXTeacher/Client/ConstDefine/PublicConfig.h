@@ -42,7 +42,7 @@
 
 #define kAppDelegate                [UIApplication sharedApplication].delegate
 #define kAppScheme @"jyxteacher"
-#define RCIMAppKey @"e0x9wycfe45zq"
+#define RCIMAppKey @"x18ywvqfxbupc"
 
 #define JYXApplicationVersionKey @"JYXApplicationVersionKey"
 #define JYX_APP_ID               @""
@@ -107,8 +107,8 @@
 ///--------
 /// Font
 ///--------
-#define FONT_SIZE(s)           [UIFont fontWithName:@"PingFangSC-Medium" size:s]
-
+#define FONT_SIZE(s)           [UIFont systemFontOfSize:s]
+//#define FONT_SIZE(s)           [UIFont fontWithName:@"PingFangSC-Medium" size:s]
 ///--------
 /// Version
 ///--------

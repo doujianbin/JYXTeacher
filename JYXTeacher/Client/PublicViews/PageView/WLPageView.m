@@ -47,7 +47,6 @@
     [self.slideView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self);
     }];
-    
     self.cache = [[DLLRUCache alloc] initWithCount:4];
 }
 

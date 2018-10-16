@@ -130,6 +130,10 @@
 //提交
 - (void)uploadAction:(UIButton *)btn
 {
+    if (self.urlArray.count == 0) {
+        [MBProgressHUD showInfoMessage:@"请选择照片"];
+        return;
+    }
     JYXUser *user = [JYXUserManager shareInstance].user;
     JYXHomeTeacherSeniorityAuthApi *api = [[JYXHomeTeacherSeniorityAuthApi alloc] initWithUserid:user.userId WithToken:user.token pic:[self.urlArray componentsJoinedByString:@","]];
     [SVProgressHUD show];
@@ -160,7 +164,7 @@
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.text = NSLocalizedString(@"认证越全面，越能获得学生信任", nil);
         _titleLabel.font = FONT_SIZE(15);
-        _titleLabel.textColor = [UIColor colorWithHex:0x474747];
+        _titleLabel.textColor = [UIColor colorWithHexString:@"#000000"];
         [_titleLabel sizeToFit];
     }
     return _titleLabel;
@@ -220,7 +224,7 @@
         _remarkLabel = [[UILabel alloc] init];
         _remarkLabel.text = NSLocalizedString(@"国家承认证书：如教师资格证等", nil);
         _remarkLabel.font = FONT_SIZE(14);
-        _remarkLabel.textColor = [UIColor colorWithHex:0x474747];
+        _remarkLabel.textColor = [UIColor colorWithHexString:@"#000000"];
         [_remarkLabel sizeToFit];
     }
     return _remarkLabel;

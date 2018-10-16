@@ -23,6 +23,7 @@
 @property (nonatomic ,strong) UIButton   *btn_action;
 @property (nonatomic ,strong) UILabel    *lb_detail;
 @property (nonatomic, strong) NSDictionary *dic_teacherInfo;
+@property (nonatomic ,assign) BOOL          isRenZheng;
 
 @end
 
@@ -43,7 +44,9 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self selectTeacherStatus];
+    if (self.isRenZheng == NO) {
+        [self selectTeacherStatus];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -81,6 +84,7 @@
         make.edges.equalTo(self.view);
     }];
     [self.v_back setBackgroundColor:[UIColor clearColor]];
+    [self.v_back setHidden:YES];
     
     self.btn_action = [[UIButton alloc]init];
     [self.v_back addSubview:self.btn_action];
@@ -150,7 +154,7 @@
             self.lb_detail.font = [UIFont systemFontOfSize:11];
             [self.lb_detail setHidden:NO];
         }
-        else if ([dic[@"planhour"] intValue] == 0){
+        else if ([dic[@"planhour"] intValue] == 0 || [[dic objectForKey:@"gradesubject"] count] == 0){
             //认证通过   未接单设置
             [self.tableView setHidden:YES];
             [self.v_back setHidden:NO];
@@ -159,6 +163,7 @@
             self.lb_detail.font = [UIFont systemFontOfSize:11];
         }else{
             //认证通过  接单设置已完成
+            self.isRenZheng = YES;
             [self.tableView setHidden:NO];
             [self.v_back setHidden:YES];
             [self loadData];
@@ -199,8 +204,8 @@
         NSArray *array = [api fetchDataWithReformer:request];
         [self.dataSourceArray addObjectsFromArray:array];
         [self.tableView reloadData];
-        [self.tableView.mj_footer endRefreshing];
         if ([array count] <= 0) {
+            [self.tableView.mj_footer endRefreshing];
             [self.tableView.mj_footer endRefreshingWithNoMoreData];
         }
     } failure:^(__kindof RXBaseRequest *request) {

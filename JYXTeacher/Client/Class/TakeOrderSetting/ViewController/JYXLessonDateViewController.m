@@ -470,6 +470,10 @@
 }
 
 - (void)rightBarAction{
+    if (self.arr_data.count == 0) {
+        [MBProgressHUD showInfoMessage:@"请选择时间日期"];
+        return;
+    }
     NSString *str_time = @"";
     for (NSDictionary *dic in self.arr_data) {
         for (NSString *str in [dic objectForKey:@"times"]) {

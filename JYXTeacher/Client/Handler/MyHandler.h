@@ -35,4 +35,11 @@
 
 //获取共享列表数据
 + (void)getShareListDataPrepare:(PrepareBlock)prepare success:(SuccessBlock)success failed:(FailedBlock)failed;
+
+//测试接口
++ (void)textjiekouWithStr:(NSMutableDictionary *)str prepare:(PrepareBlock)prepare success:(SuccessBlock)success failed:(FailedBlock)failed;
+
+
+
+
 @end

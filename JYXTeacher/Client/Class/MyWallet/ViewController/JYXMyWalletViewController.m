@@ -38,6 +38,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self loadData];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -59,7 +60,7 @@
 {
     [super viewDidLoad];
     self.navigationItem.title = NSLocalizedString(@"我的钱包", nil);
-    [self loadData];
+    
 }
 
 - (void)setupViews

@@ -77,7 +77,7 @@
         _titleLabel = [[UILabel alloc] init];
         [_titleLabel sizeToFit];
         _titleLabel.font = FONT_SIZE(17);
-        _titleLabel.textColor = [UIColor colorWithHex:0x474747];
+        _titleLabel.textColor = [UIColor colorWithHexString:@"#000000"];
     }
     return _titleLabel;
 }

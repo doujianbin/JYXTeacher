@@ -32,7 +32,7 @@
         make.left.equalTo(self.contentView).offset(15);
 //        make.centerY.equalTo(self.contentView);
         make.top.mas_equalTo(10);
-        make.width.mas_equalTo(150);
+        make.width.mas_equalTo(250);
         make.height.mas_equalTo(20);
     }];
     
@@ -67,7 +67,7 @@
     if (!_titleLabel) {
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.font = FONT_SIZE(17);
-        _titleLabel.textColor = [UIColor colorWithHex:0x474747];
+        _titleLabel.textColor = [UIColor colorWithHexString:@"#000000"];
         [_titleLabel sizeToFit];
     }
     return _titleLabel;

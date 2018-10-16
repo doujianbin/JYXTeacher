@@ -204,7 +204,7 @@
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.text = NSLocalizedString(@"认证越全面，越能获得学生信任", nil);
         _titleLabel.font = FONT_SIZE(15);
-        _titleLabel.textColor = [UIColor colorWithHex:0x474747];
+        _titleLabel.textColor = [UIColor colorWithHexString:@"#000000"];
         [_titleLabel sizeToFit];
     }
     return _titleLabel;
@@ -268,7 +268,7 @@
         _idcardFrontLabel = [[UILabel alloc] init];
         _idcardFrontLabel.text = NSLocalizedString(@"身份证正面", nil);
         _idcardFrontLabel.font = FONT_SIZE(14);
-        _idcardFrontLabel.textColor = [UIColor colorWithHex:0x474747];
+        _idcardFrontLabel.textColor = [UIColor colorWithHexString:@"#000000"];
         [_idcardFrontLabel sizeToFit];
     }
     return _idcardFrontLabel;
@@ -280,7 +280,7 @@
         _idcardReverseLabel = [[UILabel alloc] init];
         _idcardReverseLabel.text = NSLocalizedString(@"身份证反面", nil);
         _idcardReverseLabel.font = FONT_SIZE(14);
-        _idcardReverseLabel.textColor = [UIColor colorWithHex:0x474747];
+        _idcardReverseLabel.textColor = [UIColor colorWithHexString:@"#000000"];
         [_idcardReverseLabel sizeToFit];
     }
     return _idcardReverseLabel;
@@ -292,7 +292,7 @@
         _workProveLabel = [[UILabel alloc] init];
         _workProveLabel.text = NSLocalizedString(@"工作相关证明", nil);
         _workProveLabel.font = FONT_SIZE(14);
-        _workProveLabel.textColor = [UIColor colorWithHex:0x474747];
+        _workProveLabel.textColor = [UIColor colorWithHexString:@"#000000"];
         [_workProveLabel sizeToFit];
     }
     return _workProveLabel;
@@ -304,7 +304,7 @@
         _remarkLabel = [[UILabel alloc] init];
         _remarkLabel.text = NSLocalizedString(@"说明文字：如实填写相关信息，提交相关认证，有助于提高您的信誉度，得到学生信赖，获得更多课程订单。", nil);
         _remarkLabel.font = FONT_SIZE(12);
-        _remarkLabel.textColor = [UIColor colorWithHex:0x474747];
+        _remarkLabel.textColor = [UIColor colorWithHexString:@"#000000"];
         _remarkLabel.numberOfLines = 0;
         [_remarkLabel sizeToFit];
         
