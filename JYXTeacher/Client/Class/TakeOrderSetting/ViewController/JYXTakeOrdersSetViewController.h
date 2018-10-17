@@ -8,6 +8,9 @@
 
 #import "JYXBaseViewController.h"
 
+typedef void(^TakeOrderSettingComplete)(void);
 @interface JYXTakeOrdersSetViewController : JYXBaseViewController
+
+@property (nonatomic ,copy)TakeOrderSettingComplete  takeOrderSettingComplete;
 
 @end

@@ -132,17 +132,6 @@
     [self setBadageNum];
 }
 
--(NSInteger)getUnreadCount{
-    int unreadMsgCount = [[RCIMClient sharedRCIMClient] getUnreadCount:@[
-                                                                         @(ConversationType_PRIVATE),
-                                                                         @(ConversationType_DISCUSSION),
-                                                                         @(ConversationType_APPSERVICE),
-                                                                         @(ConversationType_PUBLICSERVICE),
-                                                                         @(ConversationType_GROUP)
-                                                                         ]];
-    return unreadMsgCount ;
-}
-
 -(void)onRCIMReceiveMessage:(RCMessage *)message left:(int)left{
     dispatch_async(dispatch_get_main_queue(), ^{
         [self setBadageNum];
@@ -165,6 +154,17 @@
         }
     }
     
+}
+
+-(NSInteger)getUnreadCount{
+    int unreadMsgCount = [[RCIMClient sharedRCIMClient] getUnreadCount:@[
+                                                                         @(ConversationType_PRIVATE),
+                                                                         @(ConversationType_DISCUSSION),
+                                                                         @(ConversationType_APPSERVICE),
+                                                                         @(ConversationType_PUBLICSERVICE),
+                                                                         @(ConversationType_GROUP)
+                                                                         ]];
+    return unreadMsgCount ;
 }
 
 

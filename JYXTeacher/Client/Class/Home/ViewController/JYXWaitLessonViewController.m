@@ -37,7 +37,6 @@
 
 - (void)dealloc
 {
-    
 }
 
 - (void)loadView
@@ -49,6 +48,8 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectTeacherStatus) name:@"takeOrderSettingComplete" object:nil];
     //查询认证状态  接单设置状态
     if (self.isRenZheng == NO) {
         [self selectTeacherStatus];
@@ -133,7 +134,7 @@
         
     } success:^(id obj) {
         NSDictionary *dic = (NSMutableDictionary *)obj;
-        NSLog(@"dic = %@",dic);
+//        NSLog(@"dic = %@",dic);
         self.dic_teacherInfo = dic;
 
         //使用cardname进行资本资料是否填写的判断   其余使用单独字段
@@ -146,7 +147,7 @@
             [self.btn_action setTitle:@"去认证" forState:UIControlStateNormal];
             [self.lb_detail setText:@"您尚未进行认证"];
             self.lb_detail.font = [UIFont systemFontOfSize:11];
-            
+            self.isRenZheng = NO;
         }else if ([dic[@"cardstatu"] intValue] == 1 || [dic[@"educationstatu"] intValue] == 1){
             //认证中
             [self.tableView setHidden:YES];
@@ -155,6 +156,7 @@
             [self.lb_detail setHidden:NO];
             [self.lb_detail setText:@"认证中请耐心等待"];
             self.lb_detail.font = [UIFont systemFontOfSize:17];
+            self.isRenZheng = NO;
         }else if ([dic[@"cardstatu"] intValue] == 3 || [dic[@"educationstatu"] intValue] == 3){
             //认证失败
             [self.tableView setHidden:YES];
@@ -164,6 +166,7 @@
             [self.lb_detail setText:@"您的认证审核未通过"];
             [self.lb_detail setHidden:NO];
             self.lb_detail.font = [UIFont systemFontOfSize:11];
+            self.isRenZheng = NO;
         }
         else if ([dic[@"planhour"] intValue] == 0 || [[dic objectForKey:@"gradesubject"] count] == 0){
             //认证通过   未接单设置
@@ -172,6 +175,7 @@
             [self.btn_action setTitle:@"接单设置" forState:UIControlStateNormal];
             [self.lb_detail setText:@"未进行接单设置"];
             self.lb_detail.font = [UIFont systemFontOfSize:11];
+            self.isRenZheng = NO;
         }else{
             //认证通过  接单设置已完成
             [self.tableView setHidden:NO];
@@ -190,9 +194,9 @@
     self.page = 1;
     JYXUser *user = [JYXUserManager shareInstance].user;
     JYXHomeTeacherWorkListApi *api = [[JYXHomeTeacherWorkListApi alloc] initWithTeacherid:@(user.userId.integerValue) token:user.token type:@1 startime:_currentDateStr page:@1 limitnum:@10];
-    [SVProgressHUD show];
+//    [SVProgressHUD show];
     [api sendRequestWithCompletionBlockWithSuccess:^(__kindof RXBaseRequest *request) {
-        [SVProgressHUD dismiss];
+//        [SVProgressHUD dismiss];
         [self.tableView.mj_header endRefreshing];
         [self.dataSourceArray removeAllObjects];
         NSArray *arr = [api fetchDataWithReformer:request];
@@ -207,7 +211,7 @@
         [self.tableView reloadData];
     
     } failure:^(__kindof RXBaseRequest *request) {
-        [SVProgressHUD dismiss];
+//        [SVProgressHUD dismiss];
         [self.tableView.mj_header endRefreshing];
     }];
     

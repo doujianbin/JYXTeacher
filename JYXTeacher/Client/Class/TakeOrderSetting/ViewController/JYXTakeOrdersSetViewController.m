@@ -127,7 +127,13 @@
 #pragma mark - eventResponse                - Method -
 
 #pragma mark - customDelegate               - Method -
-
+- (void)naviBack:(UIButton *)btn
+{
+    [self.navigationController popViewControllerAnimated:YES];
+    if (self.takeOrderSettingComplete) {
+        self.takeOrderSettingComplete();
+    }
+}
 #pragma mark - notification                 - Method -
 
 - (void)rightBarAction{

@@ -137,9 +137,10 @@
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
     NSString *price = [textField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
-    if (price.doubleValue <= [self.parameter[@"price"] doubleValue]) {
-        price = self.parameter[@"price"];
-    }
+//    if (price.doubleValue <= [self.parameter[@"price"] doubleValue]) {
+////        [MBProgressHUD showInfoMessage:@"设置价格不能比平台默认价格低"];
+//        price = self.parameter[@"price"];
+//    }
     textField.text = price;
 }
 

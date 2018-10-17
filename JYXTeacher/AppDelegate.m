@@ -102,11 +102,11 @@
     
     if (SERVER_TYPE == 1) {
         //appstore
-        [Bugtags startWithAppKey:@"f3a1acdf09a1b3e4dd13645873284ce2" invocationEvent:BTGInvocationEventNone];
+        [Bugtags startWithAppKey:@"c88f6606dbb54fa97737bf30e2d6523a" invocationEvent:BTGInvocationEventNone];
     }
     if (SERVER_TYPE == 2) {
         //测试环境
-        [Bugtags startWithAppKey:@"f3a1acdf09a1b3e4dd13645873284ce2" invocationEvent:BTGInvocationEventBubble];
+        [Bugtags startWithAppKey:@"c88f6606dbb54fa97737bf30e2d6523a" invocationEvent:BTGInvocationEventBubble];
     }
     
     return isFinish;

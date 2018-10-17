@@ -21,8 +21,10 @@
 #import "TakeOrderSettingHandler.h"
 #import "JYXCertificationBaseInfoViewController.h"
 #import "JYXCertificationMaterialsViewController.h"
+#import "AGBaseTabBarController.h"
+#import "UITabBar+littleRedDotBadge.h"
 
-@interface JYXWorkHomeViewController ()<WLPageViewDataSource, WLPageViewDelegate>
+@interface JYXWorkHomeViewController ()<WLPageViewDataSource, WLPageViewDelegate,RCIMReceiveMessageDelegate>
 @property (nonatomic, strong) WLPageView *pageView;
 @property (nonatomic, strong) NSMutableArray *vcArrM;
 @property (nonatomic, strong) HMSegmentedControl *segmentedControl;
@@ -112,6 +114,7 @@
     
     //连接融云服务器
     [self connectRCIM];
+    [[RCIM sharedRCIM] setReceiveMessageDelegate:self];
     
     [self setLeftBarButton];
     [self setRightBarButton];
@@ -122,6 +125,7 @@
     JYXWaitLessonViewController *waitLessonVC = [[JYXWaitLessonViewController alloc] init];
     waitLessonVC.detailVC = self;
     [self.vcArrM addObject:waitLessonVC];
+    
     //已上课
     JYXAlreadyLessonViewController *alreadyLessonVC = [[JYXAlreadyLessonViewController alloc] init];
     alreadyLessonVC.detailVC = self;
@@ -223,6 +227,7 @@
             //如果没有设置token有效期却提示token错误，请检查您客户端和服务器的appkey是否匹配，还有检查您获取token的流程。
             NSLog(@"token错误");
         }];
+        [self setBadageNum];
     } failure:^(__kindof RXBaseRequest *request) {
         [SVProgressHUD dismiss];
     }];
@@ -291,6 +296,9 @@
     }else{
         JYXTakeOrdersSetViewController *vc = [[JYXTakeOrdersSetViewController alloc]init];
         [self.navigationController pushViewController:vc animated:YES];
+        vc.takeOrderSettingComplete = ^{
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"takeOrderSettingComplete" object:nil];
+        };
     }
 }
 
@@ -372,6 +380,43 @@
 {
     [self.pageView setSelectedIndex:sender.selectedSegmentIndex];
 }
+
+#pragma mark - RongColude-cDelegate          - Method -
+-(void)onRCIMReceiveMessage:(RCMessage *)message left:(int)left{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self setBadageNum];
+    });
+}
+
+-(void)setBadageNum{
+    
+    NSInteger unreadMessageCount = [self getUnreadCount];
+    
+    // 设置tabbar 的icon
+    AGBaseTabBarController *tabbar = (AGBaseTabBarController *)[UIApplication sharedApplication].keyWindow.rootViewController ;
+    if ([tabbar isKindOfClass:[AGBaseTabBarController class]]) {
+        
+        // 如果没有未读消息返回值为nil
+        if (unreadMessageCount == 0 || unreadMessageCount == (long)nil) {
+            [tabbar.tabBar hideNumBadgeOnItemIndex:1];
+        }else{
+            [tabbar.tabBar showNumBadgeOnItemIndex:1 Count:(int)unreadMessageCount];
+        }
+    }
+    
+}
+
+-(NSInteger)getUnreadCount{
+    int unreadMsgCount = [[RCIMClient sharedRCIMClient] getUnreadCount:@[
+                                                                         @(ConversationType_PRIVATE),
+                                                                         @(ConversationType_DISCUSSION),
+                                                                         @(ConversationType_APPSERVICE),
+                                                                         @(ConversationType_PUBLICSERVICE),
+                                                                         @(ConversationType_GROUP)
+                                                                         ]];
+    return unreadMsgCount ;
+}
+
 
 #pragma mark - objective-cDelegate          - Method -
 
