@@ -21,6 +21,7 @@ target 'JYXTeacher' do
   pod 'UMCShare/UI'
   pod 'UMCShare/Social/ReducedWeChat'
   pod 'UMCShare/Social/ReducedQQ'
+  pod 'UMCAnalytics'
   # 融云
   pod 'RongCloudIM/IMLib', '~> 2.8.3'
   pod 'RongCloudIM/IMKit', '~> 2.8.3'

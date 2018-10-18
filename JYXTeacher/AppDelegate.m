@@ -23,7 +23,7 @@
 #import "MyHandler.h"
 #import "TeacherWorkHandler.h"
 #import <Bugtags/Bugtags.h>
-
+#import <UMCAnalytics/UMAnalytics/MobClick.h>
 @interface AppDelegate ()<RCIMUserInfoDataSource,WXApiDelegate,JPUSHRegisterDelegate>
 
 @end
@@ -33,12 +33,14 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    [NSThread sleepForTimeInterval:3];
+    [NSThread sleepForTimeInterval:2];
     [self.window makeKeyAndVisible];
     
     self.window = [JYXApplicationHandler shareInstance].window;
     
     [UMConfigure initWithAppkey:@"5b9f2586b27b0a4f5f0000c8" channel:@"App Store"];
+    [MobClick setScenarioType:E_UM_NORMAL];
+    [MobClick setCrashReportEnabled:YES];
     
     [self configUSharePlatforms];
     
@@ -108,7 +110,6 @@
         //测试环境
         [Bugtags startWithAppKey:@"c88f6606dbb54fa97737bf30e2d6523a" invocationEvent:BTGInvocationEventBubble];
     }
-    
     return isFinish;
 }
 

@@ -46,6 +46,8 @@ PODS:
   - SVProgressHUD (2.2.5)
   - TZImagePickerController (3.0.0)
   - UICollectionViewLeftAlignedLayout (1.0.2)
+  - UMCAnalytics (5.5.1):
+    - UMCCommon
   - UMCCommon (1.5.2)
   - UMCShare/Core (6.9.4):
     - UMCCommon
@@ -80,6 +82,7 @@ DEPENDENCIES:
   - SVProgressHUD (~> 2.2.5)
   - TZImagePickerController (~> 3.0.0)
   - UICollectionViewLeftAlignedLayout (~> 1.0.2)
+  - UMCAnalytics
   - UMCShare/Social/ReducedQQ
   - UMCShare/Social/ReducedWeChat
   - UMCShare/UI
@@ -106,9 +109,10 @@ SPEC CHECKSUMS:
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   TZImagePickerController: fb2642a6530dc12eb38c14a53972fd6869327677
   UICollectionViewLeftAlignedLayout: 830bf6fa5bab9f9b464f62e3384f9d2e00b3c0f6
+  UMCAnalytics: 0aff87e39008e2a650e5917430db0da2de2f8495
   UMCCommon: 4392868ac47ff1b101663106bb114ba616fabbad
   UMCShare: aa233aecad67979930fe43f3a2f676023b669439
 
-PODFILE CHECKSUM: 78ff97d130041483a847d11899d4864c8bc8b734
+PODFILE CHECKSUM: 86b9e946e0e086c4a8abc82bb8e00de4078cdc2c
 
 COCOAPODS: 1.4.0
