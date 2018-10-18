@@ -238,9 +238,9 @@
     NSInteger timeSp = [[NSNumber numberWithDouble:[dayView.date timeIntervalSince1970]] integerValue];
     NSLog(@"%ld---%ld",interval, timeSp);
     NSDate* myDate = [NSDate dateWithTimeIntervalSince1970:interval+timeSp];
-    if ([myDate isToday]) {
-        myDate = [NSDate dateWithTimeIntervalSince1970:interval+[[NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970]] integerValue]];
-    }
+//    if ([myDate isToday]) {
+//        myDate = [NSDate dateWithTimeIntervalSince1970:interval+[[NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970]] integerValue]];
+//    }
     
     if(![_calendarManager.dateHelper date:_calendarContentView.date isTheSameMonthThan:myDate]){
         if([_calendarContentView.date compare:myDate] == NSOrderedAscending){

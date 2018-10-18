@@ -1637,6 +1637,7 @@
 			children = (
 				188DC889212522BA001096C1 /* AppDelegate.h */,
 				188DC888212522BA001096C1 /* AppDelegate.m */,
+				74B9FB1F2147973100257243 /* APIConfig.h */,
 				74B9FB092143955900257243 /* JYXTeacher.entitlements */,
 				74B9D23B2150F981005064C9 /* Assets.xcassets */,
 				188DC874212521B0001096C1 /* Client */,
@@ -2413,7 +2414,6 @@
 		74B9FB452147A15D00257243 /* Handler */ = {
 			isa = PBXGroup;
 			children = (
-				74B9FB1F2147973100257243 /* APIConfig.h */,
 				74E7A789214A0FDC003FE137 /* TeacherWorkHandler.h */,
 				74E7A788214A0FDC003FE137 /* TeacherWorkHandler.m */,
 				74E7A785214A0FCA003FE137 /* MyHandler.h */,

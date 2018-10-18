@@ -13,6 +13,7 @@
 @interface JYXTransactionDetailViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataSourceArray;
+@property (nonatomic, strong) UILabel     *lb_noData;
 @end
 
 @implementation JYXTransactionDetailViewController
@@ -53,6 +54,21 @@
 {
     [super viewDidLoad];
     self.navigationItem.title = NSLocalizedString(@"交易明细", nil);
+    
+    self.lb_noData = [[UILabel alloc]init];
+    [self.view addSubview:self.lb_noData];
+    [self.lb_noData mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self.view).offset(-50);
+        make.left.mas_equalTo(0);
+        make.width.mas_equalTo(SCREEN_WIDTH);
+        make.height.mas_equalTo(20);
+    }];
+    [self.lb_noData setText:@"暂无交易明细数据"];
+    [self.lb_noData setTextColor:[UIColor colorWithHexString:@"#6D6D6D"]];
+    self.lb_noData.font = [UIFont systemFontOfSize:17];
+    [self.lb_noData setTextAlignment:NSTextAlignmentCenter];
+    [self.lb_noData setHidden:YES];
+    
     [self loadData];
 }
 
@@ -72,10 +88,16 @@
     [api sendRequestWithCompletionBlockWithSuccess:^(__kindof RXBaseRequest *request) {
         [SVProgressHUD dismiss];
         NSArray *array = [api fetchDataWithReformer:request];
+        if (array.count == 0) {
+            [self.lb_noData setHidden:NO];
+        }else{
+            [self.lb_noData setHidden:YES];
+        }
         self.dataSourceArray = [array mutableCopy];
         [self.tableView reloadData];
     } failure:^(__kindof RXBaseRequest *request) {
         [SVProgressHUD dismiss];
+        [self.lb_noData setHidden:YES];
     }];
 }
 

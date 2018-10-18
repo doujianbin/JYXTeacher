@@ -41,6 +41,9 @@
     [UMConfigure initWithAppkey:@"5b9f2586b27b0a4f5f0000c8" channel:@"App Store"];
     [MobClick setScenarioType:E_UM_NORMAL];
     [MobClick setCrashReportEnabled:YES];
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
+    [MobClick setVersion:[app_Version integerValue]];
     
     [self configUSharePlatforms];
     
