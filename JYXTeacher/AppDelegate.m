@@ -277,6 +277,7 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     return dic;
 }
 
+
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary*)options{
     BOOL result = [[UMSocialManager defaultManager] handleOpenURL:url];
     if (!result) {

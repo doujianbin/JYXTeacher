@@ -61,11 +61,11 @@
     UIImage *shadowImage = [UIImage imageWithColor:[UIColor clearColor]
                                      size:CGSizeMake(self.navigationController.navigationBar.size.width, 0.5)];
     
-    UIColor *titleColor = [UIColor colorWithHex:0xffffff];
     
     [self.navigationController.navigationBar setBackgroundImage:backgroundImage
                                                   forBarMetrics:UIBarMetricsDefault];
     
+    UIColor *titleColor = [UIColor colorWithHex:0xffffff];
     [self.navigationController.navigationBar setShadowImage:shadowImage];
     
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : titleColor,

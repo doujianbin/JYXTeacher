@@ -188,4 +188,33 @@
                                           }];
 }
 
+
+//教师修改名师预设价格
++ (void)teacherChangeYuShePriceWithCityPrice:(NSString *)cityPrice type:(NSString *)type Prepare:(PrepareBlock)prepare success:(SuccessBlock)success failed:(FailedBlock)failed{
+    NSString *str_url = [NSString stringWithFormat:@"%@%@",API_Login,API_POST_TeacherEdit];
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    JYXUser *user = [JYXUserManager shareInstance].user;
+    if (user.token) {
+        [dic setObject:user.token forKey:@"token"];
+    }
+    if (user.userId) {
+        [dic setObject:user.userId forKey:@"userid"];
+    }
+    [dic setObject:cityPrice forKey:type];
+    
+    [[RTHttpClient defaultClient] requestWithPath:str_url
+                                           method:RTHttpRequestGet                                   parameters:dic
+                                          prepare:prepare
+                                          success:^(NSURLSessionDataTask *task, id responseObject) {
+                                              if ([[responseObject objectForKey:@"code"] intValue] == 1000) {
+                                                  success(nil);
+                                              }else{
+                                                  [MBProgressHUD hideHUD];
+                                                  [MBProgressHUD showInfoMessage:[responseObject objectForKey:@"msg"]];
+                                              }
+                                          } failure:^(NSURLSessionDataTask *task, NSError *error) {
+                                              [self handlerErrorWithTask:task error:error complete:failed];
+                                          }];
+}
+
 @end

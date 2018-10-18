@@ -8,6 +8,7 @@
 
 #import "JYXChangeTeacherPriceViewController.h"
 #import "JYXHomeTeacherTeacherEditApi.h"
+#import "TakeOrderSettingHandler.h"
 
 @interface JYXChangeTeacherPriceViewController ()<UITextFieldDelegate>
 @property (nonatomic, strong) UITextField *priceTextField;
@@ -77,60 +78,94 @@
 #pragma mark - eventResponse                - Method -
 - (void)saveAction:(UIButton *)btn
 {
-    JYXUser *user = [JYXUserManager shareInstance].user;
-    switch ([self.parameter[@"id"] integerValue]) {
-        case 1:
-            user.citypriceone = self.priceTextField.text;
-            break;
-        case 2:
-            user.citypricetwo = self.priceTextField.text;
-            break;
-        case 3:
-            user.citypricethree = self.priceTextField.text;
-            break;
-        case 4:
-            user.citypricefour = self.priceTextField.text;
-            break;
-        case 5:
-            user.citypricefive = self.priceTextField.text;
-            break;
-        case 6:
-            user.citypricesix = self.priceTextField.text;
-            break;
-        case 7:
-            user.citypriceseven = self.priceTextField.text;
-            break;
-        case 8:
-            user.citypriceeight = self.priceTextField.text;
-            break;
-        case 9:
-            user.citypricenine = self.priceTextField.text;
-            break;
-        case 10:
-            user.citypriceten = self.priceTextField.text;
-            break;
-        case 11:
-            user.citypriceeleven = self.priceTextField.text;
-            break;
-        case 12:
-            user.citypricetwelve = self.priceTextField.text;
-            break;
-        default:
-            break;
+    NSString *type = @"";
+    if ([[self.parameter objectForKey:@"id"] intValue] == 1) {
+        type = @"citypriceone";
+    }
+    if ([[self.parameter objectForKey:@"id"] intValue] == 2) {
+        type = @"citypricetwo";
+    }
+    if ([[self.parameter objectForKey:@"id"] intValue] == 3) {
+        type = @"citypricethree";
+    }
+    if ([[self.parameter objectForKey:@"id"] intValue] == 4) {
+        type = @"citypricefour";
+    }
+    if ([[self.parameter objectForKey:@"id"] intValue] == 5) {
+        type = @"citypricefive";
+    }
+    if ([[self.parameter objectForKey:@"id"] intValue] == 6) {
+        type = @"citypricesix";
+    }
+    if ([[self.parameter objectForKey:@"id"] intValue] == 7) {
+        type = @"citypriceseven";
+    }
+    if ([[self.parameter objectForKey:@"id"] intValue] == 8) {
+        type = @"citypriceeight";
+    }
+    if ([[self.parameter objectForKey:@"id"] intValue] == 9) {
+        type = @"citypricenine";
+    }
+    if ([[self.parameter objectForKey:@"id"] intValue] == 10) {
+        type = @"citypriceten";
+    }
+    if ([[self.parameter objectForKey:@"id"] intValue] == 11) {
+        type = @"citypriceeleven";
+    }
+    if ([[self.parameter objectForKey:@"id"] intValue] == 12) {
+        type = @"citypricetwelve";
     }
     
-    JYXHomeTeacherTeacherEditApi *api = [[JYXHomeTeacherTeacherEditApi alloc] initWithUserid:user.userId token:user.token cardname:user.cardname citypriceone:user.citypriceone citypricetwo:user.citypricetwo citypricethree:user.citypricethree citypricefour:user.citypricefour citypricefive:user.citypricefive citypricesix:user.citypricesix citypriceseven:user.citypriceseven citypriceeight:user.citypriceeight citypricenine:user.citypricenine citypriceten:user.citypriceten citypriceeleven:user.citypriceeleven citypricetwelve:user.citypricetwelve];
-    [SVProgressHUD show];
-    [api sendRequestWithCompletionBlockWithSuccess:^(__kindof RXBaseRequest *request) {
-        [SVProgressHUD dismiss];
-        NSNumber *isSuccess = [api fetchDataWithReformer:request];
-        if (isSuccess.boolValue) {
-            [MBProgressHUD showInfoMessage:@"修改成功！"];
-            [self.navigationController popViewControllerAnimated:YES];
+    [TakeOrderSettingHandler teacherChangeYuShePriceWithCityPrice:self.priceTextField.text type:type Prepare:^{
+        
+    } success:^(id obj) {
+        JYXUser *user = [JYXUserManager shareInstance].user;
+        switch ([self.parameter[@"id"] integerValue]) {
+            case 1:
+                user.citypriceone = self.priceTextField.text;
+                break;
+            case 2:
+                user.citypricetwo = self.priceTextField.text;
+                break;
+            case 3:
+                user.citypricethree = self.priceTextField.text;
+                break;
+            case 4:
+                user.citypricefour = self.priceTextField.text;
+                break;
+            case 5:
+                user.citypricefive = self.priceTextField.text;
+                break;
+            case 6:
+                user.citypricesix = self.priceTextField.text;
+                break;
+            case 7:
+                user.citypriceseven = self.priceTextField.text;
+                break;
+            case 8:
+                user.citypriceeight = self.priceTextField.text;
+                break;
+            case 9:
+                user.citypricenine = self.priceTextField.text;
+                break;
+            case 10:
+                user.citypriceten = self.priceTextField.text;
+                break;
+            case 11:
+                user.citypriceeleven = self.priceTextField.text;
+                break;
+            case 12:
+                user.citypricetwelve = self.priceTextField.text;
+                break;
+            default:
+                break;
         }
-    } failure:^(__kindof RXBaseRequest *request) {
-        [SVProgressHUD dismiss];
+        [MBProgressHUD showInfoMessage:@"修改成功！"];
+        [self.navigationController popViewControllerAnimated:YES];
+    } failed:^(NSInteger statusCode, id json) {
+        
     }];
+
 }
 
 #pragma mark - customDelegate               - Method -

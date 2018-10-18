@@ -111,37 +111,37 @@
 //    }];
     
     //公益基金
-    [self addSubview:self.fundTitleLabel];
-    [self.fundTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self).offset(12);
-        make.top.equalTo(self.line3.mas_bottom).offset(12);
-    }];
-    
-    [self addSubview:self.fundImg];
-    [self.fundImg mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.fundTitleLabel.mas_right).offset(8);
-        make.centerY.equalTo(self.fundTitleLabel);
-        make.width.height.offset(13);
-    }];
-    
-    [self addSubview:self.fundLabel];
-    [self.fundLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.fundTitleLabel);
-        make.right.equalTo(self).offset(-12);
-    }];
-    
-    [self addSubview:self.line5];
-    [self.line5 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(self);
-        make.height.offset(1);
-        make.top.equalTo(self.fundTitleLabel.mas_bottom).offset(12);
-    }];
+//    [self addSubview:self.fundTitleLabel];
+//    [self.fundTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.equalTo(self).offset(12);
+//        make.top.equalTo(self.line3.mas_bottom).offset(12);
+//    }];
+//
+//    [self addSubview:self.fundImg];
+//    [self.fundImg mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.equalTo(self.fundTitleLabel.mas_right).offset(8);
+//        make.centerY.equalTo(self.fundTitleLabel);
+//        make.width.height.offset(13);
+//    }];
+//
+//    [self addSubview:self.fundLabel];
+//    [self.fundLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerY.equalTo(self.fundTitleLabel);
+//        make.right.equalTo(self).offset(-12);
+//    }];
+//
+//    [self addSubview:self.line5];
+//    [self.line5 mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.right.equalTo(self);
+//        make.height.offset(1);
+//        make.top.equalTo(self.fundTitleLabel.mas_bottom).offset(12);
+//    }];
     
     //平台提成
     [self addSubview:self.deductionTitleLabel];
     [self.deductionTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self).offset(12);
-        make.top.equalTo(self.line5.mas_bottom).offset(12);
+        make.top.equalTo(self.line3.mas_bottom).offset(12);
         make.bottom.equalTo(self).offset(-12);
     }];
     

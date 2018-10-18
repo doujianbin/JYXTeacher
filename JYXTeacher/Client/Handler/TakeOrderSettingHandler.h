@@ -21,4 +21,7 @@
 + (void)postTeacherLessonRangeWithRangeStr:(NSString *)rangeStr prepare:(PrepareBlock)prepare success:(SuccessBlock)success failed:(FailedBlock)failed;
 
 + (void)postTeacherFangShiWithTeachertohome:(BOOL)teachertohome studenttohome:(BOOL)studenttohome addr:(NSString *)addr otheraddr:(BOOL)otheraddr shareaddr:(BOOL)shareaddr prepare:(PrepareBlock)prepare success:(SuccessBlock)success failed:(FailedBlock)failed;
+
+//教师修改名师预设价格
++ (void)teacherChangeYuShePriceWithCityPrice:(NSString *)cityPrice type:(NSString *)type Prepare:(PrepareBlock)prepare success:(SuccessBlock)success failed:(FailedBlock)failed;
 @end

@@ -67,7 +67,7 @@
         make.edges.equalTo(self.view);
     }];
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
-    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMore)];
+//    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMore)];
 }
 
 - (void)loadData
@@ -78,12 +78,13 @@
     [SVProgressHUD show];
     [api sendRequestWithCompletionBlockWithSuccess:^(__kindof RXBaseRequest *request) {
         [SVProgressHUD dismiss];
+        [self.dataSourceArray removeAllObjects];
         NSDictionary *dict = [api fetchDataWithReformer:request];
         self.headerMyDataDict = dict[@"my"];
         self.dataSourceArray = [dict[@"list"] mutableCopy];
         [self.tableView reloadData];
         [self.tableView.mj_header endRefreshing];
-        [self.tableView.mj_footer resetNoMoreData];
+//        [self.tableView.mj_footer resetNoMoreData];
     } failure:^(__kindof RXBaseRequest *request) {
         [SVProgressHUD dismiss];
         [self.tableView.mj_header endRefreshing];

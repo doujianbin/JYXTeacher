@@ -13,13 +13,14 @@
 #import "WXApiManager.h"
 #import <AlipaySDK/AlipaySDK.h>
 #import "JYXWorkHomeViewController.h"
-
+#import <UMCAnalytics/UMAnalytics/MobClick.h>
 
 @interface JYXPayPenaltyViewController ()<WXApiManagerDelegate>
 
 @property (nonatomic ,strong)UIButton  *btn_selWechat;
 @property (nonatomic ,strong)UIButton  *btn_selAlipay;
-@property (nonatomic ,strong)NSString  *paytype;         //1支付宝2微信
+@property (nonatomic ,strong)UIButton  *btn_selYinLian;
+@property (nonatomic ,strong)NSString  *paytype;         //1支付宝2微信3银联
 @property (nonatomic ,strong)UILabel   *lb_money;
 @property (nonatomic, strong) UIWindow *window;
 
@@ -86,10 +87,15 @@
     [btn_wechat setBackgroundImage:[UIImage imageNamed:@"wechatPay"] forState:UIControlStateNormal];
     [btn_wechat addTarget:self action:@selector(btn_wechatAction) forControlEvents:UIControlEventTouchUpInside];
     
+    UIButton *btn_yinlian = [[UIButton alloc]initWithFrame:CGRectMake(btn_wechat.right + 89, lb3.bottom + 21, 36, 36)];
+    [self.view addSubview:btn_yinlian];
+    [btn_yinlian setBackgroundImage:[UIImage imageNamed:@"unionPay"] forState:UIControlStateNormal];
+    [btn_yinlian addTarget:self action:@selector(btn_yinlianAction) forControlEvents:UIControlEventTouchUpInside];
+    
     self.btn_selAlipay = [[UIButton alloc]initWithFrame:CGRectMake(35, btn_alipay.bottom + 19, 58, 14)];
     [self.view addSubview:self.btn_selAlipay];
     [self.btn_selAlipay setTitle:@"支付宝" forState:UIControlStateNormal];
-    [self.btn_selAlipay setImage:[UIImage imageNamed:@"paymentBtn"] forState:UIControlStateNormal];
+    [self.btn_selAlipay setImage:[UIImage imageNamed:@"paymentBtn_Sel"] forState:UIControlStateNormal];
     [self.btn_selAlipay setTitleColor:[UIColor colorWithHexString:@"#7D7D7D"] forState:UIControlStateNormal];
     self.btn_selAlipay.titleLabel.font = [UIFont systemFontOfSize:14];
 //    [self.btn_selAlipay sizeToFit];
@@ -102,9 +108,19 @@
     [self.btn_selWechat setImage:[UIImage imageNamed:@"paymentBtn"] forState:UIControlStateNormal];
     [self.btn_selWechat setTitleColor:[UIColor colorWithHexString:@"#7D7D7D"] forState:UIControlStateNormal];
     self.btn_selWechat.titleLabel.font = [UIFont systemFontOfSize:14];
-//    [self.btn_selWechat sizeToFit];
     [self.btn_selWechat setImageEdgeInsets:UIEdgeInsetsMake(0.0, -4, 0.0, 0.0)];
     [self.btn_selWechat addTarget:self action:@selector(btn_wechatAction) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.btn_selYinLian = [[UIButton alloc]initWithFrame:CGRectMake(285, btn_yinlian.bottom + 19, 58, 14)];
+    [self.view addSubview:self.btn_selYinLian];
+    [self.btn_selYinLian setTitle:@"银联" forState:UIControlStateNormal];
+    [self.btn_selYinLian setImage:[UIImage imageNamed:@"paymentBtn"] forState:UIControlStateNormal];
+    [self.btn_selYinLian setTitleColor:[UIColor colorWithHexString:@"#7D7D7D"] forState:UIControlStateNormal];
+    self.btn_selYinLian.titleLabel.font = [UIFont systemFontOfSize:14];
+    [self.btn_selYinLian setImageEdgeInsets:UIEdgeInsetsMake(0.0, -4, 0.0, 0.0)];
+    [self.btn_selYinLian addTarget:self action:@selector(btn_yinlianAction) forControlEvents:UIControlEventTouchUpInside];
+    
+    
     
     UIButton *btn_tijiao = [[UIButton alloc] init];
     [self.view addSubview:btn_tijiao];
@@ -139,11 +155,21 @@
     self.paytype = @"2";
     [self.btn_selWechat setImage:[UIImage imageNamed:@"paymentBtn_Sel"] forState:UIControlStateNormal];
     [self.btn_selAlipay setImage:[UIImage imageNamed:@"paymentBtn"] forState:UIControlStateNormal];
+    [self.btn_selYinLian setImage:[UIImage imageNamed:@"paymentBtn"] forState:UIControlStateNormal];
+    
 }
 
 - (void)btn_alipyAction{
     self.paytype = @"1";
     [self.btn_selAlipay setImage:[UIImage imageNamed:@"paymentBtn_Sel"] forState:UIControlStateNormal];
+    [self.btn_selWechat setImage:[UIImage imageNamed:@"paymentBtn"] forState:UIControlStateNormal];
+    [self.btn_selYinLian setImage:[UIImage imageNamed:@"paymentBtn"] forState:UIControlStateNormal];
+}
+
+- (void)btn_yinlianAction{
+    self.paytype = @"3";
+    [self.btn_selYinLian setImage:[UIImage imageNamed:@"paymentBtn_Sel"] forState:UIControlStateNormal];
+    [self.btn_selAlipay setImage:[UIImage imageNamed:@"paymentBtn"] forState:UIControlStateNormal];
     [self.btn_selWechat setImage:[UIImage imageNamed:@"paymentBtn"] forState:UIControlStateNormal];
 }
 
@@ -165,6 +191,16 @@
             
         }];
         
+    }else if ([self.paytype isEqualToString:@"3"]){
+        [MobClick event:@"yinliandianji"];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:@"我们正在加紧开通银联支付，给您造成不便敬请谅解\n可以尝试使用微信支付或者支付宝" preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"知道了" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+            
+        }];
+        [alert addAction:cancel];
+        [self presentViewController:alert animated:YES completion:nil];
     }else{
         [TeacherWorkHandler teacherpayforWithPaytype:self.paytype money:self.str_penalty prepare:^{
             

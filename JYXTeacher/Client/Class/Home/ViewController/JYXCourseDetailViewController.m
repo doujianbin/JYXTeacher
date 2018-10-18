@@ -39,6 +39,7 @@
 @property (nonatomic, strong) UIView *totalIncomeBgView;//收入合计
 @property (nonatomic, strong) UILabel *totalIncomeTitleLabel;
 @property (nonatomic, strong) UILabel *totalIncomeLabel;
+@property (nonatomic, strong) UILabel *jijinLabel;
 
 //底部bar
 @property (nonatomic, strong) JYXCourseDetailBottomBarView *bottomBarView;
@@ -101,6 +102,7 @@
     [self.mScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(self.view);
         make.top.equalTo(self.topBarBgView.mas_bottom);
+        
     }];
     
     [self.mScrollView addSubview:self.contentView];
@@ -114,7 +116,7 @@
     [self.bottomBarView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.bottom.equalTo(self.view);
         make.top.equalTo(self.mScrollView.mas_bottom);
-        make.height.offset(73);
+        make.height.offset(63);
     }];
     
     [self.bottomBarView.previewHomeworkBtn addTarget:self action:@selector(previewHomeworkBtnAction) forControlEvents:UIControlEventTouchUpInside];
@@ -161,11 +163,19 @@
         make.top.equalTo(self.coursePersonNumberView.mas_bottom).offset(40);
     }];
     
+    [self.contentView addSubview:self.jijinLabel];
+    [self.jijinLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(7);
+        make.right.equalTo(self.courseCostView).offset(-7);
+        make.top.equalTo(self.courseCostView.mas_bottom).offset(6.5);
+        make.height.mas_equalTo(18);
+    }];
+    
     [self.contentView addSubview:self.totalIncomeBgView];
     [self.totalIncomeBgView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(self.contentView);
         make.height.offset(43);
-        make.top.equalTo(self.courseCostView.mas_bottom).offset(10);
+        make.top.equalTo(self.jijinLabel.mas_bottom).offset(10);
         make.bottom.equalTo(self.contentView);
     }];
     
@@ -198,7 +208,7 @@
         [self.courseDemandView configCourseDemandViewWithData:self.dict];
         [self.coursePersonNumberView configCoursePersonNumberViewWithData:self.dict];
         [self.courseCostView configCourseCostViewWithData:self.dict];
-        self.totalIncomeLabel.text = [NSString stringWithFormat:@"%.2f",[self.dict[@"teacherPrice"] doubleValue]];
+        self.totalIncomeLabel.text = [NSString stringWithFormat:@"￥%.2f",[self.dict[@"teacherPrice"] doubleValue]];
         if ([self.courseType intValue] == 0) {
             self.bottomType = [self.courseType intValue] + 1;
         }
@@ -491,6 +501,19 @@
         [_totalIncomeLabel sizeToFit];
     }
     return _totalIncomeLabel;
+}
+
+- (UILabel *)jijinLabel
+{
+    if (!_jijinLabel) {
+        _jijinLabel = [[UILabel alloc] init];
+        _jijinLabel.textColor = [UIColor colorWithHex:0x666666];
+        _jijinLabel.font = FONT_SIZE(13.5);
+        [_jijinLabel setText:@"您每完成一个课时，教予学都将捐赠0.05元作为公益基金"];
+        [_jijinLabel sizeToFit];
+        
+    }
+    return _jijinLabel;
 }
 
 - (JYXCourseDetailBottomBarView *)bottomBarView
