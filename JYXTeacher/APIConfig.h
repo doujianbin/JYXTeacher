@@ -14,7 +14,7 @@
  */
 
 //1:正式网 2:测试打包
-#define SERVER_TYPE  1
+#define SERVER_TYPE  2
 
 #if (SERVER_TYPE == 1)
 //appstore环境

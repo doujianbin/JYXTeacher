@@ -123,7 +123,7 @@
 - (void)helpImgAction{
 //    JYXDFGZViewController *vc = [[JYXDFGZViewController alloc]init];
 //    [[JYXBaseViewController getCurrentVC].navigationController pushViewController:vc animated:YES];
-    NSString *msg = @"1、平台根据综合评分对教师进行排名（详情查看《常见问题》），选出各省市推荐名师。\n2、在您进入平台时，需预设进入推荐名师版块的价格。\n3、在进入推荐名师版块后，课时费按照您的预设价格执行。\n4、推荐名师价格教师可随时在后台进行更改和设置。\n5、预设价格是对学生收取的总价，正常上课后教予学平台会收取30%的平台费用，70%归教师所有。);";
+    NSString *msg = @"1、平台根据综合评分对教师进行排名（详情查看《常见问题》），选出各省市推荐名师。\n2、在您进入平台时，需预设进入推荐名师版块的价格。\n3、在进入推荐名师版块后，课时费按照您的预设价格执行。\n4、推荐名师价格教师可随时在后台进行更改和设置。\n5、预设价格是对学生收取的总价，正常上课后教予学平台会收取30%的平台费用，70%归教师所有。";
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"推荐名师价格预设说明" message:msg preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *again = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         

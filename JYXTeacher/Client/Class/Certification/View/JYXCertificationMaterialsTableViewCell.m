@@ -39,6 +39,14 @@
         make.centerY.equalTo(self.contentView);
     }];
     
+    [self.contentView addSubview:self.btn_help];
+    [self.btn_help mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.titleLabel.mas_right).offset(-10);
+        make.width.offset(35);
+        make.height.offset(50);
+        make.centerY.equalTo(self.contentView);
+    }];
+    
     [self.contentView addSubview:self.arrowImg];
     [self.arrowImg mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.contentView).offset(-30);
@@ -70,8 +78,10 @@
     if ([dict[@"status"] isEqualToString:@"全职教师"] || [dict[@"status"] isEqualToString:@"自由教师"] || [dict[@"status"] isEqualToString:@"大学生"]) {
         
         self.helpImg.hidden = NO;
+        self.btn_help.hidden = NO;
     }else{
         self.helpImg.hidden = YES;
+        self.btn_help.hidden = YES;
     }
 }
 
@@ -104,6 +114,15 @@
        
     }
     return _helpImg;
+}
+
+- (UIButton *)btn_help
+{
+    if (!_btn_help) {
+        _btn_help = [[UIButton alloc] init];
+        [_btn_help setBackgroundColor:[UIColor clearColor] forState:UIControlStateNormal];
+    }
+    return _btn_help;
 }
 
 - (UIImageView *)arrowImg

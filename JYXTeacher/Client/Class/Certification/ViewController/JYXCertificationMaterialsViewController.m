@@ -416,6 +416,7 @@
     JYXCertificationMaterialsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([JYXCertificationMaterialsTableViewCell class]) forIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     [cell.helpImg addTarget:self action:@selector(helpImgAction) forControlEvents:UIControlEventTouchUpInside];
+    [cell.btn_help addTarget:self action:@selector(helpImgAction) forControlEvents:UIControlEventTouchUpInside];
     return cell;
 }
 

@@ -176,15 +176,15 @@
 {
     if (!_appProtocolBtn) {
         _appProtocolBtn = [[UIButton alloc] init];
-        NSString * aStr = @"登录视为认可《教予学APP许可协议》";
+        NSString * aStr = @"登录视为认可《用户协议》";
         NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@",aStr]];
         [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"ArialMT" size:14.0] range:NSMakeRange(0,6)];
         [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#000000"]range:NSMakeRange(0,6)];
         
-        [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"ArialMT" size:14.0] range:NSMakeRange(6,12)];
-        [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHex:0x67C8FF] range:NSMakeRange(6,12)];
-        [str addAttribute:NSUnderlineStyleAttributeName value:        [NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(6, 12)]; // 下划线类型
-        [str addAttribute:NSUnderlineColorAttributeName value:[UIColor colorWithHex:0x67C8FF] range:NSMakeRange(6, 12)]; // 下划线颜色
+        [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"ArialMT" size:14.0] range:NSMakeRange(6,6)];
+        [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHex:0x67C8FF] range:NSMakeRange(6,6)];
+        [str addAttribute:NSUnderlineStyleAttributeName value:        [NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(6, 6)]; // 下划线类型
+        [str addAttribute:NSUnderlineColorAttributeName value:[UIColor colorWithHex:0x67C8FF] range:NSMakeRange(6, 6)]; // 下划线颜色
 
         [_appProtocolBtn setAttributedTitle:str forState:UIControlStateNormal];
         [_appProtocolBtn setTitleColor:[UIColor colorWithHex:0x67C8FF] forState:UIControlStateNormal];

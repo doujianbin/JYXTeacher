@@ -116,7 +116,7 @@
     [self.affiliatedUnitBgView addSubview:self.affiliatedUnitTitleLabel];
     [self.affiliatedUnitTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.affiliatedUnitBgView).offset(11);
-        make.width.offset(80);
+        make.width.offset(90);
         make.centerY.equalTo(self.affiliatedUnitBgView);
     }];
     
@@ -214,9 +214,25 @@
     self.workDateView.content = [NSDate timeStampToDate:user.worktime];
 }
 
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
+    if (textField == self.realNameField) {
+        JYXUser *user = [JYXUserManager shareInstance].user;
+        if (![user.cardname isEqualToString:@""]) {
+            [MBProgressHUD showInfoMessage:@"必填资料认证通过后不能修改"];
+            return NO;
+        }
+    }
+    return YES;
+}
+
 //性别选择
 - (void)sexAction:(UITapGestureRecognizer *)gesture
 {
+    JYXUser *user = [JYXUserManager shareInstance].user;
+    if (![user.sex isEqualToString:@""]) {
+        [MBProgressHUD showInfoMessage:@"必填资料认证通过后不能修改"];
+        return ;
+    }
     [_affiliatedUnitField resignFirstResponder];
     [_realNameField resignFirstResponder];
     WeakSelf(weakSelf);
@@ -230,6 +246,10 @@
 //学历选择
 - (void)educationAction:(UITapGestureRecognizer *)gesture
 {
+    if (![self.educationView.content isEqualToString:@""]) {
+        [MBProgressHUD showInfoMessage:@"必填资料认证通过后不能修改"];
+        return ;
+    }
     NSArray *array = @[@"大学专科",@"大学本科",@"硕士研究生",@"博士研究生"];
     WeakSelf(weakSelf);
     DLPickerView* picker = [[DLPickerView alloc] initWithDataSource:array withSelectedItem:self.educationView.content withSelectedBlock:^(id  _Nonnull item) {
@@ -242,6 +262,11 @@
 //从业时间
 - (void)workDateAction:(UITapGestureRecognizer *)gesture
 {
+    JYXUser *user = [JYXUserManager shareInstance].user;
+    if (![user.cardname isEqualToString:@""]) {
+        [MBProgressHUD showInfoMessage:@"必填资料认证通过后不能修改"];
+        return ;
+    }
     [kAppDelegate.window.rootViewController presentViewController:self.yearAndMonthAndDayDatePickManager animated:false completion:nil];
 }
 
@@ -259,28 +284,20 @@
 //下一步
 - (void)nextAction:(UIButton *)sender
 {
-    //    JYXUser *user = [JYXUserManager shareInstance].user;
-    //    self.realNameField.text = user.cardname;
-    //    self.sexView.content = user.sex;
-    //    self.educationView.content = user.education;
-    //    self.affiliatedUnitField.text = user.unit;
-    //    [self.affiliatedUnitTypeBtn setTitle:user.unittype?:@"小学" forState:UIControlStateNormal];
-    //    [self.showHiddenSwitch setOn:user.unitlook.boolValue];
-    //    self.introduceTextView.text = user.oneselfinfo;
-    //    self.workDateView.content = [NSDate timeStampToDate:user.worktime];
+ 
     if ([self.realNameField.text isEqualToString:@""]) {
         [MBProgressHUD showInfoMessage:@"请填写姓名"];
         return;
     }
-    if (self.sexView.content == nil) {
+    if ([self.sexView.content isEqualToString:@""]) {
         [MBProgressHUD showInfoMessage:@"请选择性别"];
         return;
     }
-    if (self.educationView.content == nil) {
+    if ([self.educationView.content isEqualToString:@""]) {
         [MBProgressHUD showInfoMessage:@"请填写学历"];
         return;
     }
-    if (self.workDateView.content == nil) {
+    if ([self.workDateView.content isEqualToString:@"1970-01-01"]) {
         [MBProgressHUD showInfoMessage:@"请选择从业时间"];
         return;
     }
@@ -462,7 +479,7 @@
     if (!_affiliatedUnitTitleLabel) {
         _affiliatedUnitTitleLabel = [[UILabel alloc] init];
         _affiliatedUnitTitleLabel.font = FONT_SIZE(15);
-        _affiliatedUnitTitleLabel.text = NSLocalizedString(@"所属单位：", nil);
+        _affiliatedUnitTitleLabel.text = NSLocalizedString(@"所属单位", nil);
         _affiliatedUnitTitleLabel.textColor = [UIColor colorWithHex:0x6d6d6d];
         [_affiliatedUnitTitleLabel sizeToFit];
     }
