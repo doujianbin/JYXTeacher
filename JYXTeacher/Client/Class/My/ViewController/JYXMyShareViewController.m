@@ -16,11 +16,10 @@
 
 @interface JYXMyShareViewController ()
 @property (nonatomic, strong) UIScrollView *mScrollView;
-@property (nonatomic, strong) UIImageView *contentView;
-@property (nonatomic, strong) UILabel *inviteFriendTitleLabel;
-@property (nonatomic, strong) UIButton *inviteFriendBtn;
+@property (nonatomic, strong) UIImageView  *contentView;
+@property (nonatomic, strong) UILabel      *inviteFriendTitleLabel;
+@property (nonatomic, strong) UIButton     *inviteFriendBtn;
 @property (nonatomic, assign) int          teacherStatus;
-
 
 @end
 
@@ -98,7 +97,11 @@
     
     [self.contentView addSubview:self.inviteFriendTitleLabel];
     [self.inviteFriendTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.contentView).offset(Iphone6ScaleHeight(250));
+        if (SCREEN_HEIGHT >= 812) {
+           make.top.equalTo(self.contentView).offset(Iphone6ScaleHeight(250));
+        }else{
+            make.top.equalTo(self.contentView).offset(Iphone6ScaleHeight(300));
+        }
         make.centerX.equalTo(self.contentView);
     }];
     

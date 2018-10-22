@@ -205,13 +205,18 @@
     self.educationView.content = user.education;
     self.affiliatedUnitField.text = user.unit;
     if ([user.unittype isEqualToString:@""]) {
-       [self.affiliatedUnitTypeBtn setTitle:@"小学" forState:UIControlStateNormal]; // 学历选择按钮
+       [self.affiliatedUnitTypeBtn setTitle:@"学校" forState:UIControlStateNormal]; // 学历选择按钮
     }else{
         [self.affiliatedUnitTypeBtn setTitle:user.unittype forState:UIControlStateNormal]; // 学历选择按钮
     }
     [self.showHiddenSwitch setOn:user.unitlook.boolValue];
     self.introduceTextView.text = user.oneselfinfo;
-    self.workDateView.content = [NSDate timeStampToDate:user.worktime];
+    
+    if ([user.worktime isEqualToString:@"0"]) {
+        self.workDateView.content = @"2018-01-01";
+    }else{
+        self.workDateView.content = [NSDate timeStampToDate:user.worktime];
+    }
 }
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
@@ -262,11 +267,11 @@
 //从业时间
 - (void)workDateAction:(UITapGestureRecognizer *)gesture
 {
-    JYXUser *user = [JYXUserManager shareInstance].user;
-    if (![user.cardname isEqualToString:@""]) {
-        [MBProgressHUD showInfoMessage:@"必填资料认证通过后不能修改"];
-        return ;
-    }
+//    JYXUser *user = [JYXUserManager shareInstance].user;
+//    if (![user.cardname isEqualToString:@""]) {
+//        [MBProgressHUD showInfoMessage:@"必填资料认证通过后不能修改"];
+//        return ;
+//    }
     [kAppDelegate.window.rootViewController presentViewController:self.yearAndMonthAndDayDatePickManager animated:false completion:nil];
 }
 
@@ -505,7 +510,7 @@
         JYXViewBorderRadius(_affiliatedUnitTypeBtn, 5, 1, [UIColor colorWithHex:0xbfbfbf]);
         JYXUser *user = [JYXUserManager shareInstance].user;
         if ([user.unittype isEqualToString:@""]) {
-            [_affiliatedUnitTypeBtn setTitle:NSLocalizedString(@"小学", nil) forState:UIControlStateNormal];
+            [_affiliatedUnitTypeBtn setTitle:NSLocalizedString(@"学校", nil) forState:UIControlStateNormal];
         }else{
             [_affiliatedUnitTypeBtn setTitle:NSLocalizedString(user.unittype, nil) forState:UIControlStateNormal];
         }

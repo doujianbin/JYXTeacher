@@ -106,13 +106,14 @@
     [self.v_back addSubview:self.lb_detail];
     [self.lb_detail mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.btn_action.mas_bottom).offset(8);
-        make.left.mas_equalTo(0);
-        make.width.mas_equalTo(self.v_back);
-        make.height.mas_equalTo(12);
+        make.left.mas_equalTo(15);
+        make.width.mas_equalTo(SCREEN_WIDTH - 30);
+        make.height.mas_equalTo(40);
     }];
     [self.lb_detail setTextColor:[UIColor colorWithHexString:@"#6D6D6D"]];
     self.lb_detail.font = [UIFont systemFontOfSize:11];
     [self.lb_detail setTextAlignment:NSTextAlignmentCenter];
+    self.lb_detail.numberOfLines = 0;
     
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMore)];
@@ -163,7 +164,7 @@
             [self.tableView setHidden:YES];
             [self.v_back setHidden:NO];
             [self.btn_action setTitle:@"接单设置" forState:UIControlStateNormal];
-            [self.lb_detail setText:@"未进行接单设置"];
+            [self.lb_detail setText:@"您还未进行接单设置，系统将自动为您安排年级科目进行展示，请尽快完成接单设置。"];
             self.lb_detail.font = [UIFont systemFontOfSize:11];
             self.isRenZheng = NO;
         }else{
