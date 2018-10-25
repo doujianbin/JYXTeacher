@@ -218,11 +218,12 @@
 //    if ([myDate isToday]) {
 //        myDate = [NSDate dateWithTimeIntervalSince1970:interval+[[NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970]] integerValue]];
 //    }
+    myDate = dayView.date;
     if([self isInDatesSelected:myDate]){
         dayView.circleView.hidden = NO;
         dayView.circleView.backgroundColor = [UIColor colorWithHex:0x1DA3FF];
         dayView.textLabel.textColor = [UIColor whiteColor];
-    } else if (![_calendarManager.dateHelper date:_calendarContentView.date isTheSameMonthThan:myDate] || ([myDate compare:[NSDate date]] == NSOrderedAscending)){
+    } else if ((![_calendarManager.dateHelper date:_calendarContentView.date isTheSameMonthThan:myDate] || ([myDate compare:[NSDate date]] == NSOrderedAscending)) && ![myDate isToday]){
         dayView.circleView.hidden = YES;
         dayView.textLabel.textColor = [UIColor colorWithHexString:@"#555555" alpha:0.3];
     } else {
@@ -241,7 +242,7 @@
 //    if ([myDate isToday]) {
 //        myDate = [NSDate dateWithTimeIntervalSince1970:interval+[[NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970]] integerValue]];
 //    }
-    
+    myDate = dayView.date;
     if(![_calendarManager.dateHelper date:_calendarContentView.date isTheSameMonthThan:myDate]){
         if([_calendarContentView.date compare:myDate] == NSOrderedAscending){
             [_calendarContentView loadNextPageWithAnimation];
@@ -251,6 +252,11 @@
         }
         return;
     }
+    //(灰色)日期不能点击
+    if ((![_calendarManager.dateHelper date:_calendarContentView.date isTheSameMonthThan:myDate] || ([myDate compare:[NSDate date]] == NSOrderedAscending)) && ![myDate isToday]){
+        return;
+    }
+    ///////////
     NSDateFormatter* dateFormat = [[NSDateFormatter alloc] init];
     [dateFormat setDateFormat:@"yyyy-MM-dd"];
     if (_datesSelected.count > 0) {
