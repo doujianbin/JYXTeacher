@@ -39,8 +39,8 @@
     [self addSubview:self.phoneBgView];
     [self.phoneBgView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.top.right.equalTo(self);
-        make.height.offset(32);
-        make.width.offset(245);
+        make.height.offset(38);
+//        make.width.offset(SCREEN_WIDTH - 20);
     }];
     
     [self.phoneBgView addSubview:self.phoneImg];
@@ -59,9 +59,10 @@
     
     [self addSubview:self.verificationCodeBgView];
     [self.verificationCodeBgView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.phoneBgView.mas_bottom).offset(11);
+        make.top.equalTo(self.phoneBgView.mas_bottom).offset(19);
         make.left.equalTo(self.phoneBgView);
-        make.height.offset(32);
+        make.width.offset(SCREEN_WIDTH * 0.485);
+        make.height.offset(38);
     }];
     
     [self.verificationCodeBgView addSubview:self.verificationCodeImg];
@@ -82,16 +83,16 @@
     [self.getCodeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.verificationCodeBgView.mas_right).offset(7);
         make.right.equalTo(self.phoneBgView);
-        make.width.offset(93);
-        make.height.offset(32);
+//        make.width.offset(103);
+        make.height.offset(38);
         make.top.equalTo(self.verificationCodeBgView);
     }];
     
     [self addSubview:self.loginBtn];
     [self.loginBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.verificationCodeBgView.mas_bottom).offset(31);
+        make.top.equalTo(self.verificationCodeBgView.mas_bottom).offset(43);
         make.left.right.equalTo(self.phoneBgView);
-        make.height.offset(35);
+//        make.height.offset(40);
         make.bottom.equalTo(self);
     }];
     

@@ -66,6 +66,7 @@
     [self.view addSubview:self.topBarView];
     [self.topBarView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.top.equalTo(self.view);
+        make.height.mas_equalTo(SCREEN_HEIGHT * 0.476);
     }];
     
     [self.view addSubview:self.welcomeLabel];
@@ -84,11 +85,12 @@
     [self.loginView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view);
         make.centerY.equalTo(self.view).offset(50);
+        make.width.mas_equalTo(SCREEN_WIDTH - 80);
     }];
     
     [self.view addSubview:self.appProtocolBtn];
     [self.appProtocolBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(self.view).offset(-Iphone6ScaleHeight(66));
+        make.bottom.equalTo(self.view).offset(-Iphone6ScaleHeight(26));
         make.centerX.equalTo(self.view);
     }];
     
@@ -156,7 +158,7 @@
 {
     if (!_visionLabel) {
         _visionLabel = [[UILabel alloc] init];
-        _visionLabel.text = NSLocalizedString(@"改变你的教学方式", nil);
+        _visionLabel.text = NSLocalizedString(@"改变您的教学方式", nil);
         _visionLabel.font = FONT_SIZE(14);
         _visionLabel.textColor = [UIColor colorWithHex:0x1AABFD];
         [_visionLabel sizeToFit];

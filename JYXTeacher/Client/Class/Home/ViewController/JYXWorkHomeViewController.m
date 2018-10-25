@@ -189,7 +189,7 @@
                 if ([user.cardstatu intValue] == 2 && [user.educationstatu intValue] == 2) {
                     //认证通过
                     self.teacherStatus = 2;
-                }else if([user.cardstatu intValue] == 1 && [user.educationstatu intValue] == 1){
+                }else if([user.cardstatu intValue] == 1 || [user.educationstatu intValue] == 1){
                     //认证中
                     self.teacherStatus = 3;
                 }else if ([user.cardstatu intValue] == 3 || [user.educationstatu intValue] == 3){
