@@ -74,7 +74,7 @@
     [self.topView addSubview:self.topTitleLabel];
     [self.topTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.topView);
-        make.centerY.equalTo(self.topView).offset(-12);
+        make.centerY.equalTo(self.topView).offset(-15);
     }];
     
     [self.topView addSubview:self.topClassFeeLabel];
@@ -108,7 +108,7 @@
         
     } success:^(id obj) {
         NSDictionary *dict = (NSDictionary *)obj;
-        self.topClassFeeLabel.text = [NSString stringWithFormat:@"%@元",dict[@"money"]];
+        self.topClassFeeLabel.text = [NSString stringWithFormat:@"%@",dict[@"money"]];
         self.dataSourceArray = [dict[@"list"] mutableCopy];
         [self.tableView reloadData];
     } failed:^(NSInteger statusCode, id json) {
@@ -213,7 +213,7 @@
         _topTitleLabel = [[UILabel alloc] init];
         _topTitleLabel.textColor = [UIColor whiteColor];
         _topTitleLabel.font = FONT_SIZE(12);
-        _topTitleLabel.text = NSLocalizedString(@"课时费余额", nil);
+        _topTitleLabel.text = NSLocalizedString(@"课时费余额(元)", nil);
         [_topTitleLabel sizeToFit];
     }
     return _topTitleLabel;

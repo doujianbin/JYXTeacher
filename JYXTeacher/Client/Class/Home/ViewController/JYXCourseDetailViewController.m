@@ -147,7 +147,7 @@
     [self.contentView addSubview:self.courseDemandView];
     [self.courseDemandView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(self.contentView);
-        make.top.equalTo(self.courseInfoView.mas_bottom).offset(10);
+        make.top.equalTo(self.courseInfoView.mas_bottom).offset(20);
     }];
     
     [self.contentView addSubview:self.coursePersonNumberView];

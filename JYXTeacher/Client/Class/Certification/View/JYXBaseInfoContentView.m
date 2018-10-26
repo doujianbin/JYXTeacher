@@ -12,7 +12,7 @@
 #import "JYXHomeTeacherTeacherEditApi.h"
 #import "MyHandler.h"
 
-@interface JYXBaseInfoContentView ()<UITextFieldDelegate>
+@interface JYXBaseInfoContentView ()<UITextFieldDelegate,UITextViewDelegate>
 @property (nonatomic, strong) UIView *realNameBgView;
 @property (nonatomic, strong) UILabel *realNameTitleLabel;
 @property (nonatomic, strong) UITextField *realNameField;
@@ -34,6 +34,7 @@
 
 @property (nonatomic, strong) UILabel *introduceLabel;
 @property (nonatomic, strong) UITextView *introduceTextView;
+@property (nonatomic, strong) UILabel *wordNumberLabel;
 
 @property (nonatomic, strong) UIButton *nextBtn;
 
@@ -174,6 +175,11 @@
         make.right.equalTo(self).offset(-7);
         make.height.offset(104);
         make.top.equalTo(self.introduceLabel.mas_bottom).offset(1);
+    }];
+    
+    [self addSubview:self.wordNumberLabel];
+    [self.wordNumberLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.bottom.equalTo(self.introduceTextView).offset(-5);
     }];
     
     [self addSubview:self.nextBtn];
@@ -352,6 +358,32 @@
     NSInteger timeSp = [[NSNumber numberWithDouble:[date timeIntervalSince1970]] integerValue];
     NSLog(@"将某个时间转化成 时间戳&&&&&&&timeSp:%ld",(long)timeSp); //时间戳的值
     return timeSp;
+}
+
+#pragma mark        textViewDelegate
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    if ([text isEqualToString:@""] && range.length > 0) {
+        //删除字符肯定是安全的
+        return YES;
+    } else {
+        
+        if (textView.text.length - range.length + text.length > 300) {
+            [MBProgressHUD showInfoMessage:@"不能超过300个字"];
+            return NO;
+        } else {
+            return YES;
+        }
+    }
+}
+
+- (void)textViewDidChange:(UITextView *)textView
+{
+    if (textView.text.length > 300) {
+        textView.text = [textView.text substringToIndex:300];
+    }
+    
+    self.wordNumberLabel.text = [NSString stringWithFormat:@"%ld/300",textView.text.length];
 }
 
 - (UIView *)realNameBgView
@@ -589,8 +621,21 @@
         _introduceTextView.textColor = [UIColor colorWithHex:0x6d6d6d];
         _introduceTextView.layer.cornerRadius = 5;
         _introduceTextView.layer.masksToBounds = YES;
+        _introduceTextView.delegate = self;
     }
     return _introduceTextView;
+}
+
+- (UILabel *)wordNumberLabel
+{
+    if (!_wordNumberLabel) {
+        _wordNumberLabel = [[UILabel alloc] init];
+        _wordNumberLabel.font = FONT_SIZE(13);
+        _wordNumberLabel.text = @"0/300";
+        _wordNumberLabel.textColor = [UIColor colorWithHex:0xc1c1c1];
+        [_wordNumberLabel sizeToFit];
+    }
+    return _wordNumberLabel;
 }
 
 - (UIButton *)nextBtn

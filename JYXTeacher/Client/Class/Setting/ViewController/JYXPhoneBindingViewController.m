@@ -7,11 +7,14 @@
 //
 
 #import "JYXPhoneBindingViewController.h"
+#import "GetVerifyCodeView.h"
+#import "JYXHomeLoginSendsmsApi.h"
+#import "MyHandler.h"
 
 @interface JYXPhoneBindingViewController ()
 @property (nonatomic, strong) UITextField *phoneNumberField;
 @property (nonatomic, strong) UITextField *verificationCodeField;
-@property (nonatomic, strong) UIButton *getVerificationCodeBtn;
+@property (nonatomic, strong) GetVerifyCodeView *getCodeBtn;
 @property (nonatomic, strong) UIButton *submitBtn;
 @end
 
@@ -53,7 +56,6 @@
 {
     [super viewDidLoad];
     self.navigationItem.title = NSLocalizedString(@"手机号绑定", nil);
-    [self loadData];
 }
 
 - (void)setupViews
@@ -75,8 +77,8 @@
         make.height.offset(43);
     }];
     
-    [self.view addSubview:self.getVerificationCodeBtn];
-    [self.getVerificationCodeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.view addSubview:self.getCodeBtn];
+    [self.getCodeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.phoneNumberField);
         make.height.offset(43);
         make.centerY.equalTo(self.verificationCodeField);
@@ -90,11 +92,51 @@
         make.left.right.equalTo(self.phoneNumberField);
         make.height.offset(43);
     }];
+    
+    //获取验证码
+    WeakSelf(weakSelf);
+    [self.getCodeBtn setGetCodeBlock:^{
+        StrongSelf(strongSelf);
+        
+        if (self.phoneNumberField.text.length != 11) {
+            [MBProgressHUD showInfoMessage:@"请输入正确的手机号!"];
+            return NO;
+        }
+        if ([[self.phoneNumberField.text substringToIndex:1] intValue] != 1) {
+            [MBProgressHUD showInfoMessage:@"请输入正确的手机号!"];
+            return NO;
+        }
+        [strongSelf getPhoneCode];
+        return YES;
+    }];
 }
 
-- (void)loadData
+//获取验证码
+- (void)getPhoneCode
 {
     
+    [self.phoneNumberField resignFirstResponder];
+    JYXHomeLoginSendsmsApi *api = [[JYXHomeLoginSendsmsApi alloc] initWithPhone:self.phoneNumberField.text];
+    [api sendRequestWithCompletionBlockWithSuccess:^(__kindof RXBaseRequest *request) {
+        
+    } failure:^(__kindof RXBaseRequest *request) {
+        
+    }];
+}
+
+- (void)submitBtnAction
+{
+    [MyHandler changePhoneNumWith:self.phoneNumberField.text sms:self.verificationCodeField.text prepare:^{
+        
+    } success:^(id obj) {
+        dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0/*延迟执行时间*/ * NSEC_PER_SEC));
+        dispatch_after(delayTime, dispatch_get_main_queue(), ^{
+            [MBProgressHUD showInfoMessage:@"修改成功！"];
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        });
+    } failed:^(NSInteger statusCode, id json) {
+        
+    }];
 }
 
 #pragma mark - eventResponse                - Method -
@@ -117,6 +159,7 @@
         _phoneNumberField.textAlignment = NSTextAlignmentCenter;
         _phoneNumberField.font = FONT_SIZE(18);
         _phoneNumberField.textColor = [UIColor colorWithHex:0x666666];
+        _phoneNumberField.keyboardType = UIKeyboardTypeNumberPad;
     }
     return _phoneNumberField;
 }
@@ -134,16 +177,13 @@
     return _verificationCodeField;
 }
 
-- (UIButton *)getVerificationCodeBtn
+- (GetVerifyCodeView *)getCodeBtn
 {
-    if (!_getVerificationCodeBtn) {
-        _getVerificationCodeBtn = [[UIButton alloc] init];
-        JYXViewBorderRadius(_getVerificationCodeBtn, 10, 1, [UIColor colorWithHex:0xbababa]);
-        [_getVerificationCodeBtn setTitle:NSLocalizedString(@"获取验证码", nil) forState:UIControlStateNormal];
-        _getVerificationCodeBtn.titleLabel.font = FONT_SIZE(18);
-        [_getVerificationCodeBtn setTitleColor:[UIColor colorWithHex:0x666666] forState:UIControlStateNormal];
+    if (!_getCodeBtn) {
+        _getCodeBtn = [[GetVerifyCodeView alloc] init];
+        JYXViewBorderRadius(_getCodeBtn, 10, 1, [UIColor colorWithHex:0xbebebe]);
     }
-    return _getVerificationCodeBtn;
+    return _getCodeBtn;
 }
 
 - (UIButton *)submitBtn
@@ -155,6 +195,7 @@
         [_submitBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_submitBtn setTitle:NSLocalizedString(@"完成", nil) forState:UIControlStateNormal];
         _submitBtn.titleLabel.font = FONT_SIZE(18);
+        [_submitBtn addTarget:self action:@selector(submitBtnAction) forControlEvents:UIControlEventTouchUpInside];
     }
     return _submitBtn;
 }

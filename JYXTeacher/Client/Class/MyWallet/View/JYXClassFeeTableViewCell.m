@@ -40,7 +40,7 @@
     
     [self.contentView addSubview:self.priceLabel];
     [self.priceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.titleLabel);
+        make.centerY.equalTo(self.contentView);
         make.right.equalTo(self.contentView).offset(-7);
     }];
     

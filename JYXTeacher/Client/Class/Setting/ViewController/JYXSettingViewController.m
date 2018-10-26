@@ -78,9 +78,9 @@
     NSDictionary *service = @{@"title" : @"联系客服", @"type" : @3};
     NSDictionary *help = @{@"title" : @"帮助", @"type" : @5};
     NSDictionary *aboutUs = @{@"title" : @"关于我们", @"type" : @6};
-    NSDictionary *clearCache = @{@"title" : @"清除缓存", @"type" : @7};
+//    NSDictionary *clearCache = @{@"title" : @"清除缓存", @"type" : @7};
 //    NSDictionary *checkUpdate = @{@"title" : @"检查更新", @"type" : @8};
-    self.dataSourceArray = [@[authentication, phoneBinding, service, help, aboutUs, clearCache] mutableCopy];
+    self.dataSourceArray = [@[authentication, phoneBinding, service, help, aboutUs] mutableCopy];
 }
 
 #pragma mark - eventResponse                - Method -
@@ -126,13 +126,13 @@
             [self.navigationController pushViewController:vc animated:YES];
         }
             break;
-        case 7://清楚缓存
-        {
-            dispatch_async(dispatch_get_global_queue(0, 0), ^{
-                [[SDImageCache sharedImageCache] clearMemory];
-            });
-        }
-            break;
+//        case 7://清楚缓存
+//        {
+//            dispatch_async(dispatch_get_global_queue(0, 0), ^{
+//                [[SDImageCache sharedImageCache] clearMemory];
+//            });
+//        }
+//            break;
         default:
             break;
     }

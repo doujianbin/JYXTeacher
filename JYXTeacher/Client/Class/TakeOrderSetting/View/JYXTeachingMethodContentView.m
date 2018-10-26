@@ -141,6 +141,7 @@
         make.centerY.equalTo(self.shareAddressTitleLabel);
         make.right.equalTo(self.shareAddressBgView).offset(-7);
     }];
+    [self.shareAddressTitleSwitch setHidden:YES];
     
     [self addSubview:self.remarkLabel];
     [self.remarkLabel mas_makeConstraints:^(MASConstraintMaker *make) {

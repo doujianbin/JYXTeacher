@@ -64,7 +64,7 @@
     
     [self.contentView addSubview:self.creditLabel];
     [self.creditLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.creditImgView.mas_right).offset(4);
+        make.left.mas_equalTo(SCREEN_WIDTH / 2 + 50);
         make.centerY.equalTo(self.creditImgView);
     }];
     
@@ -171,7 +171,8 @@
 {
     if (!_creditImgView) {
         _creditImgView = [[UIImageView alloc] init];
-        _creditImgView.image = [UIImage imageNamed:@"credit"];
+//        _creditImgView.image = [UIImage imageNamed:@"credit"];
+        _creditImgView.image = nil;
         _creditImgView.contentMode = UIViewContentModeScaleAspectFit;
     }
     return _creditImgView;

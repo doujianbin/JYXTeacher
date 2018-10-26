@@ -108,7 +108,10 @@
 //    } failure:^(__kindof RXBaseRequest *request) {
 //        [SVProgressHUD dismiss];
 //    }];
-    
+    if ([[dict objectForKey:@"content"] isEqualToString:@""]) {
+        [MBProgressHUD showInfoMessage:@"请输入作业内容"];
+        return;
+    }
     [TeacherWorkHandler postWorkWithCourseId:_courseId content:dict[@"content"] type:_type pic:dict[@"photos"] prepare:^{
         
     } success:^(id obj) {

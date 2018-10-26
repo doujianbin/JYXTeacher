@@ -46,7 +46,7 @@
         make.right.equalTo(self).offset(-7);
         make.top.equalTo(self.verticalBarImg.mas_bottom).offset(11);
         make.height.offset(64);
-        make.bottom.equalTo(self);
+        make.bottom.equalTo(self).offset(-10);;
     }];
     
     [self addSubview:self.wordNumberLabel];
@@ -114,11 +114,12 @@
 {
     if (!_demandTextView) {
         _demandTextView = [[UITextView alloc] init];
-        JYXViewBorderRadius(_demandTextView, 5, 1, [UIColor colorWithHex:0xc1c1c1]);
+        JYXViewBorderRadius(_demandTextView, 5, 1, [UIColor colorWithHex:0xeeeeee]);
         _demandTextView.contentInset = EdgeInsets(7, 9, 22, 9);
         _demandTextView.font = FONT_SIZE(14);
         _demandTextView.delegate = self;
         _demandTextView.textColor = [UIColor colorWithHex:0x8f8f8f];
+        _demandTextView.backgroundColor = [UIColor colorWithHexString:@"#f8fdff"];
     }
     return _demandTextView;
 }

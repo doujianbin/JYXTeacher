@@ -138,9 +138,7 @@
     [dic setObject:[NSNumber numberWithInteger:worktime] forKey:@"worktime"];
     [dic setObject:unit forKey:@"unit"];
     [dic setObject:unittype forKey:@"unittype"];
-    if (unitlook) {
-        [dic setObject:[NSNumber numberWithInt:unitlook] forKey:@"unitlook"];
-    }
+    [dic setObject:[NSNumber numberWithBool:unitlook] forKey:@"unitlook"];
     if (oneselfinfo) {
         [dic setObject:oneselfinfo forKey:@"oneselfinfo"];
     }
@@ -288,6 +286,33 @@
                                           prepare:prepare
                                           success:^(NSURLSessionDataTask *task, id responseObject) {
                                               
+                                          } failure:^(NSURLSessionDataTask *task, NSError *error) {
+                                              [self handlerErrorWithTask:task error:error complete:failed];
+                                          }];
+}
+
++ (void)changePhoneNumWith:(NSString *)phone sms:(NSString *)sms prepare:(PrepareBlock)prepare success:(SuccessBlock)success failed:(FailedBlock)failed{
+    NSString *str_url = [NSString stringWithFormat:@"%@home/teacher/updatePhone",API_Login];
+    JYXUser *user = [JYXUserManager shareInstance].user;
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    if (user.userId) {
+        [dic setObject:user.userId forKey:@"userid"];
+    }
+    if (user.token) {
+        [dic setObject:user.token forKey:@"token"];
+    }
+    [dic setValue:phone forKey:@"phone"];
+    [dic setValue:sms forKey:@"code"];
+    [[RTHttpClient defaultClient] requestWithPath:str_url
+                                           method:RTHttpRequestGet                                parameters:dic
+                                          prepare:prepare
+                                          success:^(NSURLSessionDataTask *task, id responseObject) {
+                                              if ([[responseObject objectForKey:@"code"] intValue] == 1000) {
+                                                  success([responseObject objectForKey:@"result"]);
+                                              }else{
+                                                  [MBProgressHUD hideHUD];
+                                                  [MBProgressHUD showInfoMessage:[responseObject objectForKey:@"msg"]];
+                                              }
                                           } failure:^(NSURLSessionDataTask *task, NSError *error) {
                                               [self handlerErrorWithTask:task error:error complete:failed];
                                           }];
