@@ -176,6 +176,7 @@
                     [SVProgressHUD show];
                     [api sendRequestWithCompletionBlockWithSuccess:^(__kindof RXBaseRequest *request) {
                         [SVProgressHUD dismiss];
+                        [self->_cellDictData setValue:@"抢单中" forKey:@"status"];
                         [self.takeOrderBtn setTitle:NSLocalizedString(@"取消", nil) forState:UIControlStateNormal];
                         self.statusLabel.text = NSLocalizedString(@"抢单中", nil);
                     } failure:^(__kindof RXBaseRequest *request) {
@@ -186,6 +187,7 @@
                     [SVProgressHUD show];
                     [api sendRequestWithCompletionBlockWithSuccess:^(__kindof RXBaseRequest *request) {
                         [SVProgressHUD dismiss];
+                        [self->_cellDictData setValue:@"待抢单" forKey:@"status"];
                         [self.takeOrderBtn setTitle:NSLocalizedString(@"抢单", nil) forState:UIControlStateNormal];
                         self.statusLabel.text = NSLocalizedString(@"待抢单", nil);
                     } failure:^(__kindof RXBaseRequest *request) {
