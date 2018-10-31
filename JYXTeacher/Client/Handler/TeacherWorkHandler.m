@@ -116,6 +116,7 @@
     if (paytype) {
         [dic setObject:paytype forKey:@"paytype"];
     }
+    [dic setObject:[NSNumber numberWithInt:2] forKey:@"type"];
     NSString *str1 = [money substringFromIndex:1];
     [dic setObject:str1 forKey:@"money"];
     [[RTHttpClient defaultClient] requestWithPath:str_url

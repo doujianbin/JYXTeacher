@@ -308,6 +308,9 @@
     switch (type.integerValue) {
         case 1://教师类型
         {
+            if ([user.cardstatu integerValue] == 1 ||[user.cardstatu integerValue] == 2) {
+                return;
+            }
             [[YXGShowPopAnimationView sharedInstance] showPopAnimationWithView:[[JYXTeacherTypeView alloc] init] withPopStyle:ZJAnimationPopStyleScale withDismissStyle:ZJAnimationDismissStyleScale withHandleAction:^(ZJAnimationPopView *popView, id customView) {
                 // 在监听自定义视图的block操作事件时，要使用弱对象来避免循环引用
                 __weak typeof(popView) weakPopView = popView;

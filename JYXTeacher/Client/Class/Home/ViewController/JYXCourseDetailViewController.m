@@ -60,7 +60,7 @@
 - (void)loadView
 {
     [super loadView];
-    [self setupViews];
+//    [self setupViews];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -201,6 +201,7 @@
     [SVProgressHUD show];
     [api sendRequestWithCompletionBlockWithSuccess:^(__kindof RXBaseRequest *request) {
         [SVProgressHUD dismiss];
+        [self setupViews];
         self.dict = [api fetchDataWithReformer:request];
         NSLog(@"需求明细%@",self.dict);
         [self.topBarBgView configCourseDetailTopBarViewWithData:self.dict];
