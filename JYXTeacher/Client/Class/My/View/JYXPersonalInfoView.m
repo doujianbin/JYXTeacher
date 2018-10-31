@@ -50,9 +50,17 @@
         make.left.top.right.equalTo(self);
     }];
     
+    [self.avatarBgView addSubview:self.arrowImg2];
+    [self.arrowImg2 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.avatarBgView).offset(-15);
+        make.centerY.equalTo(self.avatarBgView);
+        make.height.offset(16);
+        make.width.offset(9);
+    }];
+    
     [self.avatarBgView addSubview:self.avatarImg];
     [self.avatarImg mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self.avatarBgView).offset(-15);
+        make.right.equalTo(self.arrowImg2.mas_left).offset(-15);
         make.top.equalTo(self.avatarBgView).offset(15);
         make.height.width.equalTo(@50);
         make.bottom.equalTo(self.avatarBgView).offset(-15);
@@ -123,17 +131,10 @@
         make.left.equalTo(self.genderBgView).offset(15);
     }];
     
-    [self.genderBgView addSubview:self.arrowImg2];
-    [self.arrowImg2 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self.genderBgView).offset(-15);
-        make.centerY.equalTo(self.genderBgView);
-        make.height.offset(16);
-        make.width.offset(9);
-    }];
     
     [self.genderBgView addSubview:self.genderLabel];
     [self.genderLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self.arrowImg2.mas_left).offset(-21);
+        make.right.equalTo(self.nameLabel);
         make.centerY.equalTo(self.genderBgView);
     }];
 //    
@@ -272,8 +273,8 @@
         _avatarImg.contentMode = UIViewContentModeScaleToFill;
         JYXViewBorderRadius(_avatarImg, 50/2.0, 0, [UIColor clearColor]);
         _avatarImg.userInteractionEnabled = YES;
-//        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changeAvatarAction:)];
-//        [_avatarImg addGestureRecognizer:tap];
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changeAvatarAction:)];
+        [_avatarImg addGestureRecognizer:tap];
     }
     return _avatarImg;
 }
@@ -359,8 +360,8 @@
     if (!_genderBgView) {
         _genderBgView = [[UIView alloc] init];
         _genderBgView.backgroundColor = [UIColor whiteColor];
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sexAction:)];
-        [_genderBgView addGestureRecognizer:tap];
+//        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sexAction:)];
+//        [_genderBgView addGestureRecognizer:tap];
     }
     return _genderBgView;
 }

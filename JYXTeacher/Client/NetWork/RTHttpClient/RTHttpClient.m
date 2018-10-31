@@ -127,11 +127,13 @@
         switch (method) {
             case RTHttpRequestGet:
             {
+                
                 [self.manager GET:url parameters:parameters success:success failure:tFailure];
             }
                 break;
             case RTHttpRequestPost:
             {
+
                 [self.manager POST:url parameters:parameters success:success failure:tFailure];
             }
                 break;
