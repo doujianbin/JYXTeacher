@@ -76,6 +76,12 @@
     } else {
         model.isSelected = @1;
     }
+    //每个年级只能选择一个
+    for (JYXGradeSubjectChildrenModel *model in self.dataModel.children) {
+        if (model.label != self.dataModel.children[indexPath.row].label) {
+            model.isSelected = @0;
+        }
+    }
     [collectionView reloadData];
     if (self.selectedSubjectBlock) {
         self.selectedSubjectBlock();

@@ -13,6 +13,8 @@
 #import "MyHandler.h"
 
 @interface JYXBaseInfoContentView ()<UITextFieldDelegate,UITextViewDelegate>
+
+
 @property (nonatomic, strong) UIView *realNameBgView;
 @property (nonatomic, strong) UILabel *realNameTitleLabel;
 @property (nonatomic, strong) UITextField *realNameField;
@@ -35,6 +37,8 @@
 @property (nonatomic, strong) UILabel *introduceLabel;
 @property (nonatomic, strong) UITextView *introduceTextView;
 @property (nonatomic, strong) UILabel *wordNumberLabel;
+
+@property (nonatomic, strong) UILabel *introduceDetailLabel;
 
 @property (nonatomic, strong) UIButton *nextBtn;
 
@@ -182,9 +186,16 @@
         make.right.bottom.equalTo(self.introduceTextView).offset(-5);
     }];
     
+    [self addSubview:self.introduceDetailLabel];
+    [self.introduceDetailLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self).offset(7);
+        make.right.equalTo(self).offset(-7);
+        make.top.equalTo(self.introduceTextView.mas_bottom).offset(10);
+    }];
+    
     [self addSubview:self.nextBtn];
     [self.nextBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.introduceTextView.mas_bottom).offset(11);
+        make.top.equalTo(self.introduceDetailLabel.mas_bottom).offset(11);
         make.left.equalTo(self).offset(17);
         make.right.equalTo(self).offset(-17);
         make.height.offset(35);
@@ -314,6 +325,14 @@
     }
     if ([self.affiliatedUnitField.text isEqualToString:@""]) {
         [MBProgressHUD showInfoMessage:@"请填写所属单位"];
+        return;
+    }
+    if ([self.introduceTextView.text isEqualToString:@""]) {
+        [MBProgressHUD showInfoMessage:@"请输入自我介绍"];
+        return;
+    }
+    if (self.introduceTextView.text.length < 30) {
+        [MBProgressHUD showInfoMessage:@"自我介绍不能少于30字"];
         return;
     }
     NSInteger workTime = [self timeSwitchTimestamp:self.workDateView.content andFormatter:@"YYYY-MM-dd"];
@@ -604,7 +623,7 @@
         _introduceLabel = [[UILabel alloc] init];
         _introduceLabel.font = FONT_SIZE(15);
         _introduceLabel.textColor = [UIColor colorWithHex:0x6d6d6d];
-        _introduceLabel.text = NSLocalizedString(@"  自我介绍", nil);
+        _introduceLabel.text = NSLocalizedString(@"  自我介绍（必填）", nil);
         _introduceLabel.backgroundColor = [UIColor whiteColor];
         _introduceLabel.layer.cornerRadius = 5;
         _introduceLabel.layer.masksToBounds = YES;
@@ -616,7 +635,7 @@
 {
     if (!_introduceTextView) {
         _introduceTextView = [[UITextView alloc] init];
-        _introduceTextView.placeholder = NSLocalizedString(@"请输入自我介绍，让学生更好的了解你", nil);
+        _introduceTextView.placeholder = NSLocalizedString(@"请输入自我介绍，让学生更好的了解你（不少于30字）", nil);
         _introduceTextView.font = FONT_SIZE(14);
         _introduceTextView.textColor = [UIColor colorWithHex:0x6d6d6d];
         _introduceTextView.layer.cornerRadius = 5;
@@ -636,6 +655,20 @@
         [_wordNumberLabel sizeToFit];
     }
     return _wordNumberLabel;
+}
+
+- (UILabel *)introduceDetailLabel
+{
+    if (!_introduceDetailLabel) {
+        _introduceDetailLabel = [[UILabel alloc] init];
+        _introduceDetailLabel.font = FONT_SIZE(15);
+        _introduceDetailLabel.text = NSLocalizedString(@"例：本人毕业于XXX大学的XX专业。有过XX年的教师/家教经验，擅长xx学科，曾多次获得XX奖，在XX学科上颇有心得，而且性格（稳重 阳光 开朗 幽默 细心），能够在轻松愉快的学习气氛中发现学生学习的薄弱点加以强化，在教育工作中遵循“爱与尊重的原则”，注重学习方法因材施教。", nil);
+        _introduceDetailLabel.textColor = [UIColor colorWithHex:0x6d6d6d];
+        _introduceDetailLabel.numberOfLines = 0;
+        _introduceDetailLabel.textAlignment = NSTextAlignmentJustified;
+        [_introduceDetailLabel sizeToFit];
+    }
+    return _introduceDetailLabel;
 }
 
 - (UIButton *)nextBtn

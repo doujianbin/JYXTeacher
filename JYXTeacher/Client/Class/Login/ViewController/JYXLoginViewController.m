@@ -66,12 +66,22 @@
     [self.view addSubview:self.topBarView];
     [self.topBarView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.top.equalTo(self.view);
+//        if (SCREEN_HEIGHT >= 812) {
+//           make.height.mas_equalTo(SCREEN_HEIGHT * 0.476 - 64);
+//        }else{
+//           make.height.mas_equalTo(SCREEN_HEIGHT * 0.476);
+//        }
         make.height.mas_equalTo(SCREEN_HEIGHT * 0.476);
     }];
     
     [self.view addSubview:self.welcomeLabel];
     [self.welcomeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).offset(Iphone6ScaleHeight(190));
+//        make.top.equalTo(self.topBarView.mas_bottom).offset(20);
+        if (SCREEN_HEIGHT >= 812) {
+            make.top.equalTo(self.view).offset(Iphone6ScaleHeight(215));
+        }else{
+            make.top.equalTo(self.view).offset(Iphone6ScaleHeight(190));
+        }
         make.centerX.equalTo(self.view);
     }];
     
@@ -136,7 +146,11 @@
 {
     if (!_topBarView) {
         _topBarView = [[UIImageView alloc] init];
-        _topBarView.image = [UIImage imageNamed:@"Login_topBar"];
+        if (SCREEN_HEIGHT >= 812) {
+            _topBarView.image = [UIImage imageNamed:@"Login_topBarForX"];
+        }else{
+            _topBarView.image = [UIImage imageNamed:@"Login_topBar"];
+        }
         [_topBarView sizeToFit];
     }
     return _topBarView;
