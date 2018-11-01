@@ -8,6 +8,8 @@
 
 #import "JYXCoursePersonNumberView.h"
 @interface JYXCoursePersonNumberView ()
+
+@property (nonatomic, strong) UIView      *v_person;
 @property (nonatomic, strong) UIImageView *verticalBarImg;
 @property (nonatomic, strong) UILabel *personNumberTitleLabel;
 @property (nonatomic, strong) UILabel *personNumber;
@@ -29,7 +31,15 @@
 
 - (void)setupViews
 {
-    [self addSubview:self.verticalBarImg];
+    
+    [self addSubview:self.v_person];
+    [self.v_person mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(0);
+        make.width.mas_equalTo(SCREEN_WIDTH);
+        make.height.mas_equalTo(30);
+    }];
+    
+    [self.v_person addSubview:self.verticalBarImg];
     [self.verticalBarImg mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self).offset(7);
         make.top.equalTo(self).offset(11);
@@ -37,13 +47,13 @@
         make.height.offset(17);
     }];
     
-    [self addSubview:self.personNumberTitleLabel];
+    [self.v_person addSubview:self.personNumberTitleLabel];
     [self.personNumberTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.verticalBarImg.mas_right).offset(3);
         make.centerY.equalTo(self.verticalBarImg);
     }];
     
-    [self addSubview:self.personNumber];
+    [self.v_person addSubview:self.personNumber];
     [self.personNumber mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.personNumberTitleLabel.mas_right).offset(3);
         make.centerY.equalTo(self.verticalBarImg);
@@ -78,6 +88,14 @@
 {
     if (!model) return;
     [self.personNumber setText:[NSString stringWithFormat:@"%@人",model[@"people"]]];
+}
+
+- (UIView *)v_person{
+    if (!_v_person) {
+        _v_person = [[UIView alloc]init];
+        [_v_person setBackgroundColor:[UIColor whiteColor]];
+    }
+    return _v_person;
 }
 
 - (UIImageView *)verticalBarImg

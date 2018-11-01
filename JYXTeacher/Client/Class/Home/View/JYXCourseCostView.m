@@ -24,6 +24,7 @@
 
 - (void)setupViews
 {
+    [self setBackgroundColor:[UIColor whiteColor]];
     //课程单价
     [self addSubview:self.coursePriceTitleLabel];
     [self.coursePriceTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {

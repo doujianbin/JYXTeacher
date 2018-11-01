@@ -35,6 +35,7 @@
 @property (nonatomic, strong) JYXCoursePersonNumberView *coursePersonNumberView;
 //课程费用明细
 @property (nonatomic, strong) JYXCourseCostView *courseCostView;
+@property (nonatomic ,strong) UIView            *v_back_courseCostView;
 
 @property (nonatomic, strong) UIView *totalIncomeBgView;//收入合计
 @property (nonatomic, strong) UILabel *totalIncomeTitleLabel;
@@ -147,27 +148,36 @@
     [self.contentView addSubview:self.courseDemandView];
     [self.courseDemandView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(self.contentView);
-        make.top.equalTo(self.courseInfoView.mas_bottom).offset(20);
+        make.top.equalTo(self.courseInfoView.mas_bottom).offset(10);
     }];
     
     [self.contentView addSubview:self.coursePersonNumberView];
     [self.coursePersonNumberView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(self.contentView);
-        make.top.equalTo(self.courseDemandView.mas_bottom);
+        make.top.equalTo(self.courseDemandView.mas_bottom).offset(10);
+        make.height.mas_equalTo(30);
     }];
     
-    [self.contentView addSubview:self.courseCostView];
+    [self.contentView addSubview:self.v_back_courseCostView];
+    [self.v_back_courseCostView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(0);
+        make.width.mas_equalTo(SCREEN_WIDTH);
+        make.top.equalTo(self.coursePersonNumberView.mas_bottom);
+        make.height.mas_equalTo(195);
+    }];
+    
+    [self.v_back_courseCostView addSubview:self.courseCostView];
     [self.courseCostView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.contentView).offset(7);
         make.right.equalTo(self.contentView).offset(-7);
-        make.top.equalTo(self.coursePersonNumberView.mas_bottom).offset(40);
+        make.top.equalTo(self.coursePersonNumberView.mas_bottom).offset(20);
     }];
     
     [self.contentView addSubview:self.jijinLabel];
     [self.jijinLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(7);
         make.right.equalTo(self.courseCostView).offset(-7);
-        make.top.equalTo(self.courseCostView.mas_bottom).offset(6.5);
+        make.top.equalTo(self.v_back_courseCostView.mas_bottom).offset(6.5);
         make.height.mas_equalTo(18);
     }];
     
@@ -460,6 +470,14 @@
         _coursePersonNumberView.backgroundColor = [UIColor whiteColor];
     }
     return _coursePersonNumberView;
+}
+
+- (UIView *)v_back_courseCostView{
+    if (!_v_back_courseCostView) {
+        _v_back_courseCostView = [[UIView alloc]init];
+        [_v_back_courseCostView setBackgroundColor:[UIColor whiteColor]];
+    }
+    return _v_back_courseCostView;
 }
 
 - (JYXCourseCostView *)courseCostView
