@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>BuildTimes</key>
-	<string>1811021653</string>
+	<string>1811021809</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>zh_CN</string>
 	<key>CFBundleDisplayName</key>
@@ -54,7 +54,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.1.4.1811021653</string>
+	<string>1.1.4.1811021809</string>
 	<key>Configuration</key>
 	<string>$(CONFIGURATION)</string>
 	<key>LSApplicationQueriesSchemes</key>

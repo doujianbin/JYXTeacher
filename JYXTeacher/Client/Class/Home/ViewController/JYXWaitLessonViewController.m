@@ -368,9 +368,7 @@
 - (UITableView *)tableView
 {
     if (!_tableView) {
-//        _pageViewCode = [[ScottPageView alloc]init];
-//        _pageViewCode.frame = CGRectMake(0, 0, self.view.frame.size.width, 90);
-//        _tableView = [[BaseTableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
+
         _tableView = [[BaseTableView alloc]initWithFrame:CGRectZero style:UITableViewStyleGrouped hasHeaderRefreshing:YES hasFooterRefreshing:YES];
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableView.rowHeight = 159;
@@ -378,9 +376,6 @@
         _tableView.dataSource = self;
         _tableView.tableViewDelegate = self;
         _tableView.backgroundColor = [UIColor clearColor];
-//        _tableView.sectionHeaderHeight = 59;
-//        _tableView.sectionFooterHeight = 0.01f;
-//        _tableView.tableHeaderView = _pageViewCode;
         
 //        [_tableView registerClass:[ScottPageView class] forHeaderFooterViewReuseIdentifier:NSStringFromClass([ScottPageView class])];
         [_tableView registerClass:[JYXWaitLessonTableViewCell class] forCellReuseIdentifier:NSStringFromClass([JYXWaitLessonTableViewCell class])];
