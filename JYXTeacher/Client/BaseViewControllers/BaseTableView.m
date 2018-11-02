@@ -46,10 +46,10 @@
 }
 
 - (void)showOrHidenFooterRefresh{
-    if (!self.footer.isRefreshing) {
-        self.footer.alpha = 0.;
+    if (!self.mj_footer.isRefreshing) {
+        self.mj_footer.alpha = 0.;
     }else{
-        self.footer.alpha = 1.0;
+        self.mj_footer.alpha = 1.0;
     }
 }
 
@@ -61,14 +61,14 @@
         [self.tableViewDelegate tableView:self requestDataSourceWithPageNum:self.int_pageNum complete:^(NSInteger count) {
             [self reloadData];
             if (count == 0) {
-                self.footer.hidden = YES;
+                self.mj_footer.hidden = YES;
             }
             if (count > 0) {
                 [self setBackgroundView:nil];
             }
-            [self.header endRefreshing];
+            [self.mj_header endRefreshing];
         }];
-        [self.footer resetNoMoreData];
+        [self.mj_footer resetNoMoreData];
     }
 }
 
@@ -78,9 +78,9 @@
         [self.tableViewDelegate tableView:self requestDataSourceWithPageNum:self.int_pageNum complete:^(NSInteger count){
             [self reloadData];
             if (count == 0) {
-                [self.footer noticeNoMoreData];
+                self.mj_footer.hidden = YES;
             }else{
-                [self.footer endRefreshing];
+                [self.mj_footer endRefreshing];
             }
             if (count > 0) {
                 [self setBackgroundView:nil];
@@ -93,11 +93,11 @@
 #pragma mark - setBackGroundView
 
 - (void)networkErrorHandler{
-    if ([self.header isRefreshing]) {
-        [self.header endRefreshing];
+    if ([self.mj_header isRefreshing]) {
+        [self.mj_header endRefreshing];
     }
-    if ([self.footer isRefreshing]) {
-        [self.footer endRefreshing];
+    if ([self.mj_footer isRefreshing]) {
+        [self.mj_footer endRefreshing];
     }
     if ([self isDataSourceEmpty]) {
         if (self.hideErrorBackView == NO) {
@@ -110,11 +110,11 @@
 }
 
 - (void)setDataErrorDefaultView{
-    if ([self.header isRefreshing]) {
-        [self.header endRefreshing];
+    if ([self.mj_header isRefreshing]) {
+        [self.mj_header endRefreshing];
     }
-    if ([self.footer isRefreshing]) {
-        [self.footer endRefreshing];
+    if ([self.mj_footer isRefreshing]) {
+        [self.mj_footer endRefreshing];
     }
     if ([self isDataSourceEmpty]) {
         if (self.hideErrorBackView == NO) {
@@ -175,7 +175,7 @@
 
 - (void)requestDataSource{
     if (self.hasHeaderRefreshing) {
-        [self.header beginRefreshing];
+        [self.mj_header beginRefreshing];
     }else{
         if ([self.tableViewDelegate respondsToSelector:@selector(tableView:requestDataSourceWithPageNum:complete:)]) {
             self.int_pageNum = 0;
@@ -183,7 +183,7 @@
                 [self reloadData];
                 if (count == 0) {
                     if (self.hasFooterRefreshing) {
-                        self.footer.hidden = YES;
+                        self.mj_footer.hidden = YES;
                     }
                 }
                 if (count > 0) {
@@ -191,7 +191,7 @@
                 }
             }];
             if (self.hasFooterRefreshing) {
-                [self.footer resetNoMoreData];
+                [self.mj_footer resetNoMoreData];
             }
         }
     }
@@ -204,7 +204,7 @@
             [self reloadData];
             if (count == 0) {
                 if (self.hasFooterRefreshing) {
-                    self.footer.hidden = YES;
+                    self.mj_footer.hidden = YES;
                 }
             }
             if (count > 0) {
@@ -213,7 +213,7 @@
         }];
         
         if (self.hasFooterRefreshing) {
-            [self.footer resetNoMoreData];
+            [self.mj_footer resetNoMoreData];
         }
     }
 }
@@ -229,18 +229,18 @@
 - (void)setHasHeaderRefreshing:(BOOL)hasHeaderRefreshing{
     _hasHeaderRefreshing = hasHeaderRefreshing;
     if(hasHeaderRefreshing){
-        self.header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+        self.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
     }else{
-        self.header = nil;
+        self.mj_header = nil;
     }
 }
 
 - (void)setHasFooterRefreshing:(BOOL)hasFooterRefreshing{
     _hasFooterRefreshing = hasFooterRefreshing;
     if (hasFooterRefreshing) {
-        self.footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
+        self.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
     }else{
-        self.footer = nil;
+        self.mj_footer = nil;
     }
 }
 

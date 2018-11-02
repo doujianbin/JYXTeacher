@@ -21,7 +21,7 @@
     if (user.token) {
         [dic setObject:user.token forKey:@"token"];
     }
-    
+    [dic setObject:@"0" forKey:@"system"];
     [[RTHttpClient defaultClient] requestWithPath:str_url
                                            method:RTHttpRequestGet                                      parameters:dic
                                           prepare:prepare

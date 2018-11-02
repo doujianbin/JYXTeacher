@@ -33,7 +33,7 @@
         return;
     }
     
-    self.webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    self.webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - SafeAreaTopHeight)];
     self.webView.delegate = self;
     if (@available(iOS 11.0, *)) {
         self.webView.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
@@ -78,6 +78,8 @@
         [self.navigationController popViewControllerAnimated:YES];
         responseCallback(@"Response from testObjcCallback");
     }];
+    
+    
 }
 
 - (void)shareWebPageToPlatformType:(UMSocialPlatformType)platformType
@@ -103,9 +105,12 @@
         if (error) {
             UMSocialLogInfo(@"************Share fail with error %@*********",error);
             [MBProgressHUD showInfoMessage:@"分享失败"];
+            [self.bridge callHandler:@"shareResult" data:@"failure"];
         }else{
             if ([data isKindOfClass:[UMSocialShareResponse class]]) {
                 UMSocialShareResponse *resp = data;
+                
+                [self.bridge callHandler:@"shareResult" data:@"success"];
                 //分享结果消息
                 UMSocialLogInfo(@"response message is %@",resp.message);
                 //第三方原始返回的数据

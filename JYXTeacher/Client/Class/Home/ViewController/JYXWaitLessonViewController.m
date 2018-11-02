@@ -99,13 +99,8 @@
     
     
     
-    self.v_back = [[UIView alloc]init];
-    [self.view addSubview:self.v_back];
-    [self.v_back mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.view);
-    }];
+    self.v_back = [[UIView alloc]initWithFrame:self.tableView.frame];
     [self.v_back setBackgroundColor:[UIColor clearColor]];
-    [self.v_back setHidden:YES];
     
     self.btn_action = [[UIButton alloc]init];
     [self.v_back addSubview:self.btn_action];
@@ -135,8 +130,35 @@
     self.lb_detail.numberOfLines = 0;
 //    self.lb_detail.lineBreakMode = UILineBreakModeWordWrap;
     
-    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
-    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMore)];
+//    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
+//    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMore)];
+//    self.tableView.mj_footer.au
+}
+
+- (void)tableView:(UITableView *)tableView requestDataSourceWithPageNum:(NSInteger)pageNum complete:(DataCompleteBlock)complete{
+    self.page = pageNum + 1;
+    JYXUser *user = [JYXUserManager shareInstance].user;
+    JYXHomeTeacherWorkListApi *api = [[JYXHomeTeacherWorkListApi alloc] initWithTeacherid:@(user.userId.integerValue) token:user.token type:@1 startime:_currentDateStr page:[NSNumber numberWithInteger:self.page] limitnum:@10];
+    [api sendRequestWithCompletionBlockWithSuccess:^(__kindof RXBaseRequest *request) {
+        if (self.page == 1) {
+            [self.dataSourceArray removeAllObjects];
+        }
+        NSArray *arr = [api fetchDataWithReformer:request];
+        for (NSDictionary *dic_data in arr) {
+            [self.dataSourceArray addObjectsFromArray:[dic_data objectForKey:@"list"]];
+        }
+        complete(arr.count);
+        if (self.dataSourceArray.count == 0) {
+            self.tableView.backgroundView = self.v_back;
+        }else{
+            self.tableView.backgroundView = nil;
+        }
+        
+    } failure:^(__kindof RXBaseRequest *request) {
+        if (complete) {
+            complete(CompleteBlockErrorCode);
+        }
+    }];
 }
 
 - (void)selectTeacherStatus{
@@ -148,6 +170,8 @@
         NSDictionary *dic = (NSMutableDictionary *)obj;
 //        NSLog(@"dic = %@",dic);
         self.dic_teacherInfo = dic;
+        [self.adArrs removeAllObjects];
+        [self.picArrs removeAllObjects];
         [self.adArrs addObjectsFromArray:[dic objectForKey:@"ad"]];
         for (int i = 0; i < self.adArrs.count; i++) {
             [self.picArrs addObject:[[self.adArrs objectAtIndex:i] objectForKey:@"pic"]];
@@ -155,8 +179,9 @@
         //使用cardname进行资本资料是否填写的判断   其余使用单独字段
         if ([[dic objectForKey:@"cardname"] isEqualToString:@""] || [dic[@"cardstatu"] intValue] == 0 || [dic[@"educationstatu"] intValue] == 0) {
             //未认证
-            [self.tableView setHidden:YES];
-            [self.v_back setHidden:NO];
+//            [self.tableView setHidden:YES];
+            self.tableView.backgroundView = self.v_back;
+//            [self.v_back setHidden:NO];
             [self.btn_action setHidden:NO];
             [self.lb_detail setHidden:NO];
             [self.btn_action setTitle:@"去认证" forState:UIControlStateNormal];
@@ -165,8 +190,9 @@
             self.isRenZheng = NO;
         }else if ([dic[@"cardstatu"] intValue] == 1 || [dic[@"educationstatu"] intValue] == 1){
             //认证中
-            [self.tableView setHidden:YES];
-            [self.v_back setHidden:NO];
+//            [self.tableView setHidden:YES];
+//            [self.v_back setHidden:NO];
+            self.tableView.backgroundView = self.v_back;
             [self.btn_action setHidden:YES];
             [self.lb_detail setHidden:NO];
             [self.lb_detail setText:@"认证中请耐心等待"];
@@ -174,7 +200,8 @@
             self.isRenZheng = NO;
         }else if ([dic[@"cardstatu"] intValue] == 3 || [dic[@"educationstatu"] intValue] == 3){
             //认证失败
-            [self.tableView setHidden:YES];
+//            [self.tableView setHidden:YES];
+            self.tableView.backgroundView = self.v_back;
             [self.v_back setHidden:NO];
             [self.btn_action setHidden:NO];
             [self.btn_action setTitle:@"重新认证" forState:UIControlStateNormal];
@@ -185,7 +212,8 @@
         }
         else if ([dic[@"planhour"] intValue] == 0 || [[dic objectForKey:@"gradesubject"] count] == 0){
             //认证通过   未接单设置
-            [self.tableView setHidden:YES];
+//            [self.tableView setHidden:YES];
+            self.tableView.backgroundView = self.v_back;
             [self.v_back setHidden:NO];
             [self.btn_action setTitle:@"接单设置" forState:UIControlStateNormal];
             [self.lb_detail setText:@"您还未进行接单设置，系统将自动为您安排年级科目进行展示，请尽快完成接单设置。"];
@@ -193,69 +221,18 @@
             self.isRenZheng = NO;
         }else{
             //认证通过  接单设置已完成
-            [self.tableView setHidden:NO];
-            [self.v_back setHidden:YES];
+//            [self.tableView setHidden:NO];
+//            [self.v_back setHidden:YES];
+            self.tableView.backgroundView = nil;
             self.isRenZheng = YES;
-            [self loadData];
+            [self.tableView requestDataSource];
         }
-    
+        [self.tableView reloadData];
     } failed:^(NSInteger statusCode, id json) {
         
     }];
 }
 
-- (void)loadData
-{
-    self.page = 1;
-    JYXUser *user = [JYXUserManager shareInstance].user;
-    JYXHomeTeacherWorkListApi *api = [[JYXHomeTeacherWorkListApi alloc] initWithTeacherid:@(user.userId.integerValue) token:user.token type:@1 startime:_currentDateStr page:@1 limitnum:@10];
-//    [SVProgressHUD show];
-    [api sendRequestWithCompletionBlockWithSuccess:^(__kindof RXBaseRequest *request) {
-//        [SVProgressHUD dismiss];
-        [self.tableView.mj_header endRefreshing];
-        [self.dataSourceArray removeAllObjects];
-        NSArray *arr = [api fetchDataWithReformer:request];
-        for (NSDictionary *dic_data in arr) {
-            [self.dataSourceArray addObjectsFromArray:[dic_data objectForKey:@"list"]];
-        }
-//        [self.dataSourceArray addObjectsFromArray:dict[@"list"]];
-        if (self.dataSourceArray.count == 0) {
-            
-        }
-        [self.tableView reloadData];
-    
-    } failure:^(__kindof RXBaseRequest *request) {
-//        [SVProgressHUD dismiss];
-        [self.tableView.mj_header endRefreshing];
-    }];
-    
-}
-
-- (void)loadMore
-{
-    self.page++;
-    JYXUser *user = [JYXUserManager shareInstance].user;
-    JYXHomeTeacherWorkListApi *api = [[JYXHomeTeacherWorkListApi alloc] initWithTeacherid:@(user.userId.integerValue) token:user.token type:@1 startime:_currentDateStr page:@(self.page) limitnum:@10];
-    [SVProgressHUD show];
-    [api sendRequestWithCompletionBlockWithSuccess:^(__kindof RXBaseRequest *request) {
-        [SVProgressHUD dismiss];
-        NSArray *arr = [api fetchDataWithReformer:request];
-//        self.dataSourceDict = dict;
-        if (arr.count > 0) {
-            for (NSDictionary *dic_data in arr) {
-                [self.dataSourceArray addObjectsFromArray:[dic_data objectForKey:@"list"]];
-            }
-            [self.tableView reloadData];
-        }
-        [self.tableView.mj_footer endRefreshing];
-        if (arr.count <= 0) {
-            [self.tableView.mj_footer endRefreshingWithNoMoreData];
-        }
-    } failure:^(__kindof RXBaseRequest *request) {
-        [SVProgressHUD dismiss];
-        [self.tableView.mj_footer endRefreshing];
-    }];
-}
 
 #pragma mark - eventResponse                - Method -
 

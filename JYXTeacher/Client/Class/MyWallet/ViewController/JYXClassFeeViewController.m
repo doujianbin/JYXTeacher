@@ -131,21 +131,25 @@
 #pragma mark - eventResponse                - Method -
 
 - (void)applyBtnAction{
-    if ([self.topClassFeeLabel.text floatValue] < 100) {
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"低于100元不可以提现" preferredStyle:UIAlertControllerStyleAlert];
-        
-        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"我知道了" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            
-            
-        }];
-        [alert addAction:cancel];
-        [self presentViewController:alert animated:YES completion:nil];
-    }else{
-        JYXWithdrawViewController *vc = [[JYXWithdrawViewController alloc]init];
-        vc.money = [self.topClassFeeLabel.text floatValue];
-        vc.tixianfangshi = 4;
-        [self.navigationController pushViewController:vc animated:YES];
-    }
+//    if ([self.topClassFeeLabel.text floatValue] < 100) {
+//        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"低于100元不可以提现" preferredStyle:UIAlertControllerStyleAlert];
+//
+//        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"我知道了" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//
+//
+//        }];
+//        [alert addAction:cancel];
+//        [self presentViewController:alert animated:YES completion:nil];
+//    }else{
+//        JYXWithdrawViewController *vc = [[JYXWithdrawViewController alloc]init];
+//        vc.money = [self.topClassFeeLabel.text floatValue];
+//        vc.tixianfangshi = 4;
+//        [self.navigationController pushViewController:vc animated:YES];
+//    }
+    JYXWithdrawViewController *vc = [[JYXWithdrawViewController alloc]init];
+    vc.money = [self.topClassFeeLabel.text floatValue];
+    vc.tixianfangshi = 4;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 

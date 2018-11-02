@@ -14,16 +14,22 @@
 #import "JYXCertificationBaseInfoViewController.h"
 #import "JYXCertificationMaterialsViewController.h"
 #import "JYXTakeOrdersSetViewController.h"
+#import "ScottPageView.h"
+#import "JYXShareWebViewViewController.h"
 
-@interface JYXAlreadyLessonViewController ()<UITableViewDataSource, UITableViewDelegate>
+
+@interface JYXAlreadyLessonViewController ()<UITableViewDataSource, UITableViewDelegate,BaseTableViewDelagate>
 @property (nonatomic, assign) NSInteger page;
-@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) BaseTableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataSourceArray;
 @property (nonatomic ,strong) UIView   *v_back;
 @property (nonatomic ,strong) UIButton   *btn_action;
 @property (nonatomic ,strong) UILabel    *lb_detail;
 @property (nonatomic, strong) NSDictionary *dic_teacherInfo;
 @property (nonatomic ,assign) BOOL          isRenZheng;
+@property (nonatomic, strong) ScottPageView *pageViewCode;
+@property (nonatomic, strong) NSMutableArray *picArrs;
+@property (nonatomic, strong) NSMutableArray *adArrs;
 
 @end
 
@@ -71,6 +77,8 @@
     [super viewDidLoad];
     self.page = 1;//默认第一页
 //    [self loadData];
+    self.picArrs = [[NSMutableArray alloc]init];
+    self.adArrs = [[NSMutableArray alloc]init];
 }
 
 - (void)setupViews
@@ -80,13 +88,8 @@
         make.edges.equalTo(self.view);
     }];
     
-    self.v_back = [[UIView alloc]init];
-    [self.view addSubview:self.v_back];
-    [self.v_back mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.view);
-    }];
+    self.v_back = [[UIView alloc]initWithFrame:self.tableView.frame];
     [self.v_back setBackgroundColor:[UIColor clearColor]];
-    [self.v_back setHidden:YES];
     
     self.btn_action = [[UIButton alloc]init];
     [self.v_back addSubview:self.btn_action];
@@ -115,8 +118,6 @@
     [self.lb_detail setTextAlignment:NSTextAlignmentCenter];
     self.lb_detail.numberOfLines = 0;
     
-    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
-    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMore)];
 }
 
 - (void)selectTeacherStatus{
@@ -128,11 +129,19 @@
         NSDictionary *dic = (NSMutableDictionary *)obj;
 //        NSLog(@"dic = %@",dic);
         self.dic_teacherInfo = dic;
+        [self.adArrs removeAllObjects];
+        [self.picArrs removeAllObjects];
+        [self.adArrs addObjectsFromArray:[dic objectForKey:@"ad"]];
+        for (int i = 0; i < self.adArrs.count; i++) {
+            [self.picArrs addObject:[[self.adArrs objectAtIndex:i] objectForKey:@"pic"]];
+        }
+        
         //使用cardname进行资本资料是否填写的判断   其余使用单独字段
         if ([[dic objectForKey:@"cardname"] isEqualToString:@""] || [dic[@"cardstatu"] intValue] == 0 || [dic[@"educationstatu"] intValue] == 0) {
             //未认证
-            [self.tableView setHidden:YES];
-            [self.v_back setHidden:NO];
+////            [self.tableView setHidden:YES];
+//            [self.v_back setHidden:NO];
+            self.tableView.backgroundView = self.v_back;
             [self.btn_action setHidden:NO];
             [self.lb_detail setHidden:NO];
             [self.btn_action setTitle:@"去认证" forState:UIControlStateNormal];
@@ -141,8 +150,9 @@
             self.isRenZheng = NO;
         }else if ([dic[@"cardstatu"] intValue] == 1 || [dic[@"educationstatu"] intValue] == 1){
             //认证中
-            [self.tableView setHidden:YES];
-            [self.v_back setHidden:NO];
+//            [self.tableView setHidden:YES];
+//            [self.v_back setHidden:NO];
+            self.tableView.backgroundView = self.v_back;
             [self.btn_action setHidden:YES];
             [self.lb_detail setHidden:NO];
             [self.lb_detail setText:@"认证中请耐心等待"];
@@ -150,8 +160,9 @@
             self.isRenZheng = NO;
         }else if ([dic[@"cardstatu"] intValue] == 3 || [dic[@"educationstatu"] intValue] == 3 ){
             //认证失败
-            [self.tableView setHidden:YES];
-            [self.v_back setHidden:NO];
+//            [self.tableView setHidden:YES];
+//            [self.v_back setHidden:NO];
+            self.tableView.backgroundView = self.v_back;
             [self.btn_action setHidden:NO];
             [self.btn_action setTitle:@"重新认证" forState:UIControlStateNormal];
             [self.lb_detail setText:@"您的认证审核未通过"];
@@ -161,8 +172,9 @@
         }
         else if ([dic[@"planhour"] intValue] == 0 || [[dic objectForKey:@"gradesubject"] count] == 0){
             //认证通过   未接单设置
-            [self.tableView setHidden:YES];
-            [self.v_back setHidden:NO];
+//            [self.tableView setHidden:YES];
+//            [self.v_back setHidden:NO];
+            self.tableView.backgroundView = self.v_back;
             [self.btn_action setTitle:@"接单设置" forState:UIControlStateNormal];
             [self.lb_detail setText:@"您还未进行接单设置，系统将自动为您安排年级科目进行展示，请尽快完成接单设置。"];
             self.lb_detail.font = [UIFont systemFontOfSize:11];
@@ -170,53 +182,40 @@
         }else{
             //认证通过  接单设置已完成
             self.isRenZheng = YES;
-            [self.tableView setHidden:NO];
-            [self.v_back setHidden:YES];
-            [self loadData];
+//            [self.tableView setHidden:NO];
+//            [self.v_back setHidden:YES];
+            self.tableView.backgroundView = nil;
+            [self.tableView requestDataSource];
         }
-        
+        [self.tableView reloadData];
     } failed:^(NSInteger statusCode, id json) {
         
     }];
 }
 
-- (void)loadData
-{
-    self.page = 1;
+-(void)tableView:(UITableView *)tableView requestDataSourceWithPageNum:(NSInteger)pageNum complete:(DataCompleteBlock)complete{
+    self.page = pageNum + 1;
     JYXUser *user = [JYXUserManager shareInstance].user;
-    JYXHomeTeacherWorkListApi *api = [[JYXHomeTeacherWorkListApi alloc] initWithTeacherid:@(user.userId.integerValue) token:user.token type:@2 startime:nil page:@1 limitnum:@10];
-//    [SVProgressHUD show];
+    JYXHomeTeacherWorkListApi *api = [[JYXHomeTeacherWorkListApi alloc] initWithTeacherid:@(user.userId.integerValue) token:user.token type:@2 startime:nil page:[NSNumber numberWithInteger:self.page] limitnum:@10];
+    //    [SVProgressHUD show];
     [api sendRequestWithCompletionBlockWithSuccess:^(__kindof RXBaseRequest *request) {
-//        [SVProgressHUD dismiss];
-        NSArray *array = [api fetchDataWithReformer:request];
-        self.dataSourceArray = [array mutableCopy];
-        [self.tableView reloadData];
-        [self.tableView.mj_header endRefreshing];
-        [self.tableView.mj_footer resetNoMoreData];
-    } failure:^(__kindof RXBaseRequest *request) {
-//        [SVProgressHUD dismiss];
-        [self.tableView.mj_header endRefreshing];
-    }];
-}
-
-- (void)loadMore
-{
-    self.page++;
-    JYXUser *user = [JYXUserManager shareInstance].user;
-    JYXHomeTeacherWorkListApi *api = [[JYXHomeTeacherWorkListApi alloc] initWithTeacherid:@(user.userId.integerValue) token:user.token type:@2 startime:nil page:@(self.page) limitnum:@10];
-    [SVProgressHUD show];
-    [api sendRequestWithCompletionBlockWithSuccess:^(__kindof RXBaseRequest *request) {
-        [SVProgressHUD dismiss];
+        
+        
+        if (self.page == 1) {
+            [self.dataSourceArray removeAllObjects];
+        }
         NSArray *array = [api fetchDataWithReformer:request];
         [self.dataSourceArray addObjectsFromArray:array];
-        [self.tableView reloadData];
-        if ([array count] <= 0) {
-            [self.tableView.mj_footer endRefreshing];
-            [self.tableView.mj_footer endRefreshingWithNoMoreData];
+        
+        complete(array.count);
+        if (self.dataSourceArray.count == 0) {
+            self.tableView.backgroundView = self.v_back;
+        }else{
+            self.tableView.backgroundView = nil;
         }
+        
     } failure:^(__kindof RXBaseRequest *request) {
-        [SVProgressHUD dismiss];
-        [self.tableView.mj_footer endRefreshing];
+        //        [SVProgressHUD dismiss];
     }];
 }
 
@@ -273,6 +272,35 @@
     return self.dataSourceArray.count;
 }
 
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    
+    if (self.picArrs.count > 0) {
+        
+        _pageViewCode = [ScottPageView pageViewWithImageArr:self.picArrs andImageClickBlock:^(NSInteger index) {
+            NSLog(@"点击代码创建的第%ld张图片",index+1);
+            JYXShareWebViewViewController *vc = [[JYXShareWebViewViewController alloc]init];
+            vc.str_title = [[self.adArrs objectAtIndex:index] objectForKey:@"title"];
+            vc.str_url = [[self.adArrs objectAtIndex:index] objectForKey:@"url"];
+            [self.navigationController pushViewController:vc animated:YES];
+        }];
+        _pageViewCode.time = 3;
+        return _pageViewCode;
+        
+    }else{
+        return nil;
+    }
+    return nil;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    if (self.picArrs.count > 0) {
+        return 95;
+    }else{
+        return 0.01f;
+    }
+}
+
 #pragma mark - getters and setters          - Method -
 - (NSMutableArray *)dataSourceArray
 {
@@ -285,11 +313,12 @@
 - (UITableView *)tableView
 {
     if (!_tableView) {
-        _tableView = [[UITableView alloc] init];
+        _tableView = [[BaseTableView alloc]initWithFrame:CGRectZero style:UITableViewStyleGrouped hasHeaderRefreshing:YES hasFooterRefreshing:YES];
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableView.rowHeight = 159;
         _tableView.delegate = self;
         _tableView.dataSource = self;
+        _tableView.tableViewDelegate = self;
         _tableView.backgroundColor = [UIColor clearColor];
         _tableView.contentInset = EdgeInsets(4, 0, 0, 0);
         

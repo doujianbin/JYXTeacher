@@ -90,21 +90,25 @@
 }
 
 - (void)applyBtnAction{
-    if ([[self.dic_data objectForKey:@"c4"] doubleValue] < 100) {
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"低于100元不可以提现" preferredStyle:UIAlertControllerStyleAlert];
-        
-        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"我知道了" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            
-            
-        }];
-        [alert addAction:cancel];
-        [self presentViewController:alert animated:YES completion:nil];
-    }else{
-        JYXWithdrawViewController *vc = [[JYXWithdrawViewController alloc] init];
-        vc.money = [[self.dic_data objectForKey:@"c4"] doubleValue];
-        vc.tixianfangshi = 5;
-        [self.navigationController pushViewController:vc animated:YES];
-    }
+//    if ([[self.dic_data objectForKey:@"c4"] doubleValue] < 100) {
+//        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"低于100元不可以提现" preferredStyle:UIAlertControllerStyleAlert];
+//
+//        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"我知道了" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//
+//
+//        }];
+//        [alert addAction:cancel];
+//        [self presentViewController:alert animated:YES completion:nil];
+//    }else{
+//        JYXWithdrawViewController *vc = [[JYXWithdrawViewController alloc] init];
+//        vc.money = [[self.dic_data objectForKey:@"c4"] doubleValue];
+//        vc.tixianfangshi = 5;
+//        [self.navigationController pushViewController:vc animated:YES];
+//    }
+    JYXWithdrawViewController *vc = [[JYXWithdrawViewController alloc] init];
+    vc.money = [[self.dic_data objectForKey:@"c4"] doubleValue];
+    vc.tixianfangshi = 5;
+    [self.navigationController pushViewController:vc animated:YES];
    
 }
 
