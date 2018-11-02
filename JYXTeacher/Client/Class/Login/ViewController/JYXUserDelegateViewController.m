@@ -32,6 +32,7 @@
     self.myWebview = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     [self.view addSubview:self.myWebview];
     NSURL *requestUrl = [NSURL URLWithString:self.str_url];
+//    NSURL *requestUrl = [NSURL URLWithString:@"http://www.jiaoyuxuevip.com/home/active/testactive"];
     NSURLRequest *request = [NSURLRequest requestWithURL:requestUrl];
     [self.myWebview loadRequest:request];
 }

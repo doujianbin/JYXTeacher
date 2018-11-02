@@ -9,6 +9,7 @@
 #import "JYXLoginViewController.h"
 #import "JYXLoginView.h"
 #import "JYXUserDelegateViewController.h"
+#import "JYXShareWebViewViewController.h"
 
 @interface JYXLoginViewController ()
 @property (nonatomic, strong) UIImageView *topBarView;
@@ -123,7 +124,7 @@
 
 - (void)appProtocolBtnAction{
     JYXUserDelegateViewController *vc = [[JYXUserDelegateViewController alloc]init];
-    JYXBaseNavigationController *nav = [[JYXBaseNavigationController alloc]initWithRootViewController:vc];
+        JYXBaseNavigationController *nav = [[JYXBaseNavigationController alloc]initWithRootViewController:vc];
     vc.str_title = @"用户协议";
     vc.str_url = [NSString stringWithFormat:@"%@API_DOC/help/agreement.html",API_Login];
     [self presentViewController:nav animated:YES completion:^{
@@ -203,7 +204,7 @@
         [str addAttribute:NSUnderlineColorAttributeName value:[UIColor colorWithHex:0x67C8FF] range:NSMakeRange(6, 6)]; // 下划线颜色
 
         [_appProtocolBtn setAttributedTitle:str forState:UIControlStateNormal];
-        [_appProtocolBtn setTitleColor:[UIColor colorWithHex:0x67C8FF] forState:UIControlStateNormal];
+//        [_appProtocolBtn setTitleColor:[UIColor colorWithHex:0x67C8FF] forState:UIControlStateNormal];
 //        _appProtocolBtn.titleLabel.font = FONT_SIZE(14);
 //        [_appProtocolBtn sizeToFit];
         [_appProtocolBtn addTarget:self action:@selector(appProtocolBtnAction) forControlEvents:UIControlEventTouchUpInside];

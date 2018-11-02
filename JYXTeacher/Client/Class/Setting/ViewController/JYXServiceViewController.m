@@ -203,7 +203,7 @@
         _emailBtn = [[UIButton alloc] init];
         _emailBtn.backgroundColor = [UIColor whiteColor];
         _emailBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-        [_emailBtn setTitle:NSLocalizedString(@"service@jiaoyuxuevip.com", nil) forState:UIControlStateNormal];
+        [_emailBtn setTitle:NSLocalizedString(@"cs@jiaoyuxuevip.com", nil) forState:UIControlStateNormal];
         [_emailBtn setImage:[UIImage imageNamed:@"youxiang"] forState:UIControlStateNormal];
         [_emailBtn setImageEdgeInsets:UIEdgeInsetsMake(0.0, -4, 0.0, 0.0)];
         [_emailBtn setTitleColor:[UIColor colorWithHex:0x6f6e6e6e] forState:UIControlStateNormal];

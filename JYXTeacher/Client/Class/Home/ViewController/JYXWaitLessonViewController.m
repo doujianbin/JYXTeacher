@@ -16,6 +16,8 @@
 #import "JYXCertificationBaseInfoViewController.h"
 #import "JYXCertificationMaterialsViewController.h"
 #import "JYXTakeOrdersSetViewController.h"
+#import "ScottPageView.h"
+#import "JYXShareWebViewViewController.h"
 
 @interface JYXWaitLessonViewController ()<UITableViewDataSource, UITableViewDelegate,BaseTableViewDelagate>
 @property (nonatomic, assign) NSInteger page;
@@ -28,12 +30,14 @@
 @property (nonatomic ,strong) UILabel    *lb_detail;
 @property (nonatomic, strong) NSDictionary *dic_teacherInfo;
 @property (nonatomic ,assign) BOOL          isRenZheng;
-
-
+@property (nonatomic, strong) ScottPageView *pageViewCode;
+@property (nonatomic, strong) NSMutableArray *picArrs;
+@property (nonatomic, strong) NSMutableArray *adArrs;
 @end
 
 @implementation JYXWaitLessonViewController
 #pragma mark - lifeCycle                    - Method -
+
 
 - (void)dealloc
 {
@@ -79,14 +83,21 @@
     [super viewDidLoad];
 //    self.page = 1;//默认第一页
 //    [self loadData];
+    self.picArrs = [[NSMutableArray alloc]init];
+    self.adArrs = [[NSMutableArray alloc]init];
 }
 
 - (void)setupViews
 {
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.view);
+//        make.edges.equalTo(self.view);
+        make.top.mas_equalTo(3.5);
+        make.left.right.equalTo(self.view);
+        make.bottom.equalTo(self.view);
     }];
+    
+    
     
     self.v_back = [[UIView alloc]init];
     [self.view addSubview:self.v_back];
@@ -137,7 +148,10 @@
         NSDictionary *dic = (NSMutableDictionary *)obj;
 //        NSLog(@"dic = %@",dic);
         self.dic_teacherInfo = dic;
-
+        [self.adArrs addObjectsFromArray:[dic objectForKey:@"ad"]];
+        for (int i = 0; i < self.adArrs.count; i++) {
+            [self.picArrs addObject:[[self.adArrs objectAtIndex:i] objectForKey:@"pic"]];
+        }
         //使用cardname进行资本资料是否填写的判断   其余使用单独字段
         if ([[dic objectForKey:@"cardname"] isEqualToString:@""] || [dic[@"cardstatu"] intValue] == 0 || [dic[@"educationstatu"] intValue] == 0) {
             //未认证
@@ -201,7 +215,6 @@
         [self.tableView.mj_header endRefreshing];
         [self.dataSourceArray removeAllObjects];
         NSArray *arr = [api fetchDataWithReformer:request];
-//        self.dataSourceDict = dict;
         for (NSDictionary *dic_data in arr) {
             [self.dataSourceArray addObjectsFromArray:[dic_data objectForKey:@"list"]];
         }
@@ -216,22 +229,6 @@
         [self.tableView.mj_header endRefreshing];
     }];
     
-//    [TeacherWorkHandler teacherWorkListWithStartTime:_currentDateStr page:1 type:1 prepare:^{
-//        [SVProgressHUD show];
-//    } success:^(id obj) {
-//        [SVProgressHUD dismiss];
-//        [self.dataSourceArray removeAllObjects];
-//        NSDictionary *dict = (NSDictionary *)obj;
-////        self.dataSourceDict = dict;
-//        //        self.dataSourceArray = [dict[@"list"] mutableCopy];
-//        [self.dataSourceArray addObjectsFromArray:dict[@"list"]];
-//        [self.tableView reloadData];
-//        [self.tableView.mj_header endRefreshing];
-//        [self.tableView.mj_footer resetNoMoreData];
-//    } failed:^(NSInteger statusCode, id json) {
-//        [SVProgressHUD dismiss];
-//        [self.tableView.mj_header endRefreshing];
-//    }];
 }
 
 - (void)loadMore
@@ -313,23 +310,41 @@
     [mCell configWaitLessonCellWithData:self.dataSourceArray[indexPath.row]];
 }
 
+
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    JYXWaitLessonHeaderView *headerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:NSStringFromClass([JYXWaitLessonHeaderView class])];
-    WeakSelf(weakSelf);
-    [headerView setDateSelectSuccess:^(NSString *selectedDate) {
-        weakSelf.currentDateStr = selectedDate;
-        [weakSelf.tableView.mj_header beginRefreshing];
-    }];
-    return headerView;
+
+    if (self.picArrs.count > 0) {
+
+        _pageViewCode = [ScottPageView pageViewWithImageArr:self.picArrs andImageClickBlock:^(NSInteger index) {
+            NSLog(@"点击代码创建的第%ld张图片",index+1);
+            JYXShareWebViewViewController *vc = [[JYXShareWebViewViewController alloc]init];
+            vc.str_title = [[self.adArrs objectAtIndex:index] objectForKey:@"title"];
+            vc.str_url = [[self.adArrs objectAtIndex:index] objectForKey:@"url"];
+            [self.navigationController pushViewController:vc animated:YES];
+        }];
+        _pageViewCode.time = 3;
+        return _pageViewCode;
+        
+    }else{
+        return nil;
+    }
     return nil;
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section
-{
-    JYXWaitLessonHeaderView *headerView = (JYXWaitLessonHeaderView *)view;
-    [headerView configWaitLessonHeaderViewWithData:self.dataSourceDict];
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    if (self.picArrs.count > 0) {
+        return 95;
+    }else{
+        return 0.01f;
+    }
 }
+
+//- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section
+//{
+//    JYXWaitLessonHeaderView *headerView = (JYXWaitLessonHeaderView *)view;
+//    [headerView configWaitLessonHeaderViewWithData:self.dataSourceDict];
+//}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -353,6 +368,8 @@
 - (UITableView *)tableView
 {
     if (!_tableView) {
+//        _pageViewCode = [[ScottPageView alloc]init];
+//        _pageViewCode.frame = CGRectMake(0, 0, self.view.frame.size.width, 90);
 //        _tableView = [[BaseTableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
         _tableView = [[BaseTableView alloc]initWithFrame:CGRectZero style:UITableViewStyleGrouped hasHeaderRefreshing:YES hasFooterRefreshing:YES];
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -361,10 +378,11 @@
         _tableView.dataSource = self;
         _tableView.tableViewDelegate = self;
         _tableView.backgroundColor = [UIColor clearColor];
-        _tableView.sectionHeaderHeight = 59;
-        _tableView.sectionFooterHeight = 0.01f;
+//        _tableView.sectionHeaderHeight = 59;
+//        _tableView.sectionFooterHeight = 0.01f;
+//        _tableView.tableHeaderView = _pageViewCode;
         
-        [_tableView registerClass:[JYXWaitLessonHeaderView class] forHeaderFooterViewReuseIdentifier:NSStringFromClass([JYXWaitLessonHeaderView class])];
+//        [_tableView registerClass:[ScottPageView class] forHeaderFooterViewReuseIdentifier:NSStringFromClass([ScottPageView class])];
         [_tableView registerClass:[JYXWaitLessonTableViewCell class] forCellReuseIdentifier:NSStringFromClass([JYXWaitLessonTableViewCell class])];
     }
     return _tableView;

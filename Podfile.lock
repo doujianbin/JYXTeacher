@@ -60,6 +60,7 @@ PODS:
   - UMCShare/UI (6.9.4):
     - UMCCommon
     - UMCShare/Core
+  - WebViewJavascriptBridge (5.2.0)
 
 DEPENDENCIES:
   - AFNetworking (~> 3.2.1)
@@ -86,6 +87,7 @@ DEPENDENCIES:
   - UMCShare/Social/ReducedQQ
   - UMCShare/Social/ReducedWeChat
   - UMCShare/UI
+  - WebViewJavascriptBridge (~> 5.0)
 
 SPEC CHECKSUMS:
   AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
@@ -112,7 +114,8 @@ SPEC CHECKSUMS:
   UMCAnalytics: 0aff87e39008e2a650e5917430db0da2de2f8495
   UMCCommon: 4392868ac47ff1b101663106bb114ba616fabbad
   UMCShare: aa233aecad67979930fe43f3a2f676023b669439
+  WebViewJavascriptBridge: a00b2d61252aec5207e3263d46fd0fd3cfaf7895
 
-PODFILE CHECKSUM: 86b9e946e0e086c4a8abc82bb8e00de4078cdc2c
+PODFILE CHECKSUM: 0a50bc2930116be11cefe5f79db67c8b5a866a57
 
 COCOAPODS: 1.4.0

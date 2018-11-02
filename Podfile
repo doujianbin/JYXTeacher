@@ -15,6 +15,7 @@ target 'JYXTeacher' do
   pod 'MBProgressHUD'
   pod 'AliPay', '~> 2.1.2'
   pod 'Bugtags'
+  pod 'WebViewJavascriptBridge', '~> 5.0'
   # 友盟
 #  pod 'UMCCommon'
 #  pod 'UMCSecurityPlugins'

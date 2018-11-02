@@ -37,7 +37,7 @@
 - (void)configGradeSubjectFooterViewWithData:(id)model
 {
     if (!model) return;
-    self.remarkLabel.text = @"\n1.先选择一个年级再选择可授课的科目。\n2.重复此操作流程，就选择多个年级多个科目。\n如：选择一年级，然后选择一年级的相应课程,再选择二年级，然后选择二年级的课程，以此类推，就可以选择出多个年级多个不同的科目，没有数量限制。\n\n";
+    self.remarkLabel.text = @"\n1.先选择一个年级再选择可授课的科目。\n2.每个年级只能选择一个科目。\n3.重复此操作流程，就选择多个年级多个科目。\n如：选择一年级，然后选择一年级的相应课程,再选择二年级，然后选择二年级的课程，以此类推，就可以选择出多个年级多个不同的科目，没有数量限制。\n";
     CGSize size = [self.remarkLabel sizeThatFits:CGSizeMake(SCREEN_WIDTH-34, MAXFLOAT)];
     [self.remarkLabel mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.offset(size.height);

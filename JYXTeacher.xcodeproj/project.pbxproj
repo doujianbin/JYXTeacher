@@ -269,6 +269,7 @@
 		7409B007216DBB6B004247EF /* ZJPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7409B005216DBB6B004247EF /* ZJPickerView.m */; };
 		7409B00A216F17F7004247EF /* JYXMessageDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7409B009216F17F7004247EF /* JYXMessageDetailViewController.m */; };
 		7409B00D2171D3A5004247EF /* UITabBar+littleRedDotBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 7409B00B2171D3A4004247EF /* UITabBar+littleRedDotBadge.m */; };
+		74917AAA218C11B200AA18E9 /* JYXShareWebViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 74917AA9218C11B200AA18E9 /* JYXShareWebViewViewController.m */; };
 		74A290872152315E0032DC11 /* JYXAboutMeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 74A290862152315E0032DC11 /* JYXAboutMeViewController.m */; };
 		74A2908A2152406E0032DC11 /* JYXWebViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 74A290892152406E0032DC11 /* JYXWebViewViewController.m */; };
 		74A2908D215243E60032DC11 /* JYXNavWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 74A2908C215243E60032DC11 /* JYXNavWebViewController.m */; };
@@ -326,6 +327,8 @@
 		74E7A7A6214A6AF8003FE137 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74E7A7A5214A6AF8003FE137 /* CFNetwork.framework */; };
 		74E7A7AB214A731C003FE137 /* WXSpeechSynthesizerPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 74E7A7A8214A731C003FE137 /* WXSpeechSynthesizerPlayer.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		74E7A7AC214A731C003FE137 /* WXApiManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 74E7A7AA214A731C003FE137 /* WXApiManager.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		74F50DED218BEA83003DAF4F /* background_image_default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 74F50DEB218BEA82003DAF4F /* background_image_default@2x.png */; };
+		74F50DEE218BEA83003DAF4F /* ScottPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 74F50DEC218BEA82003DAF4F /* ScottPageView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -881,6 +884,8 @@
 		7409B009216F17F7004247EF /* JYXMessageDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JYXMessageDetailViewController.m; sourceTree = "<group>"; };
 		7409B00B2171D3A4004247EF /* UITabBar+littleRedDotBadge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITabBar+littleRedDotBadge.m"; sourceTree = "<group>"; };
 		7409B00C2171D3A4004247EF /* UITabBar+littleRedDotBadge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITabBar+littleRedDotBadge.h"; sourceTree = "<group>"; };
+		74917AA8218C11B200AA18E9 /* JYXShareWebViewViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JYXShareWebViewViewController.h; sourceTree = "<group>"; };
+		74917AA9218C11B200AA18E9 /* JYXShareWebViewViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JYXShareWebViewViewController.m; sourceTree = "<group>"; };
 		74A290852152315E0032DC11 /* JYXAboutMeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JYXAboutMeViewController.h; sourceTree = "<group>"; };
 		74A290862152315E0032DC11 /* JYXAboutMeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JYXAboutMeViewController.m; sourceTree = "<group>"; };
 		74A290882152406E0032DC11 /* JYXWebViewViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JYXWebViewViewController.h; sourceTree = "<group>"; };
@@ -979,6 +984,9 @@
 		74E7A7A9214A731C003FE137 /* WXSpeechSynthesizerPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXSpeechSynthesizerPlayer.h; sourceTree = "<group>"; };
 		74E7A7AA214A731C003FE137 /* WXApiManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WXApiManager.m; sourceTree = "<group>"; };
 		74E7A7AD214A757F003FE137 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		74F50DEA218BEA82003DAF4F /* ScottPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScottPageView.h; sourceTree = "<group>"; };
+		74F50DEB218BEA82003DAF4F /* background_image_default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background_image_default@2x.png"; sourceTree = "<group>"; };
+		74F50DEC218BEA82003DAF4F /* ScottPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScottPageView.m; sourceTree = "<group>"; };
 		804AEC4CCFCA77115A6840FD /* libPods-JYXTeacher.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-JYXTeacher.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7B6068DB43B50BA5629B50C /* Pods-JYXTeacher.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JYXTeacher.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JYXTeacher/Pods-JYXTeacher.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1799,6 +1807,7 @@
 		188DC87D212521B0001096C1 /* PublicViews */ = {
 			isa = PBXGroup;
 			children = (
+				74F50DE9218BEA82003DAF4F /* ScottPageView */,
 				7409B004216DBB6B004247EF /* ZJPickerView */,
 				18D21267213E5BF80091B28F /* HelpView */,
 				18FFDB012137C9BF009F6863 /* HAddressPickerView */,
@@ -2068,6 +2077,8 @@
 				74E7A78C214A11BC003FE137 /* JYXReportViewController.m */,
 				74E7A791214A586D003FE137 /* JYXPayPenaltyViewController.h */,
 				74E7A792214A586D003FE137 /* JYXPayPenaltyViewController.m */,
+				74917AA8218C11B200AA18E9 /* JYXShareWebViewViewController.h */,
+				74917AA9218C11B200AA18E9 /* JYXShareWebViewViewController.m */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -2367,8 +2378,8 @@
 			children = (
 				74B9FB19214796E200257243 /* RTHttpClient.h */,
 				74B9FB1C214796E200257243 /* RTHttpClient.m */,
-				74B9FB1A214796E200257243 /* RTJSONResponseSerializerWithData.m */,
 				74B9FB1B214796E200257243 /* RTJSONResponseSerializerWithData.h */,
+				74B9FB1A214796E200257243 /* RTJSONResponseSerializerWithData.m */,
 			);
 			path = RTHttpClient;
 			sourceTree = "<group>";
@@ -2464,6 +2475,16 @@
 				74E7A7A8214A731C003FE137 /* WXSpeechSynthesizerPlayer.m */,
 			);
 			path = WeChatOpenSdk;
+			sourceTree = "<group>";
+		};
+		74F50DE9218BEA82003DAF4F /* ScottPageView */ = {
+			isa = PBXGroup;
+			children = (
+				74F50DEA218BEA82003DAF4F /* ScottPageView.h */,
+				74F50DEC218BEA82003DAF4F /* ScottPageView.m */,
+				74F50DEB218BEA82003DAF4F /* background_image_default@2x.png */,
+			);
+			path = ScottPageView;
 			sourceTree = "<group>";
 		};
 		F7B1D5688E88CFD10C0A90F8 /* Pods */ = {
@@ -2597,6 +2618,7 @@
 				185000CD212E8603002A05C9 /* config_Release.plist in Resources */,
 				188DC88F212522BA001096C1 /* Info.plist in Resources */,
 				185000CC212E8603002A05C9 /* config_Debug.plist in Resources */,
+				74F50DED218BEA83003DAF4F /* background_image_default@2x.png in Resources */,
 				188DC88D212522BA001096C1 /* Main.storyboard in Resources */,
 				18FFDB0D2137CAFD009F6863 /* city.plist in Resources */,
 			);
@@ -2746,6 +2768,7 @@
 				18FFDB102137F106009F6863 /* JYXAddEditApproveCollectionViewCell.m in Sources */,
 				188DC9552125562D001096C1 /* MASConstraintMaker.m in Sources */,
 				1814811B212FDA4B00313209 /* PGDatePicker+DateHour.m in Sources */,
+				74F50DEE218BEA83003DAF4F /* ScottPageView.m in Sources */,
 				181AB67E212D6DE00069BD9B /* JYXIDcardApproveView.m in Sources */,
 				18148125212FDA4B00313209 /* PGPickerColumnView.m in Sources */,
 				181AB655212D150B0069BD9B /* JYXAddressManageViewController.m in Sources */,
@@ -2927,6 +2950,7 @@
 				74B9D2342150A3F1005064C9 /* TeacherInfoEntity.m in Sources */,
 				188DC95B2125562D001096C1 /* MASViewAttribute.m in Sources */,
 				181255BE2134C9B800CEE196 /* JYXLessonDateViewController.m in Sources */,
+				74917AAA218C11B200AA18E9 /* JYXShareWebViewViewController.m in Sources */,
 				74A290F82153892B0032DC11 /* MJRefreshAnimationStateHeader.m in Sources */,
 				74B9FB1D214796E200257243 /* RTJSONResponseSerializerWithData.m in Sources */,
 				185000C6212E3E92002A05C9 /* JYXScheduleTopBarView.m in Sources */,
